@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-class CB extends Component {
+export class CB extends Component {
   constructor(props) {
     super(props);
     this.state = {

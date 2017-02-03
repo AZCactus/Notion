@@ -5,7 +5,6 @@ import {createUser, loginUser, checkLoginStatus} from '../actions/user';
 import Signup from '../components/Signup';
 import Login from '../components/Login';
 
-
 export class SignupContainer extends Component {
   constructor(props) {
     super(props);

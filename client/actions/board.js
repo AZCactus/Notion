@@ -23,7 +23,7 @@ export const addNewBoard = (board) => ({
 
 export const getAllBoards = () => {
   return dispatch => {
-    axios.get('/api/boards/')
+    return axios.get('/api/boards/')
       .then((res) => res.data)
       .then((boards) => {
         dispatch(receiveAllBoards(boards.boards, boards.permissions));
@@ -34,7 +34,7 @@ export const getAllBoards = () => {
 
 export const createBoard = (boardName) => {
   return dispatch => {
-    axios.post('/api/boards/', {boardName})
+    return axios.post('/api/boards/', {boardName})
       .then((res) => res.data)
       .then((board) => {
         dispatch(addNewBoard(board));
@@ -44,7 +44,7 @@ export const createBoard = (boardName) => {
 
 
 export const getBoard = (boardId) => (dispatch) => {
-  axios.get(`/api/boards/${boardId}`)
+  return axios.get(`/api/boards/${boardId}`)
     .then((res) => res.data)
     .then((board) => {
       dispatch(receiveBoard(board));
