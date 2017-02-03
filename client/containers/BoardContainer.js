@@ -3,6 +3,9 @@ import store from '../store';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
 import CustomDragLayerContainer from './CustomDragLayerContainer';
+import ParticipantsContainer from './ParticipantsContainer';
+import { socketConnect, socketDisconnect, clearSocketListeners } from '../actions/socketio';
+import { bindActionCreators } from 'redux';
 
 
 class BoardContainer extends Component {
@@ -26,6 +29,7 @@ class BoardContainer extends Component {
               <CustomDragLayerContainer {...this.props}/>
             </div>
           </div>
+          <ParticipantsContainer />
       </div>
     );
   }
@@ -34,6 +38,8 @@ class BoardContainer extends Component {
 
 const mapStateToProps = (state) => ({board: state.board.selectedBoard});
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({socketConnect, socketDisconnect, clearSocketListeners }, dispatch);
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);

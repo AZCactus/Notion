@@ -8,7 +8,6 @@ import CreateBoardContainer from './containers/CreateBoardContainer';
 import CreateNoteContainer from './containers/CreateNoteContainer';
 import ViewNoteContainer from './containers/ViewNoteContainer';
 import SignupContainer from './containers/SignupContainer';
-import ParticipantsContainer from './containers/ParticipantsContainer';
 
 //action-creators
 import {getBoard, getAllBoards} from './actions/board';
@@ -46,7 +45,6 @@ export default function Routes() {
          <IndexRoute component={CreateNoteContainer} />
          <Route path=":id" component={ViewNoteContainer} />
        </Route>
-      <Route path="/participants/:room" component={ParticipantsContainer} />
       </Route>
     </Router>
   );

@@ -99,7 +99,13 @@ module.exports = function sockets(server) {
   function addParticipant(id, name, room) {
     const participant = { id, name };
     boardMeeting[room] = boardMeeting[room] || [];
-    boardMeeting[room].push(participant);
+    let exist = false;
+    for (let i = 0; i < boardMeeting[room]; i++) {
+      if (boardMeeting[room].id === id) {
+        exist = true;
+      }
+    }
+    if (!exist) boardMeeting[room].push(participant);
   }
 
   function removeParticpants(id) {

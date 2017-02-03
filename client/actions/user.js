@@ -30,6 +30,7 @@ export const loginUser = (email, password) => dispatch => {
 export const logoutUser = () => dispatch => {
   return axios.delete('/api/auth/')
   .then(res => dispatch(removeLoginUser(res.data)))
+  .then(() => browserHistory.push('/signup'))
   .catch(err => console.error(err));
 };
 
