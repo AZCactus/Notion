@@ -43,11 +43,12 @@ const Signup = (props) => {
         <button className="signup-submit-button" type="submit">
         SIGN UP
         </button>
-         <button className="login-link-container login-link"
+           <button className="login-link-container login-link" type="button"
          onClick={() => { props.changeForm('login'); }} >
           Already have an account? Login
         </button>
       </form>
+
       );
 };
 
