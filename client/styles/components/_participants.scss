@@ -3,9 +3,10 @@
 }
 
 .participant-number-container {
-  text-align: left;
-  margin-top: 0.6em;
+  text-align: center;
+  padding: 0.8em 0;
   border-bottom: 2px solid black;
+  font-size: 1.5rem;
 }
 
 .participant-number {
@@ -22,15 +23,41 @@
 .participant-list {
   list-style-type: none;
   padding: 0;
-  text-align: center;
+  text-align: left;
+}
+
+.participant-item {
+  margin: 0.4em 0;
+}
+
+.participant-image {
+  background: #3a3f41;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: inline-block;
+  color: #fff;
+  vertical-align: middle;
+  position: relative;
 }
 
 .participant {
-  margin: 0.3em;
+  margin: 0 1em;
   text-align: left;
   i {
-    margin-right: 0.5em;
+
   }
+  display: inline-block;
+  height: 4rem;
+  line-height: 4rem;
+  vertical-align: middle;
+}
+
+.participant-icon {
+    text-align: center;
+    position: absolute;
+    top: 30%;
+    left: 32%;
 }
 
 @media screen and (min-device-width: 1281px)  {

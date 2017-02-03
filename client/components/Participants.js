@@ -7,7 +7,7 @@ export default function(props) {
      onClick={() => { props.toggleParticipantsMenu(); }}>
           <div className="participant-number-container">
             <span className="participant-number">
-              <i className="glyphicon glyphicon-globe"></i>
+              <i className="glyphicon glyphicon-globe globe-icon"></i>
               {props.totalParticipants} Collaborators Online
             </span>
           </div>
@@ -16,8 +16,10 @@ export default function(props) {
               {props.participants.map((participant, idx) => {
                 return <li className="participant-item"
                             key={`${participant.id}_${idx}`}>
+                            <div className="participant-image">
+                              <i className="glyphicon glyphicon-user participant-icon"></i>
+                            </div>
                             <div className="participant">
-                              <i className="glyphicon glyphicon-user"></i>
                               {participant.name}
                             </div>
                         </li>;
