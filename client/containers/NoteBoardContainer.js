@@ -100,22 +100,21 @@
 
 
     componentWillReceiveProps({board, user, note, room}) {
+      /* join room is done in participants container instead */
+      // if (!this.props.board || isEmpty(this.props.board)) {
+      //   return;
+      // } else {
+      //   this.props.socketEmit('join', {
 
-      if (!this.props.board || isEmpty(this.props.board)) {
-        return;
-      } else {
-        this.props.socketEmit('join', {
-
-          room: genShortHash(board.id),
-          name: user.first_name + user.last_name
-        });
-      }
+      //     room: genShortHash(board.id),
+      //     name: user.first_name + user.last_name
+      //   });
+      // }
 
 
     }
 
     componentWillUnmount() {
-      console.log('UNMOUNTED');
       this.props.clearSocketListeners();
       this.props.socketDisconnect();
     }

@@ -56,8 +56,8 @@ export default class CreateNote extends Component {
   componentWillReceiveProps({board, user}) {
     if (!isEmpty(board) && !isEmpty(user)) {
       this.props.socketEmit('join', {
-        room: genShortHash(this.props.board.id),
-        name: user.first_name + user.last_name
+        room: genShortHash(board.id),
+        name: user.first_name + ' ' + user.last_name
       });
     }
   }
