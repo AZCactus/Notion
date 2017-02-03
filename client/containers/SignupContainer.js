@@ -54,7 +54,6 @@ export class SignupContainer extends Component {
 
   render() {
     return (
-      <div>
       <div className="signup-form-container">
         {this.state.type === 'signup' ?
           <Signup submitForm={this.submitForm}
@@ -65,7 +64,6 @@ export class SignupContainer extends Component {
                 handleInput={this.handleInput}
                 changeForm={this.changeForm} />
         }
-    </div>
     </div>
     );
   }

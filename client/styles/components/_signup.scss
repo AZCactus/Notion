@@ -12,6 +12,7 @@ button:focus {
   min-height: 30em;
   background-color:#fff;
   margin: 0 auto;
+  margin-top: 2em;
   border: 1px solid black;
 }
 
@@ -90,15 +91,29 @@ button:focus {
 }
 
 .login-link-container {
-  width: 100%;
+  width: 80%;
+  color: #fff;
   margin: 0 auto;
   text-align: center;
+  border-radius: 500px;
+  display: block;
+  background-color: #111;
+  border: none;
+  height: 2.5em;
+  margin-top: 0.8em;
 }
 
 .signup-link-container {
-  width: 100%;
+  width: 80%;
+  color: #fff;
   margin: 0 auto;
   text-align: center;
+  border-radius: 500px;
+  display: block;
+  background-color: #111;
+  border: none;
+  height: 2.5em;
+  margin-top: 0.8em;
 }
 
 @media screen
@@ -111,6 +126,7 @@ button:focus {
   height: 60vh;
   background-color:#fff;
   margin: 0 auto;
+  margin-top: 2em;
   border: 1px solid black;
 }
 
