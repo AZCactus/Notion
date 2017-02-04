@@ -78,7 +78,6 @@ export const noteMover = (id, left, top) => {
 
 
 export function getAllNotes({userId, boardId}) {
-  console.log('getting notes', boardId);
   return dispatch =>
     axios.get('/api/notes/', {params: {userId, boardId}})
       .then(res => {
