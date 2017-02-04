@@ -51,13 +51,16 @@ export default class Note extends Component {
   }
 
   render() {
+    const hslArr = Color(this.state.color).hsl().array();
+    console.log(hslArr.toString(), hslArr);
+    hslArr[2] = hslArr[2] > 32 ? 25 : 85;
+    console.log(hslArr.toString(), hslArr);
 
 
     const noteStyle = {
       backgroundColor: this.state.color,
-      color          : Color(this.state.color).rgb().rotate(180).hex(),
+      color          : Color.hsl(hslArr).rotate(180).hex(),
     };
-
 
     return (
       <div
