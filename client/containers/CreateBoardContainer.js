@@ -4,13 +4,14 @@ import CreateBoard from '../components/CreateBoard';
 import {createBoard} from '../actions/board';
 import {getAllNotes} from '../actions/note';
 
+// make redirect to board page when created
+// short hash url to db with util short hash function
+// touch up navbar
 const mapStateToProps = (state, ownProps) => {
   return {
-
     user       : state.userReducer.loggedInUser,
     boards     : state.board.allBoards,
     permissions: state.board.permissions
-
   };
 };
 
