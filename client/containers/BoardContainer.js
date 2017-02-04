@@ -10,12 +10,9 @@ import { bindActionCreators } from 'redux';
 
 class BoardContainer extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     const { dispatch, board} = this.props;
-
     const boardId = board.id;
-
-
   }
 
   render() {
@@ -36,7 +33,9 @@ class BoardContainer extends Component {
 }
 
 
-const mapStateToProps = (state) => ({board: state.board.selectedBoard});
+const mapStateToProps = (state) => ({
+  board: state.board.selectedBoard,
+  notes: state.noteReducer.all});
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({socketConnect, socketDisconnect, clearSocketListeners }, dispatch);

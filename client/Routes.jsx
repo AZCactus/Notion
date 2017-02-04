@@ -27,7 +27,10 @@ function indexEnter() {
 function onBoardEnter(nextRouterState) {
   const boardId = nextRouterState.params.boardId;
   store.dispatch(getBoard(boardId));
-  store.dispatch(getAllNotes({boardId}));
+  if (!store.getState().noteReducer.all.length) {
+    store.dispatch(getAllNotes({boardId}));
+  }
+
 }
 
 function onMyBoardEnter(nextRouterState) {

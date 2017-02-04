@@ -146,7 +146,9 @@
 
   const mapStateToProps = (state, ownProps) => {
 
-    return {notes: state.noteReducer.all, user: state.userReducer.loggedInUser};
+    return {notes: state.noteReducer.all.filter(note => {
+      return ownProps.board.id === note.board_id;
+    }), user: state.userReducer.loggedInUser};
 
   };
 
