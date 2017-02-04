@@ -5,18 +5,11 @@ import NoteWrapper from '../components/NoteWrapper';
 import {getBoardNotes, getBoard} from '../actions/board';
 
 
-class UserBoardsContainer extends Component {
+export class UserBoardsContainer extends Component {
 
   render() {
     const boardId = this.props.board.id;
-    let boardIdNotes = [];
-
-    if (this.props.notes.length) {
-      boardIdNotes = this.props.notes.filter(note => {
-        return boardId === note.board_id;
-      });
-
-    }
+    const boardIdNotes = this.props.notes;
 
     return (
       <div style={{
@@ -48,7 +41,9 @@ class UserBoardsContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    notes: state.noteReducer.all,
+    notes: state.noteReducer.all.filter(note => {
+      return ownProps.board.id === note.board_id;
+    }),
     board: ownProps.board
   };
 };
