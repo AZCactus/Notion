@@ -19,6 +19,8 @@ module.exports = function sockets(server) {
   });
 
 
+
+
   /************************** main board meeting namespace ***************************/
 
   io.of('board').on('connection', (socket) => {
@@ -46,9 +48,9 @@ module.exports = function sockets(server) {
       console.log(red(`[Board Meeting]: ${Object.keys(connections).length} sockets remaining`));
     });
 
+
     /* wild card socket listener other than join room and leave room */
     socket.on('*', (eventName, payload) => {
-      console.log('SOCKET ON WILDCARD', eventName, payload);
       if (eventName !== 'join' && eventName !== 'leave') {
         /* broadcast to all clients in board namespace */
         io.of('board').emit(eventName, payload);
@@ -86,6 +88,7 @@ module.exports = function sockets(server) {
       io.of('board').in(room).emit('joined', { participants: boardMeeting[room], totalParticipants: getTotalParticipantsInRoom(room)});
     });
 
+
   });
 
   /************************** main board meeting namespace END **************************/
@@ -96,7 +99,13 @@ module.exports = function sockets(server) {
   function addParticipant(id, name, room) {
     const participant = { id, name };
     boardMeeting[room] = boardMeeting[room] || [];
-    boardMeeting[room].push(participant);
+    let exist = false;
+    for (let i = 0; i < boardMeeting[room]; i++) {
+      if (boardMeeting[room].id === id) {
+        exist = true;
+      }
+    }
+    if (!exist) boardMeeting[room].push(participant);
   }
 
   function removeParticpants(id) {

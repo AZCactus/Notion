@@ -7,7 +7,7 @@
   import NoteWrapper from '../components/NoteWrapper';
   import DraggableNote from '../components/DraggableNote';
   import snapToGrid from '../components/snapToGrid';
-  import {moveNote, addNoteToBoard} from '../actions/note';
+  import {moveNote, addNoteToBoard, noteMover} from '../actions/note';
   import {setLoginUser} from '../actions/user';
   import {
     socketConnect,
@@ -20,7 +20,6 @@
   import flow from 'lodash/flow';
   import isEmpty from 'lodash/isEmpty';
   import {genShortHash} from '../utils/stringHash';
-
 
   const styles = {
     height  : 1000,
@@ -46,7 +45,7 @@
         [ left, top ] = snapToGrid(left, top);
       }
 
-      props.moveNote(item.id, left, top);
+      props.noteMover(item.id, left, top);
 
 
     },
@@ -65,45 +64,57 @@
     constructor(props) {
       super(props);
       this.boardUpdate = this.boardUpdate.bind(this);
+      this.participantMoveNote = this.participantMoveNote.bind(this);
     }
 
     componentWillMount() {
       this.props.socketConnect('board');
-      this.props.addSocketListener('note', this.boardUpdate);
 
+
+      this.props.addSocketListener('note', this.boardUpdate);
+      this.props.addSocketListener('moveNote', this.participantMoveNote);
     }
 
     boardUpdate(note) {
-      store.dispatch(addNoteToBoard(note));
+      console.log('RECEIVED NOTE', note);
+      console.log('BOARD ID', this.props.board.id);
+      if (note.board_id === this.props.board.id) {
+        store.dispatch(addNoteToBoard(note));
+      }
+    }
 
+    participantMoveNote(data) {
+      const key = Object.keys(data);
+      let left;
+      let top;
+      const coordObj = data[key];
+      for (const coords in coordObj) {
+        if (coords === 'left') {
+          left = coordObj[coords];
+        } else {
+          top = coordObj[coords];
+        }
+      }
+      store.dispatch(moveNote(Number(key[0]), left, top));
     }
 
 
     componentWillReceiveProps({board, user, note, room}) {
+      /* join room is done in participants container instead */
+      // if (!this.props.board || isEmpty(this.props.board)) {
+      //   return;
+      // } else {
+      //   this.props.socketEmit('join', {
 
-      if (!this.props.board || isEmpty(this.props.board)) {
-        return;
-      } else {
-        this.props.socketEmit('join', {
+      //     room: genShortHash(board.id),
+      //     name: user.first_name + user.last_name
+      //   });
+      // }
 
-          room: genShortHash(board.id),
-          name: user.first_name + user.last_name
-        });
-      }
-
-      if (!note) {
-        return;
-      } else if (note.room === room) {
-        this.props.socketEmit('updateBoard', {
-          note: note
-        });
-
-      }
 
     }
 
     componentWillUnmount() {
-      console.log('UNMOUNTED');
       this.props.clearSocketListeners();
       this.props.socketDisconnect();
     }
@@ -142,7 +153,7 @@
   };
 
   const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({moveNote, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard}, dispatch);
+    return bindActionCreators({noteMover, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard}, dispatch);
   };
 
   export default flow(DropTarget(NOTE, noteTarget, collect

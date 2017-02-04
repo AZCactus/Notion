@@ -2,37 +2,51 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { socketConnect, socketEmit, addSocketListener, clearSocketListeners } from '../actions/socketio';
+import { socketConnect,
+        socketEmit,
+        addSocketListener,
+        clearSocketListeners,
+        socketDisconnect } from '../actions/socketio';
 
-class ParticipantsContainer extends Component {
+import Participants from '../components/Participants';
+
+import { genShortHash } from '../utils/stringHash';
+
+import isEmpty from 'lodash/isEmpty';
+
+export class ParticipantsContainer extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       totalParticipants: 0,
       participants     : [],
+      display          : false,
     };
 
     this.connect = this.connect.bind(this);
     this.disconnect = this.disconnect.bind(this);
     this.joined = this.joined.bind(this);
+    this.getRoomHash = this.joined.bind(this);
+    this.toggleParticipantsMenu = this.toggleParticipantsMenu.bind(this);
   }
 
   componentWillMount() {
-    if (!Object.keys(this.props.loggedInUser).length) {
-      console.log('hitting this will mount');
-      browserHistory.push('/signup');
-    }
     this.props.socketConnect('board');
     this.props.addSocketListener('connect', this.connect);
     this.props.addSocketListener('disconnect', this.disconnect);
     this.props.addSocketListener('joined', this.joined);
-    this.props.socketEmit('join', { room: this.props.params.room, name: this.props.loggedInUser.first_name});
+    if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
+      this.props.socketEmit('join',
+        {room: genShortHash(this.props.selectedBoard.id),
+         name: this.props.loggedInUser.first_name + ' ' + this.props.loggedInUser.last_name});
+    }
   }
 
   componentWillUnmount() {
-    this.props.socketEmit('leave', this.props.params.room);
+    this.props.socketEmit('leave', genShortHash(this.props.selectedBoard.id));
     this.props.clearSocketListeners();
+    this.props.socketDisconnect();
   }
 
   connect() {
@@ -48,27 +62,18 @@ class ParticipantsContainer extends Component {
     this.setState({ totalParticipants});
   }
 
+  toggleParticipantsMenu() {
+    this.setState({display: !this.state.display});
+  }
+
   render() {
     return (
-      <div className="participants-container">
-          <div className="participant-number-container">
-            <span className="participant-number">
-              <i className="glyphicon glyphicon-globe"></i>{this.state.totalParticipants} Users Online
-            </span>
-          </div>
-          <div className="participant-list-container">
-            <ul className="participant-list">
-              {this.state.participants.map(participant => {
-                return <li className="participant-item" key={participant.id}>
-                          <div className="participant">
-                          <i className="glyphicon glyphicon-user"></i>
-                            {participant.name}
-                          </div>
-                        </li>;
-              })}
-            </ul>
-          </div>
-      </div>
+      <Participants
+        className="participants-wrapper"
+        totalParticipants={this.state.totalParticipants}
+        participants={this.state.participants}
+        display={this.state.display}
+        toggleParticipantsMenu={this.toggleParticipantsMenu} />
     );
   }
 
@@ -76,15 +81,17 @@ class ParticipantsContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loggedInUser: state.userReducer.loggedInUser,
-  socket      : state.socket
+  loggedInUser : state.userReducer.loggedInUser,
+  socket       : state.socket,
+  selectedBoard: state.board.selectedBoard
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  socketConnect       : (namespace) => { dispatch(socketConnect(namespace)); },
   addSocketListener   : (eventName, method) => { dispatch(addSocketListener(eventName, method)); },
   clearSocketListeners: (eventName, method) => { dispatch(clearSocketListeners(eventName, method)); },
   socketEmit          : (eventName, payload) => { dispatch(socketEmit(eventName, payload)); },
+  socketConnect       : (namespace) => {dispatch(socketConnect(namespace))},
+  socketDisconnect    : () => { dispatch(socketDisconnect())}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantsContainer);

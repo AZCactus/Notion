@@ -30,13 +30,36 @@ describe('<Signup />', () => {
     expect(loginLinkSpy.called).to.be.true;
   });
 
-  it('should handle inputs change in signup component', () => {
+  it('should handle first name input field changes in signup component', () => {
     const firstNameInput = 'Alvin';
-    const signupInput = signupWrapper.find('#signup-firstname-input-field');
-    signupInput.simulate('change', {target: {value: firstNameInput}});
+    const firstNameInputField = signupWrapper.find('#signup-firstname-input-field');
+    firstNameInputField.simulate('change', {target: {value: firstNameInput}});
     expect(handleInputSpy.called).to.be.true;
-    // expect(handleInputSpy.calledWith('Alvin')).to.be.true;
-    // not working ?
+    expect(handleInputSpy.args[0][0].target.value).to.equal('Alvin');
+  });
+
+  it('should handle last name input field changes in signup component', () => {
+    const lastNameInput = 'Yuen';
+    const lastNameInputField = signupWrapper.find('#signup-lastname-input-field');
+    lastNameInputField.simulate('change', {target: {value: lastNameInput}});
+    expect(handleInputSpy.called).to.be.true;
+    expect(handleInputSpy.args[0][0].target.value).to.equal('Yuen');
+  });
+
+  it('should handle email input field changes in signup component', () => {
+    const emailInput = 'alvin@yuen.com';
+    const emailInputField = signupWrapper.find('#signup-email-input-field');
+    emailInputField.simulate('change', {target: {value: emailInput}});
+    expect(handleInputSpy.called).to.be.true;
+    expect(handleInputSpy.args[0][0].target.value).to.equal('alvin@yuen.com');
+  });
+
+  it('should handle email input field changes in signup component', () => {
+    const passwordInput = 12345;
+    const passwordInputField = signupWrapper.find('#signup-password-input-field');
+    passwordInputField.simulate('change', {target: {value: passwordInput}});
+    expect(handleInputSpy.called).to.be.true;
+    expect(handleInputSpy.args[0][0].target.value).to.equal(12345);
   });
 
   it('should handle submit when user signups as new user', () => {

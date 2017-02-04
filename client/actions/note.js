@@ -63,6 +63,20 @@ export function getNote(noteId) {
     .catch(err => console.warn(err));
 }
 
+export const noteMover = (id, left, top) => {
+  const data = {[id]: {left, top}};
+
+  return dispatch => {
+
+    dispatch(moveNote(id, left, top));
+
+
+    dispatch(socketEmit('moveNote', data));
+
+  };
+};
+
+
 export function getAllNotes({userId, boardId}) {
   console.log('getting notes', boardId);
   return dispatch =>
@@ -82,6 +96,7 @@ export function createNote(note, boardId) {
       boardId: boardId || note.boardId
     })
       .then(({data}) => {
+        console.log('DISPATCH SOCKET', data);
         dispatch(socketEmit('note', data));
       })
       .catch(err => console.warn(err));

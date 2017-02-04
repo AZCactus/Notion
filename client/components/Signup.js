@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const Signup = (props) => {
   return (
@@ -43,14 +43,10 @@ const Signup = (props) => {
         <button className="signup-submit-button" type="submit">
         SIGN UP
         </button>
-         <div className="login-link-container" >
-          Already have an account?
-          <label>
-            <a className="login-link"
-            onClick={() => { props.changeForm('login'); }}>
-            Login</a>
-          </label>
-        </div>
+         <button className="login-link-container login-link"
+         onClick={() => { props.changeForm('login'); }} >
+          Already have an account? Login
+        </button>
       </form>
       );
 };
