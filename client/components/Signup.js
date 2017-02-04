@@ -34,7 +34,7 @@ const Signup = (props) => {
           onChange={(e) => { props.handleInput(e); }}
           required />
         </div>
-        <div className="">
+        <div className="signup-disclaimer-container">
           <label className="signup-disclaimer">
           By clicking on Sign up, you agree to notion's terms &
           conditions and privacy policy

@@ -8,31 +8,31 @@ button:focus {
 
 .signup-form-container {
   width: 90vw;
-  height: 70vh;
-  min-height: 18em;
+  height: 60vh;
+  min-height: 28em;
   background-color:#fff;
   margin: 0 auto;
   margin-top: 2em;
-  border: 1px solid black;
+  box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
 }
 
 .signup-label {
   text-align: center;
   margin: 0 auto;
   display: block;
-  margin-top: 1em;
+  padding-top: 1em;
 }
 
 .login-label {
   text-align: center;
   margin: 0 auto;
   display: block;
-  margin-top: 1em;
+  padding-top: 1em;
 }
 
 .signup-input-field {
   border: 1px solid darkgrey;
-  width: 90%;
+  width: 80%;
   text-align: left;
   line-height: 2em;
   height: 2em;
@@ -57,10 +57,10 @@ button:focus {
   border: 1px solid #dfe0e6;
 }
 
-.signup-disclaimer {
+.signup-disclaimer-container {
   font-size: 0.65em;
-  margin-left: 3.7em;
-  margin-right: 3.7em;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .login-submit-button {
@@ -74,6 +74,7 @@ button:focus {
   border: none;
   height: 2.5em;
   margin-top: 0.8em;
+  font-weight: bold;
 }
 
 .signup-submit-button {
@@ -87,6 +88,7 @@ button:focus {
   border: none;
   height: 2.5em;
   margin-top: 0.8em;
+  font-weight: bold;
 
 }
 
@@ -97,7 +99,7 @@ button:focus {
   text-align: center;
   border-radius: 500px;
   display: block;
-  background-color: #111;
+  background-color: #3a3f41;
   border: none;
   height: 2.5em;
   margin-top: 0.8em;
@@ -110,7 +112,7 @@ button:focus {
   text-align: center;
   border-radius: 500px;
   display: block;
-  background-color: #111;
+  background-color: #3a3f41;
   border: none;
   height: 2.5em;
   margin-top: 0.8em;
@@ -118,8 +120,7 @@ button:focus {
 
 @media screen
   and (min-device-width: 768px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (min-resolution: 192dpi) {
+ {
 
   .signup-form-container {
   width: 50vw;
@@ -127,7 +128,7 @@ button:focus {
   background-color:#fff;
   margin: 0 auto;
   margin-top: 2em;
-  border: 1px solid black;
+  box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
 }
 
 }

@@ -6,6 +6,7 @@ import Signup from '../components/Signup';
 import Login from '../components/Login';
 import isEmpty from 'lodash/isEmpty';
 
+
 export class SignupContainer extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,7 @@ export class SignupContainer extends Component {
       lastName : '',
       email    : '',
       password : '',
+      display  : false,
     };
 
     this.submitForm = this.submitForm.bind(this);
@@ -25,6 +27,7 @@ export class SignupContainer extends Component {
 
   componentDidMount() {
     this.props.checkLoginStatus();
+    this.setState({display: true});
   }
 
   componentWillReceiveProps(props, nextProps) {
@@ -54,7 +57,7 @@ export class SignupContainer extends Component {
 
   render() {
     return (
-      <div className="signup-form-container">
+      <div className='signup-form-container' >
         {this.state.type === 'signup' ?
           <Signup submitForm={this.submitForm}
                    changeForm={this.changeForm}
