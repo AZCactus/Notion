@@ -1,0 +1,229 @@
+.homepage-container {
+  overflow:hidden;
+  position: relative;
+  font-family: "Open Sans", sans-serif;
+}
+
+.homepage-main-image-container {
+  position: relative;
+}
+
+.homepage-main-image {
+  width: 100vw;
+  max-width: 100%;
+}
+
+.main-slogan {
+  position: absolute;
+  top: 10%;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 999;
+  width: 100%;
+}
+
+.main-mini-desc {
+  position: absolute;
+  top: 20%;
+  font-style: italic;
+  color: #fff;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 999;
+  width: 100%;
+}
+
+input:focus{
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+.main-signup-button-container {
+   position: absolute;
+   top: 40%;
+   font-size:1.8rem;
+   width: 100%;
+   text-align: center;
+}
+
+.main-signup-button {
+  width: 80%;
+  border-radius: 500px;
+  background-color: #FFFFA5;
+  color: #333333;
+  font-weight: bold;
+  font-family: "Permanent Marker";
+  border: none;
+  padding: 1.5rem 3rem;
+  cursor: pointer;
+}
+
+.main-signup-button:hover {
+  background-color: #333333;
+  color: #FFFFA5;
+}
+
+.postit-view {
+  position: absolute;
+  top: 70%;
+  justify-content: center;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  font-family: "Caveat Brush";
+}
+
+.bulb-img{
+  width: 100%;
+  vertical-align: top;
+}
+
+.postit{
+  box-sizing: border-box;
+  margin: 0.2em;
+  min-width: 3.9rem;
+  max-width: 3.9rem;
+  height: 3.9rem;
+  padding: 0.1em;
+  border:1px solid #E8E8E8;
+  font-size: 1.8rem;
+  text-align:center;
+  border-bottom-right-radius: 60px 5px;
+  vertical-align:middle;
+
+}
+
+.postit:nth-child(even){
+  -webkit-transform:rotate(4deg);
+	-moz-transform:rotate(4deg);
+}
+
+.postit:nth-child(odd){
+  -webkit-transform:rotate(-4deg);
+	-moz-transform:rotate(-4deg);
+}
+
+.yellow{
+  background: linear-gradient(135deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%);
+}
+
+.lightyellow {
+  background: linear-gradient(135deg, #ffffa5 81%,#ffffa5 82%,#ffffa5 82%,#ffffc6 100%);
+}
+
+.pink{
+  background: linear-gradient(135deg, #ff879b 81%,#ff879b 82%,#ffc7d0 100%);
+}
+.green{
+  background: linear-gradient(135deg, #b1ff87 81%,#b1ff87 82%,#dbffc7 100%);
+}
+
+.blue{
+   background: linear-gradient(135deg, #b3e8ff 81%,#b3e8ff 82%,#b3e8ff 100%);
+}
+
+.brightgreen {
+  background: linear-gradient(135deg, #b3ffc0 81%,#b3ffc0  82%,#dbffc7 100%);
+}
+
+
+
+@media screen
+  and (min-device-width: 414px) {
+
+  .main-slogan {
+    letter-spacing: 0.1em;
+    font-size: 1.9rem;
+    font-weight: normal;
+  }
+
+  .main-mini-desc {
+    font-size: 1.9rem;
+    font-weight: normal;
+  }
+
+  .main-signup-button {
+    width: 90%;
+    font-size: 1.9rem;
+  }
+
+  .postit {
+  min-width: 5rem;
+  max-width: 5rem;
+  height: 5rem;
+  font-size: 3rem;
+  }
+
+}
+
+
+@media screen
+  and (min-device-width: 768px) {
+
+  .main-slogan {
+    letter-spacing: 0.1em;
+    font-size: 4rem;
+    font-weight: normal;
+  }
+
+  .main-mini-desc {
+    top: 40%;
+    font-size: 2rem;
+    font-weight: normal;
+  }
+
+  .main-signup-button-container {
+    top: 50%;
+  }
+
+  .main-signup-button {
+    width: 60%;
+    font-size: 2.5rem;
+  }
+
+   .postit {
+  min-width: 7rem;
+  max-width: 7rem;
+  height: 7rem;
+  font-size: 3em;
+  }
+
+}
+
+@media screen
+  and (min-device-width: 1024px) {
+
+  .homepage-main-image {
+
+    margin: -11rem 0 -10rem 0;
+  }
+
+  .main-slogan {
+    top: 30%;
+    letter-spacing: 0.1em;
+    font-size: 4rem;
+    font-weight: normal;
+  }
+
+  .main-mini-desc {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .main-signup-button-container {
+    top: 50%;
+  }
+
+  .main-signup-button {
+    width: 30%;
+    font-size: 2.5rem;
+  }
+
+}
+
