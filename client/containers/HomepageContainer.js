@@ -50,6 +50,28 @@ export default class HomePageContainer extends Component {
           </div>
         </div>
 
+        <div className="border-line"/>
+
+        <div className="desc-container">
+            <div className="left-desc">
+              <div className="left-desc-title">
+                  Seamless Design.
+              </div>
+              <div className="left-desc-content">
+                 Unite with your team and brainstorm ideas on your own dynamic board. Some more description we need to think about. Lets get back to this
+              </div>
+
+            </div>
+
+            <div className="right-desc">
+              <img className="right-desc-img" src="/assets/collaborator-view-2.png" />
+            </div>
+        </div>
+
+        <div className="team-desc">
+          Made by Alvin Yuen, Spencer Goodwine, Hal Carleton & Joe Stephens
+        </div>
+
       </div>
     );
   }

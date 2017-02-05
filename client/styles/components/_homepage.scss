@@ -1,3 +1,6 @@
+$dark-gray: #333c4e;
+$light-gray: #7e8890;
+
 .homepage-container {
   overflow:hidden;
   position: relative;
@@ -96,7 +99,6 @@ button:focus {
   text-align:center;
   border-bottom-right-radius: 60px 5px;
   vertical-align:middle;
-
 }
 
 .postit:nth-child(even){
@@ -132,10 +134,55 @@ button:focus {
   background: linear-gradient(135deg, #b3ffc0 81%,#b3ffc0  82%,#dbffc7 100%);
 }
 
+.border-line {
+  width: 90%;
+  border-bottom: 2px solid $light-gray;
+  margin: 0 auto;
+  margin-top: 3em;
+}
+
+.desc-container {
+  color: $dark-gray;
+}
+
+.left-desc {
+  width: 100%;
+  padding: 0.8em;
+  line-height: 1.5em;
+}
+
+.left-desc-title{
+  width: 100%;
+  text-align:center;
+  font-weight: 300;
+  font-size:1.5rem;
+}
+
+.left-desc-content{
+  width: 100%;
+  text-align: center;
+  font-weight: 300;
+  color: $light-gray;
+  font-size: 1rem;
+}
+
+.right-desc {
+  width: 100%;
+  img {
+    box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
+  }
+}
+
+.right-desc-img{
+  width: 100%;
+}
+
+.team-desc {
+  display: none;
+}
 
 
-@media screen
-  and (min-device-width: 414px) {
+@media screen and (min-device-width: 414px) {
 
   .main-slogan {
     letter-spacing: 0.1em;
@@ -154,17 +201,17 @@ button:focus {
   }
 
   .postit {
-  min-width: 5rem;
-  max-width: 5rem;
-  height: 5rem;
-  font-size: 3rem;
+    min-width: 5rem;
+    max-width: 5rem;
+    height: 5rem;
+    font-size: 3rem;
   }
+
 
 }
 
 
-@media screen
-  and (min-device-width: 768px) {
+@media screen and (min-device-width: 768px) {
 
   .main-slogan {
     letter-spacing: 0.1em;
@@ -187,17 +234,71 @@ button:focus {
     font-size: 2.5rem;
   }
 
-   .postit {
-  min-width: 7rem;
-  max-width: 7rem;
-  height: 7rem;
-  font-size: 3em;
+  .postit {
+    min-width: 7rem;
+    max-width: 7rem;
+    height: 7rem;
+    font-size: 3em;
   }
+
+  .desc-container {
+    color: $dark-gray;
+    display: flex;
+    flex-direction: row;
+    min-height: 60rem;
+  }
+
+  .left-desc {
+    width: 50%;
+    padding: 2em 5em;
+    line-height: 3em;
+    height: 28.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .left-desc-title{
+    text-align:left;
+    font-weight: 300;
+    font-size:2rem;
+  }
+
+  .left-desc-content{
+    width: 100%;
+    text-align: left;
+    font-weight: 300;
+    color: $light-gray;
+    font-size: 1.5rem;
+  }
+
+  .right-desc {
+    width: 50%;
+    padding: 2em 5em;
+  }
+
+  .right-desc-img{
+    width: 100%;
+  }
+
+  .team-desc {
+    display: block;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-weight: 300;
+    text-align: center;
+    height: 4em;
+    line-height: 4em;
+    letter-spacing: 0.2rem;
+}
 
 }
 
-@media screen
-  and (min-device-width: 1024px) {
+@media screen and (min-device-width: 1024px) {
 
   .homepage-main-image {
 
@@ -224,6 +325,15 @@ button:focus {
     width: 30%;
     font-size: 2.5rem;
   }
+
+  .left-desc {
+    height: 40rem;
+  }
+
+  .border-line {
+    margin-top: 15rem;
+  }
+
 
 }
 
