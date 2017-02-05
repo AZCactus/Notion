@@ -26,7 +26,7 @@ const Login = (props) => {
         <button className="login-submit-button" type="submit">
         Login
         </button>
-        <button className="signup-link-container signup-link"
+        <button className="signup-link-container signup-link" type="button"
          onClick={() => { props.changeForm('signup'); }} >
           Don't have an account? Signup
         </button>

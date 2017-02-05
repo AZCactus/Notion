@@ -21,7 +21,7 @@ export const clearAllListeners = () => ({
 //need to change to ip address where board resides
 
 export const socketConnect = (namespace) => dispatch => {
-  socket = io(`http://192.168.1.65:3030/${namespace}`);
+  socket = io(`http://localhost:3030/${namespace}`);
 };
 
 export const socketEmit = (eventName, payload) => dispatch => {

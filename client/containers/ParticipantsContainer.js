@@ -36,21 +36,26 @@ export class ParticipantsContainer extends Component {
     this.props.addSocketListener('connect', this.connect);
     this.props.addSocketListener('disconnect', this.disconnect);
     this.props.addSocketListener('joined', this.joined);
-    if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
-      this.props.socketEmit('join',
-        {room: genShortHash(this.props.selectedBoard.id),
-         name: this.props.loggedInUser.first_name + ' ' + this.props.loggedInUser.last_name});
-    }
   }
 
   componentWillUnmount() {
-    this.props.socketEmit('leave', genShortHash(this.props.selectedBoard.id));
+    this.props.socketEmit('leave', {
+      room: genShortHash(this.props.selectedBoard.id)});
     this.props.clearSocketListeners();
     this.props.socketDisconnect();
   }
 
   connect() {
     this.setState({ status: 'connected'});
+    if (isEmpty(this.props.loggedInUser)) {
+      browserHistory.push('/signup');
+    } else if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
+      this.props.socketEmit('join',
+        {
+          room: genShortHash(this.props.selectedBoard.id),
+          name: this.props.loggedInUser.first_name + ' ' + this.props.loggedInUser.last_name,
+        });
+    }
   }
 
   disconnect() {
@@ -61,6 +66,7 @@ export class ParticipantsContainer extends Component {
     this.setState({ participants });
     this.setState({ totalParticipants});
   }
+
 
   toggleParticipantsMenu() {
     this.setState({display: !this.state.display});
