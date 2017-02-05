@@ -9,7 +9,8 @@ import {
   socketConnect,
   socketEmit,
   clearSocketListeners,
-  socketDisconnect
+  socketDisconnect,
+  addSocketListener
 } from '../actions/socketio';
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNote);
@@ -26,6 +27,7 @@ function mapDispatchToProps(dispatch) {
     createNote,
     getBoard,
     socketConnect,
+    addSocketListener,
     socketEmit,
     clearSocketListeners,
     socketDisconnect

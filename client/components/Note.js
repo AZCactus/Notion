@@ -51,13 +51,17 @@ export default class Note extends Component {
   }
 
   render() {
+    const hslArr = Color(this.state.color).hsl().array();
+    hslArr[2] = hslArr[2] > 32 ? 25 : 85;
 
 
     const noteStyle = {
       backgroundColor: this.state.color,
-      color          : Color(this.state.color).rgb().rotate(180).hex(),
+      color          : Color.hsl(hslArr).rotate(180).hex(),
     };
 
+
+    const {content} = this.props;
 
     return (
       <div
@@ -65,7 +69,7 @@ export default class Note extends Component {
         onClick={this.clickHandler}
         style={noteStyle}>
         <div className="c-note__inner">
-          <div className="c-note__content">{this.props.content}</div>
+          <div className="c-note__content">{content}</div>
           { this.props.editable &&
             <input type="text"
               value={this.props.content}

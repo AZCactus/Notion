@@ -5,12 +5,13 @@ import NoteContainer from '../containers/NoteContainer';
 import ColorPicker from './ColorPicker';
 import Color from 'color';
 import {genShortHash} from '../utils/stringHash';
-
+import presetColors from 'ROOT/client/presetColors.json';
 const initState = {
   content           : '',
   color             : Color.rgb([ 237, 208, 13 ]).hex(),
   displayColorPicker: false
 };
+
 
 export default class CreateNote extends Component {
 
@@ -22,12 +23,14 @@ export default class CreateNote extends Component {
       this.changeHandler,
       this.submitHandler,
       this.updateColor,
-      this.toggleColorPicker
+      this.toggleColorPicker,
+      this.join
     );
   }
 
   componentWillMount() {
     this.props.socketConnect('board');
+    this.props.addSocketListener('connect', this.join);
 
     if ((!this.props.board || isEmpty(this.props.board)) && !this.props.location.query.board) {
       // If no board is selected and no board ID is provided
@@ -37,6 +40,16 @@ export default class CreateNote extends Component {
       // if no board is selected but a board ID is provided
       // select board by ID
       this.props.getBoard(this.props.location.query.board);
+    }
+  }
+
+  join() {
+    if (!isEmpty(this.props.board) && !isEmpty(this.props.user)) {
+      this.props.socketEmit('join', {
+        room  : genShortHash(this.props.board.id),
+        name  : this.props.user.first_name + ' ' + this.props.user.last_name,
+        userId: this.props.user.id
+      });
     }
   }
 
@@ -53,13 +66,20 @@ export default class CreateNote extends Component {
       .then(() => this.setState(initState));
   }
 
-  componentWillReceiveProps({board, user}) {
-    if (!isEmpty(board) && !isEmpty(user)) {
-      this.props.socketEmit('join', {
-        room: genShortHash(board.id),
-        name: user.first_name + ' ' + user.last_name
-      });
-    }
+  /* changed to join room upon connect to account for phone disconnects */
+  // componentWillReceiveProps({board, user}) {
+  //   if (!isEmpty(board) && !isEmpty(user)) {
+  //     this.props.socketEmit('join', {
+  //       room  : genShortHash(board.id),
+  //       name  : user.first_name + ' ' + user.last_name,
+  //       userId: user.id
+  //     });
+  //   }
+  // }
+
+  modalClickHandler(e, cb) {
+    e.stopPropagation();
+    if (e.target === e.currentTarget) cb(e);
   }
 
   toggleColorPicker() {
@@ -71,17 +91,23 @@ export default class CreateNote extends Component {
     });
   }
 
-  updateColor(hex) {
-    this.setState({color: hex});
+  updateColor(color) {
+    const newState = {};
+    if (typeof color === 'string') newState.color = color;
+    else if (Array.isArray(color)) newState.color = Color.rgb(color).hex();
+    this.setState(newState);
   }
 
   componentWillUnmount() {
     this.props.clearSocketListeners();
     this.props.socketDisconnect();
+    this.props.socketEmit('leave', {
+      room  : genShortHash(this.props.board.id),
+      userId: this.props.user.id
+    });
   }
 
   render() {
-    console.log(this.state.color, typeof this.state.color);
     return (
       <div className="container">
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
@@ -95,11 +121,12 @@ export default class CreateNote extends Component {
                 onChange={this.changeHandler} />
             </div>
             { this.state.displayColorPicker &&
-              <div className="c-color-picker__wrapper c-color-picker__wrapper--modal">
+              <div className="c-color-picker__wrapper c-color-picker__wrapper--modal"
+                onClick={(e) => { this.modalClickHandler(e, this.toggleColorPicker); }}>
                 <ColorPicker
-                  width={500}
                   color={this.state.color}
-                  updateColor={this.updateColor} />
+                  updateColor={this.updateColor}
+                  presets={presetColors} />
               </div>
             }
           </div>
