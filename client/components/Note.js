@@ -58,6 +58,7 @@ export default class Note extends Component {
       color          : Color(this.state.color).rgb().rotate(180).hex(),
     };
 
+    const {content} = this.props;
 
     return (
       <div
@@ -65,10 +66,10 @@ export default class Note extends Component {
         onClick={this.clickHandler}
         style={noteStyle}>
         <div className="c-note__inner">
-          <div className="c-note__content">{this.props.content}</div>
+          <div className="c-note__content">{content}</div>
           { this.props.editable &&
             <input type="text"
-              value={this.props.content}
+              value={content}
               className="c-note__input"
               ref={(input) => { this.input = input; }}
               onFocus={this.focusHandler}

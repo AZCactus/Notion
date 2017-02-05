@@ -42,6 +42,7 @@ function getItemStyles(props) {
 
 
 const collect = (monitor) => {
+
   return {
     item         : monitor.getItem(),
     itemType     : monitor.getItemType(),
@@ -56,9 +57,11 @@ class CustomDragLayer extends Component {
 
   renderItem(type, item) {
 
+
     switch (type) {
     case NOTE:
-      return (<NoteDragPreview note={item} />);
+      console.log('CDL ITEM', item);
+      return (<NoteDragPreview content={item.content} />);
     default:
       return null;
     }
@@ -66,7 +69,7 @@ class CustomDragLayer extends Component {
 
   render() {
     const { item, itemType, isDragging } = this.props;
-
+    console.log('CDL', this.props);
 
     if (!isDragging) {
       return null;
@@ -75,7 +78,9 @@ class CustomDragLayer extends Component {
     return (
       <div style={layerStyles}>
         <div style={getItemStyles(this.props)}>
-          {this.renderItem(itemType, item)}
+          { console.log('RENDERED CONTENT', this.renderItem(itemType, item))}
+            {this.renderItem(itemType, item)
+          }
         </div>
       </div>
     );

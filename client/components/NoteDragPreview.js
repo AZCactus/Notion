@@ -16,6 +16,7 @@ export default class NoteDragPreview extends Component {
     this.state = {
       tickTock: false
     };
+    console.log('NDP Props', props);
   }
 
   componentDidMount() {
@@ -35,10 +36,11 @@ export default class NoteDragPreview extends Component {
   render() {
 
     const { tickTock } = this.state;
+    console.log('NOTE PREVIEW', this.props);
 
     return (
       <div style={styles}>
-        <NoteWrapper yellow={tickTock} />
+        <NoteWrapper red={tickTock} />
       </div>
     );
   }

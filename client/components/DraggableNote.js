@@ -49,13 +49,17 @@ class DraggableNote extends PureComponent {
 
 
   render() {
-    const { connectDragSource} = this.props;
+    const { connectDragSource, content} = this.props;
 
 
     return connectDragSource(
+
       <div style={getStyles(this.props)}>
-        <NoteWrapper note={this.props} />
+        <div className='zIndex'>
+          <NoteWrapper note={this.props} content={content}/>
+        </div>
       </div>
+
     );
   }
 }

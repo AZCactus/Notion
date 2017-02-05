@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE} from '../constants';
+import {DRAGGING_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE} from '../constants';
 import {socketEmit} from './socketio';
 
 export function receiveNote(note) {
@@ -29,6 +29,20 @@ export const moveNote = (id, left, top) => {
     notes: {
       [id]: {left, top}
     }
+  };
+};
+
+export const DraggedNote = (note) => {
+  return {
+    type       : DRAG_NOTE,
+    draggedNote: note
+  };
+};
+
+export const noteArrayIndexPush = (noteArr) => {
+  return {
+    type       : NOTE_ARRAY_INDEX_PUSH,
+    zIndexNotes: noteArr
   };
 };
 
@@ -69,10 +83,22 @@ export const noteMover = (id, left, top) => {
   return dispatch => {
 
     dispatch(moveNote(id, left, top));
-
-
     dispatch(socketEmit('moveNote', data));
 
+  };
+};
+
+export const IndexToZIndex = (notes, dragNoteId) => {
+  return dispatch => {
+
+    const newNoteArr = notes;
+    const dragNoteIndex = notes.map((note) => { return note.id; }).indexOf(dragNoteId);
+    const dragNote = notes[dragNoteIndex];
+
+    newNoteArr.splice(dragNoteIndex, 1);
+    newNoteArr.push(dragNote);
+
+    dispatch(noteArrayIndexPush(newNoteArr));
   };
 };
 

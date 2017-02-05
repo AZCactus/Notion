@@ -23,8 +23,16 @@ class NoteWrapper extends Component {
     return true;
   }
 
+  onClick(e) {
+    let zPos = 'top';
+
+    if (zPos === 'bottom') zPos = 'top';
+
+  }
+
   render() {
-    const { note, yellow} = this.props;
+    const { note, red, content} = this.props;
+
     let color;
     if (note) {
       color = this.props.note.color;
@@ -38,10 +46,14 @@ class NoteWrapper extends Component {
       position: 'absolute'
     };
 
+    const backgroundColor = red ? 'red' : 'white';
+
     return (
-      <div style={{ ...styles }}>
-        <Note color={color} />
+
+      <div className='enlarge' style={{ ...styles, red }}>
+        <Note color={color} content={content}/>
       </div>
+
     );
   }
 }
