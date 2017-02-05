@@ -3,6 +3,7 @@ import { DragSource } from 'react-dnd';
 import {NOTE} from '../constants';
 import Note from './Note';
 import {shallowEqual} from './ShouldCompUpdate';
+import NoteWrapperModalContainer from '../containers/NoteWrapperModalContainer';
 
 const noteSource = {
   beginDrag(props) {
@@ -42,10 +43,14 @@ class NoteWrapper extends PureComponent {
     const backgroundColor = red ? 'red' : 'white';
 
     return (
-
+      <div>
       <div className='enlarge' style={{ ...styles, backgroundColor }}>
-        <Note color={color} content={content} value={this.props.content} />
+        <Note color={color} content={content} value={this.props.content} input={this.props.content}/>
       </div>
+      <div>
+
+      </div>
+    </div>
 
     );
   }

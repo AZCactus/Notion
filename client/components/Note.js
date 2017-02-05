@@ -37,9 +37,11 @@ export default class Note extends Component {
 
   clickHandler(e) {
     e.preventDefault();
+    console.log('THIS', this);
     this.input.focus();
   }
   focusHandler() {
+
     this.setState({focused: true});
   }
   blurHandler() {
