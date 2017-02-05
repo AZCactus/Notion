@@ -11,11 +11,13 @@ import { bindActionCreators } from 'redux';
 class BoardContainer extends Component {
 
   componentWillMount() {
-    const { dispatch, board} = this.props;
+    const { dispatch, board, notes} = this.props;
     const boardId = board.id;
+
   }
 
   render() {
+
     return (
       <div className="col-xs-12" key={ this.props.board.id }>
         <h2 className="text-center">

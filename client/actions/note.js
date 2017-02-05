@@ -32,12 +32,6 @@ export const moveNote = (id, left, top) => {
   };
 };
 
-export const DraggedNote = (note) => {
-  return {
-    type       : DRAG_NOTE,
-    draggedNote: note
-  };
-};
 
 export const noteArrayIndexPush = (noteArr) => {
   return {
@@ -81,12 +75,13 @@ export const noteMover = (id, left, top) => {
   const data = {[id]: {left, top}};
 
   return dispatch => {
-
-    dispatch(moveNote(id, left, top));
     dispatch(socketEmit('moveNote', data));
+    dispatch(moveNote(id, left, top));
+
 
   };
 };
+
 
 export const IndexToZIndex = (notes, dragNoteId) => {
   return dispatch => {

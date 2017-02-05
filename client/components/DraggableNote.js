@@ -3,11 +3,12 @@ import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import {NOTE} from '../constants';
 import NoteWrapper from './NoteWrapper';
+import {shallowEqual} from './ShouldCompUpdate';
 
 const noteSource = {
   beginDrag(props) {
-    const { id, left, top } = props;
-    return { id, left, top };
+    const { id, left, top, content } = props;
+    return { id, left, top, content };
   },
 };
 
@@ -37,6 +38,11 @@ const collect = (connector, monitor) => {
 
 class DraggableNote extends PureComponent {
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !shallowEqual(this.props, nextProps);
+
+  }
+
   componentDidMount() {
     // Use empty image as a drag preview so browsers don't draw it
     // and we can draw whatever we want on the custom drag layer instead.
@@ -56,7 +62,7 @@ class DraggableNote extends PureComponent {
 
       <div style={getStyles(this.props)}>
         <div className='zIndex'>
-          <NoteWrapper note={this.props} content={content}/>
+          <NoteWrapper color={this.props.color} content={content}/>
         </div>
       </div>
 

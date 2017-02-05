@@ -5,6 +5,7 @@ import NoteDragPreview from './NoteDragPreview';
 import snapToGrid from './snapToGrid';
 import NoteWrapper from './NoteWrapper';
 
+
 const layerStyles = {
   position     : 'fixed',
   pointerEvents: 'none',
@@ -43,6 +44,8 @@ function getItemStyles(props) {
 
 const collect = (monitor) => {
 
+  // console.log("IS DRAGGING", monitor.getClientOffset())
+
   return {
     item         : monitor.getItem(),
     itemType     : monitor.getItemType(),
@@ -55,13 +58,29 @@ const collect = (monitor) => {
 class CustomDragLayer extends Component {
 
 
+  static propTypes = {
+    item: PropTypes.object,
+    itemType: PropTypes.string,
+    initialOffset: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    }),
+    currentOffset: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    }),
+    isDragging: PropTypes.bool.isRequired,
+    snapToGrid: PropTypes.bool.isRequired,
+  };
+
+
+
   renderItem(type, item) {
 
 
     switch (type) {
     case NOTE:
-      console.log('CDL ITEM', item);
-      return (<NoteDragPreview content={item.content} />);
+      return (<NoteDragPreview content={item.content} test={item}/>);
     default:
       return null;
     }
@@ -69,7 +88,6 @@ class CustomDragLayer extends Component {
 
   render() {
     const { item, itemType, isDragging } = this.props;
-    console.log('CDL', this.props);
 
     if (!isDragging) {
       return null;
@@ -78,7 +96,6 @@ class CustomDragLayer extends Component {
     return (
       <div style={layerStyles}>
         <div style={getItemStyles(this.props)}>
-          { console.log('RENDERED CONTENT', this.renderItem(itemType, item))}
             {this.renderItem(itemType, item)
           }
         </div>

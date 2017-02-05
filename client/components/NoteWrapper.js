@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from 'react';
 import { DragSource } from 'react-dnd';
 import {NOTE} from '../constants';
 import Note from './Note';
+import {shallowEqual} from './ShouldCompUpdate';
 
 const noteSource = {
   beginDrag(props) {
@@ -16,27 +17,19 @@ const collect = (connect, monitor) => ({
   isDragging       : monitor.isDragging()
 });
 
-class NoteWrapper extends Component {
+class NoteWrapper extends PureComponent {
 
 
   shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
-  onClick(e) {
-    let zPos = 'top';
-
-    if (zPos === 'bottom') zPos = 'top';
+    return !shallowEqual(this.props, nextProps);
 
   }
+
 
   render() {
-    const { note, red, content} = this.props;
+    const { color, red, content} = this.props;
 
-    let color;
-    if (note) {
-      color = this.props.note.color;
-    }
+
     const styles = {
       cursor  : 'move',
       height  : this.props.height || 100,
@@ -50,8 +43,8 @@ class NoteWrapper extends Component {
 
     return (
 
-      <div className='enlarge' style={{ ...styles, red }}>
-        <Note color={color} content={content}/>
+      <div className='enlarge' style={{ ...styles, backgroundColor }}>
+        <Note color={color} content={content} value={this.props.content} />
       </div>
 
     );

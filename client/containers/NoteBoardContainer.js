@@ -8,7 +8,7 @@
   import NoteWrapper from '../components/NoteWrapper';
   import DraggableNote from '../components/DraggableNote';
   import snapToGrid from '../components/snapToGrid';
-  import {moveNote, draggedNote, addNoteToBoard, noteMover, IndexToZIndex} from '../actions/note';
+  import {moveNote, participantMoveNote, addNoteToBoard, noteMover, IndexToZIndex} from '../actions/note';
   import {setLoginUser} from '../actions/user';
   import {
     socketConnect,
@@ -31,6 +31,7 @@
 
   const noteTarget = {
     drop(props, monitor, component) {
+
       const delta = monitor.getDifferenceFromInitialOffset();
       const item = monitor.getItem();
 
@@ -42,9 +43,12 @@
 
       props.IndexToZIndex(props.notes, item.id);
       props.noteMover(item.id, left, top);
-
+      const newdata = {[item.id]: {left, top}};
+      component.participantMoveNote(newdata);
 
     },
+
+
   };
 
 
@@ -61,7 +65,6 @@
     constructor(props) {
       super(props);
       this.boardUpdate = this.boardUpdate.bind(this);
-      // this.NoteZIndexChanger = this.NoteZIndexChanger.bind(this);
       this.participantMoveNote = this.participantMoveNote.bind(this);
     }
 
@@ -73,9 +76,8 @@
       this.props.addSocketListener('moveNote', this.participantMoveNote);
     }
 
+
     boardUpdate(note) {
-      console.log('RECEIVED NOTE', note);
-      console.log('BOARD ID', this.props.board.id);
       if (note.board_id === this.props.board.id) {
         store.dispatch(addNoteToBoard(note));
       }
@@ -102,12 +104,6 @@
       this.props.socketDisconnect();
     }
 
-    // NoteZIndexChanger(dragNote) {
-    //   const {notes} = this.props;
-    //   console.log('NOTES', notes);
-    //   const dragNoteIndex = notes.findIndex(dragNote);
-    //   return notes.splice(dragNoteIndex, 0).push(dragNote);
-    // }
 
     renderNote(item, key, index) {
 
@@ -121,15 +117,10 @@
 
       const {movedNote, notes, connectDropTarget} = this.props;
 
-
       return connectDropTarget(
-
       <div style={styles}>
-
         {
-
           notes.map((note) => {
-
             return this.renderNote(note, note.id);
           }
       )}
@@ -152,7 +143,7 @@
   };
 
   const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({noteMover, draggedNote, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard, IndexToZIndex}, dispatch);
+    return bindActionCreators({noteMover, participantMoveNote, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard, IndexToZIndex}, dispatch);
   };
 
   export default flow(DropTarget(NOTE, noteTarget, collect
