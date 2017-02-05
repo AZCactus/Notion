@@ -52,9 +52,7 @@ export default class Note extends Component {
 
   render() {
     const hslArr = Color(this.state.color).hsl().array();
-    console.log(hslArr.toString(), hslArr);
     hslArr[2] = hslArr[2] > 32 ? 25 : 85;
-    console.log(hslArr.toString(), hslArr);
 
 
     const noteStyle = {

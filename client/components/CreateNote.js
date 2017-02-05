@@ -5,12 +5,13 @@ import NoteContainer from '../containers/NoteContainer';
 import ColorPicker from './ColorPicker';
 import Color from 'color';
 import {genShortHash} from '../utils/stringHash';
-
+import presetColors from 'ROOT/client/presetColors.json';
 const initState = {
   content           : '',
   color             : Color.rgb([ 237, 208, 13 ]).hex(),
   displayColorPicker: false
 };
+
 
 export default class CreateNote extends Component {
 
@@ -62,6 +63,11 @@ export default class CreateNote extends Component {
     }
   }
 
+  modalClickHandler(e, cb) {
+    e.stopPropagation();
+    if (e.target === e.currentTarget) cb(e);
+  }
+
   toggleColorPicker() {
     this.setState((prevState) => {
       return Object.assign(
@@ -71,8 +77,11 @@ export default class CreateNote extends Component {
     });
   }
 
-  updateColor(hex) {
-    this.setState({color: hex});
+  updateColor(color) {
+    const newState = {};
+    if (typeof color === 'string') newState.color = color;
+    else if (Array.isArray(color)) newState.color = Color.rgb(color).hex();
+    this.setState(newState);
   }
 
   componentWillUnmount() {
@@ -81,7 +90,6 @@ export default class CreateNote extends Component {
   }
 
   render() {
-    console.log(this.state.color, typeof this.state.color);
     return (
       <div className="container">
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
@@ -95,11 +103,12 @@ export default class CreateNote extends Component {
                 onChange={this.changeHandler} />
             </div>
             { this.state.displayColorPicker &&
-              <div className="c-color-picker__wrapper c-color-picker__wrapper--modal">
+              <div className="c-color-picker__wrapper c-color-picker__wrapper--modal"
+                onClick={(e) => { this.modalClickHandler(e, this.toggleColorPicker); }}>
                 <ColorPicker
-                  width={500}
                   color={this.state.color}
-                  updateColor={this.updateColor} />
+                  updateColor={this.updateColor}
+                  presets={presetColors} />
               </div>
             }
           </div>
