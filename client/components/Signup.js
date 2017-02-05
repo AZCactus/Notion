@@ -34,7 +34,7 @@ const Signup = (props) => {
           onChange={(e) => { props.handleInput(e); }}
           required />
         </div>
-        <div className="">
+        <div className="signup-disclaimer-container">
           <label className="signup-disclaimer">
           By clicking on Sign up, you agree to notion's terms &
           conditions and privacy policy
@@ -43,11 +43,12 @@ const Signup = (props) => {
         <button className="signup-submit-button" type="submit">
         SIGN UP
         </button>
-         <button className="login-link-container login-link"
+           <button className="login-link-container login-link" type="button"
          onClick={() => { props.changeForm('login'); }} >
           Already have an account? Login
         </button>
       </form>
+
       );
 };
 

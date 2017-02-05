@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import { browserHistory } from 'react-router';
 import Navbar from '../components/Navbar';
 
 import { logoutUser } from '../actions/user';
@@ -15,7 +16,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    logoutUser   : () => dispatch(logoutUser()),
+    logoutUser: () => {
+      dispatch(logoutUser())
+        .then(() => browserHistory.push('/signup'));
+    },
     toggleSidebar: (field) => dispatch(toggleClick(field))
   };
 };

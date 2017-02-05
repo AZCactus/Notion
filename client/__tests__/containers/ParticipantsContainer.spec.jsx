@@ -11,6 +11,7 @@ chai.use(chaiEnzyme());
 
 const user = {id: 1, first_name: 'Alvin', last_name: 'Yuen'};
 const params = {room: 'ABCD'};
+const selectedBoard = { id: 1, boardName: 'Alvin\'s board'};
 
 describe ('<ParticipantsContainer /> ', () => {
 
@@ -27,7 +28,8 @@ describe ('<ParticipantsContainer /> ', () => {
       socketConnect,
       addSocketListener,
       clearSocketListener,
-      params
+      params,
+      selectedBoard
     };
 
     participantsContainerWrapper = shallow(<ParticipantsContainer loggedInUser={user}

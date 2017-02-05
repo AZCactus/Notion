@@ -48,7 +48,6 @@ module.exports = function sockets(server) {
       console.log(red(`[Board Meeting]: ${Object.keys(connections).length} sockets remaining`));
     });
 
-
     /* wild card socket listener other than join room and leave room */
     socket.on('*', (eventName, payload) => {
       if (eventName !== 'join' && eventName !== 'leave') {
@@ -81,7 +80,7 @@ module.exports = function sockets(server) {
      * @param {String} room - room name (a randomly generated string sent from frontend)
      * @returns broadcast participant names and total participants remaining
      */
-    socket.on('leave', (room) => {
+    socket.on('leave', ({room}) => {
       delete connections[socket.id];
       removeParticpants(socket.id);
       socket.disconnect();
@@ -97,7 +96,7 @@ module.exports = function sockets(server) {
   /********************************* util function **************************************/
 
   function addParticipant(id, name, room) {
-    const participant = { id, name };
+    const participant = { id, name};
     boardMeeting[room] = boardMeeting[room] || [];
     let exist = false;
     for (let i = 0; i < boardMeeting[room]; i++) {
