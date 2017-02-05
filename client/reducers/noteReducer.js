@@ -1,9 +1,9 @@
-import {SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE } from '../constants';
+import {DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE } from '../constants';
 
 const initState = {
   all                  : [],
   selected             : null,
-  allBoardSpecificNotes: {}
+  allBoardSpecificNotes: {},
 
 };
 
@@ -38,6 +38,15 @@ export default function noteReducer(state = initState, action) {
     const newNote = action.newNote;
     nextState.all = [ ...nextState.all, newNote ];
 
+    break;
+
+  case DRAGGED_NOTE:
+    nextState.selected = action.draggedNote;
+    break;
+
+  case NOTE_ARRAY_INDEX_PUSH:
+
+    nextState.all = action.zIndexNotes;
     break;
 
   case SET_NOTE_COORDS:

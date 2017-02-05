@@ -60,13 +60,16 @@ export default class Note extends Component {
       color          : Color.hsl(hslArr).rotate(180).hex(),
     };
 
+
+    const {content} = this.props;
+
     return (
       <div
         className={`c-note ${this.state.focused ? 'c-note--focused' : ''}`}
         onClick={this.clickHandler}
         style={noteStyle}>
         <div className="c-note__inner">
-          <div className="c-note__content">{this.props.content}</div>
+          <div className="c-note__content">{content}</div>
           { this.props.editable &&
             <input type="text"
               value={this.props.content}
