@@ -10,7 +10,7 @@ import { socketConnect, socketDisconnect, clearSocketListeners } from '../action
 import { bindActionCreators } from 'redux';
 // import Clipboard from 'react-clipboard';
 
-// localhost:3030/note?=${this.props.board.hash}
+// localhost:3030/note?board=${this.props.board.hash}
 function noop() {}
 
 const Clipboard = React.createClass({
@@ -88,7 +88,7 @@ class BoardContainer extends Component {
     console.log('copied', e);
   }
   render() {
-    const value = `localhost:3030/note?=${this.props.board.hash}`;
+    const value = `localhost:3030/note?board=${this.props.board.hash}`;
 
     return (
       <div className="col-xs-12" key={ this.props.board.id }>
