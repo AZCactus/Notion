@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import Note from '../components/Note';
+import NoteWrapper from '../components/NoteWrapper';
+import {connect} from 'react-redux';
 
 const customStyles = {
   content: {
-    top        : '50%',
-    left       : '50%',
+    top        : '200%',
+    left       : '200%',
     right      : 'auto',
     bottom     : 'auto',
     marginRight: '-50%',
-    transform  : 'translate(-50%, -50%)'
+    transform  : 'translate(-200%, -200%)'
   }
 };
 
@@ -35,6 +36,7 @@ class NoteWrapperModalContainer extends Component {
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
+    console.log('THIS', this);
     this.refs.subtitle.style.color = '#f00';
   }
 
@@ -47,7 +49,7 @@ class NoteWrapperModalContainer extends Component {
     console.log('MODAL PROPS', this.props);
     return (
       <div>
-        <a className='addBoard thumbnail' onClick={this.openModal}>test</a>
+        <a className='note thumbnail' onClick={this.openModal}>test</a>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -55,7 +57,9 @@ class NoteWrapperModalContainer extends Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-        <div> "TEST" </div>
+        <div>
+          <NoteWrapper/>
+        </div>
 
 
           <button onClick={this.closeModal}>close</button>
@@ -65,4 +69,13 @@ class NoteWrapperModalContainer extends Component {
   }
 }
 
-export default NoteWrapperModalContainer;
+
+const mapStateToProps = (state) => ({
+  board: state.board.selectedBoard,
+  notes: state.noteReducer.all});
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteWrapperModalContainer);

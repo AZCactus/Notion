@@ -4,6 +4,7 @@ import {NOTE} from '../constants';
 import Note from './Note';
 import {shallowEqual} from './ShouldCompUpdate';
 import NoteWrapperModalContainer from '../containers/NoteWrapperModalContainer';
+import bindHandlers from '../utils/bindHandlers';
 
 const noteSource = {
   beginDrag(props) {
@@ -18,12 +19,43 @@ const collect = (connect, monitor) => ({
   isDragging       : monitor.isDragging()
 });
 
-class NoteWrapper extends PureComponent {
+const initState = {
+  focused: false
+};
 
+class NoteWrapper extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = Object.assign({},
+      initState);
+    bindHandlers(this,
+      this.clickHandler,
+      this.focusHandler,
+      this.blurHandler,
+      this.changeHandler
+    );
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return !shallowEqual(this.props, nextProps);
 
+  }
+
+  clickHandler(e) {
+    e.preventDefault();
+    this.input.focus();
+  }
+  focusHandler() {
+
+    this.setState({focused: true});
+  }
+  blurHandler() {
+    this.setState({focused: false});
+  }
+  changeHandler(e) {
+    e.preventDefault();
+    this.props.onChange(e.target.value);
   }
 
 
@@ -43,12 +75,16 @@ class NoteWrapper extends PureComponent {
     const backgroundColor = red ? 'red' : 'white';
 
     return (
-      <div>
-      <div className='enlarge' style={{ ...styles, backgroundColor }}>
-        <Note color={color} content={content} value={this.props.content} input={this.props.content}/>
-      </div>
-      <div>
-
+      <div
+          className={`noteWrapper ${this.state.focused ? 'noteWrapper--focused' : ''}`}
+          onClick={this.clickHandler}>
+      <div className='enlarge'
+        style={{ ...styles, backgroundColor }}
+        ref={(input) => { this.input = input; }}
+        onFocus={this.focusHandler}
+        onBlur={this.blurHandler}
+        onChange={this.changeHandler}>
+        <Note color={color} content={content} input={this.props.content} onFocus={this.focusHandler}/>
       </div>
     </div>
 

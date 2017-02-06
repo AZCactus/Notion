@@ -41,10 +41,11 @@
         [ left, top ] = snapToGrid(left, top);
       }
 
+      console.log('OLD COORD', item.id, item.left, item.top, 'NEW COORDS', item.id, left, top);
+
       props.IndexToZIndex(props.notes, item.id);
       props.noteMover(item.id, left, top);
-      const newdata = {[item.id]: {left, top}};
-      component.participantMoveNote(newdata);
+      // const newdata = {[item.id]: {left, top}};
 
     },
 
@@ -124,6 +125,8 @@
             return this.renderNote(note, note.id);
           }
       )}
+      <div className="nb button">
+      </div>
       </div>
     );
     }

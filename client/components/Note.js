@@ -37,7 +37,7 @@ export default class Note extends Component {
 
   clickHandler(e) {
     e.preventDefault();
-    console.log('THIS', this);
+    console.log('THIS NOTE ', this.input.focus());
     this.input.focus();
   }
   focusHandler() {
