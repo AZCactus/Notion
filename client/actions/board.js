@@ -45,7 +45,6 @@ export const createBoard = (boardName, hash) => {
 
 
 export const getBoard = (boardHash) => (dispatch) => {
-  console.log(boardHash);
   return axios.get(`/api/boards/${boardHash}`)
     .then((res) => res.data)
     .then((board) => {
