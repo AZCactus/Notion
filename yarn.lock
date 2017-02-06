@@ -5313,6 +5313,10 @@ react-router@^3.0.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
+react-typist@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-typist/-/react-typist-1.0.3.tgz#030a6cb5bad57835c185ae7e6874674171072fa3"
+
 react@^15.4.1:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
