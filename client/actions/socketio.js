@@ -48,5 +48,5 @@ export const clearSocketListeners = () => (dispatch, getState) => {
 };
 
 export const socketDisconnect = () => (dispatch) => {
-  socket.disconnect();
+  if (socket.disconnect) socket.disconnect();
 };

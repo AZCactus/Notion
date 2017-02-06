@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import bindHandlers from '../utils/bindHandlers';
-import NoteContainer from '../containers/NoteContainer';
+import Note from './Note';
 import Color from 'color';
 
 export default class ViewNote extends Component {
@@ -25,7 +25,7 @@ export default class ViewNote extends Component {
         <hr />
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1" style={{fontSize: '5vw'}}>
-            <NoteContainer content={this.props.note.content} color={this.props.note.color}/>
+            <Note content={this.props.note.content} color={this.props.note.color}/>
           </div>
         </div>
       </div>
