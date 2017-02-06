@@ -21,11 +21,17 @@
   import flow from 'lodash/flow';
   import isEmpty from 'lodash/isEmpty';
   import {genShortHash} from '../utils/stringHash';
+  import TrashCan from '../components/NoteBoardTrashCan';
 
   const styles = {
     height  : 1000,
     width   : 1000,
     position: 'relative'
+  };
+
+  const trashStyles = {
+    top : 900,
+    left: 900
   };
 
 
@@ -125,8 +131,10 @@
             return this.renderNote(note, note.id);
           }
       )}
-      <div className="nb button">
+      <div className="trashcan">
+          <TrashCan style={trashStyles}/>
       </div>
+
       </div>
     );
     }
