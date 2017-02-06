@@ -69,7 +69,7 @@ function seedBoards(users, range) {
 function generateBoard() {
   return {
     name: randomString(3, 20),
-    url : `http://${randomString(3, 8)}.com/${randomString(36)}`
+    hash: `${randomString(6)}`
   };
 }
 

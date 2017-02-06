@@ -3,8 +3,9 @@ import {connect} from 'react-redux';
 import CreateBoard from '../components/CreateBoard';
 import {createBoard} from '../actions/board';
 import {getAllNotes} from '../actions/note';
+import {genShortHash} from '../utils/stringHash';
 
-// make redirect to board page when created
+// make redirect to board page when created - updated state
 // short hash url to db with util short hash function
 // touch up navbar
 const mapStateToProps = (state, ownProps) => {
@@ -18,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     create: (boardName) => {
-      dispatch(createBoard(boardName));
+      dispatch(createBoard(boardName, genShortHash(boardName)));
     },
     onBoardEnter: function() {
       dispatch(getAllNotes({}));

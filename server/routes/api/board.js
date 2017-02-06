@@ -33,9 +33,10 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.get('/:boardId', (req, res, next) => {
-  const boardId = req.params.boardId;
-  return Board.findById(boardId)
+router.get('/:boardHash', (req, res, next) => {
+  const boardHash = req.params.boardHash;
+  console.log(boardHash);
+  return Board.findOne({where: { hash: boardHash}})
     .then((board) => {
       res.json(board);
     })
@@ -43,10 +44,12 @@ router.get('/:boardId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const boardInfo = req.body.boardName;
+  const boardName = req.body.boardName;
+  const hash = req.body.hash;
   Board
     .create({
-      name: boardInfo
+      name: boardName,
+      hash: hash
     })
     .then(board => {
       return Promise.all([ board, board.addUser(req.user.id) ]);
@@ -65,8 +68,8 @@ router.post('/', (req, res, next) => {
           })
       ]);
     })
-    .then(([ board, permissions ]) => {
-      res.json(board);
+    .then(([ board, permission ]) => {
+      res.json({board, permission});
     })
     .catch(next);
 });
@@ -75,7 +78,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const changes = {};
   if (req.body.name) changes.name = req.body.name;
-  if (req.body.url) changes.url = req.body.url;
+  if (req.body.hash) changes.hash = req.body.hash;
 
   Board.update(changes, {
     where: {
