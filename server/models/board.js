@@ -5,7 +5,7 @@ const db = require('./db');
 
 const Board = db.define('board', {
   name: Sequelize.TEXT,
-  url : Sequelize.TEXT
+  hash: Sequelize.TEXT
 });
 
 module.exports = Board;

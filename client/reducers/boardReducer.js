@@ -19,6 +19,7 @@ export default function(state = initialState, action) {
 
   case ADD_NEW_BOARD:
     newState.allBoards = [ ...newState.allBoards, action.board ];
+    newState.permissions = [ ...newState.permissions, action.permission ];
     break;
   default:
     return state;

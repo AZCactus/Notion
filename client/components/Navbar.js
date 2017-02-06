@@ -19,8 +19,8 @@ const Navbar = (props) => {
         </div>
 
 
-          <div id='navbar' className={props.navClass} aria-expanded={props.aria}>
-            <ul className="nav navbar-nav" style={{float: 'right'}} onClick={() => { props.expandNav(); }}>
+          <div id='navbar' className={props.navClass} style={{float: 'right'}} aria-expanded={props.aria}>
+            <ul className="nav navbar-nav" onClick={() => { props.expandNav(); }}>
               { !Object.keys(props.user).length ? (
                 <li><Link to="/signup">Login/SignUp</Link></li>
               ) : (
@@ -28,6 +28,7 @@ const Navbar = (props) => {
               )
               }
               <li><Link to="/myboards">My Boards</Link></li>
+              <li><Link to="/participants/111"> Participants Test </Link></li>
           </ul>
         </div>
       </div>
