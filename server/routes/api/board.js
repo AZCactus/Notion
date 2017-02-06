@@ -35,7 +35,6 @@ router.get('/', (req, res, next) => {
 
 router.get('/:boardHash', (req, res, next) => {
   const boardHash = req.params.boardHash;
-  console.log(boardHash);
   return Board.findOne({where: { hash: boardHash}})
     .then((board) => {
       res.json(board);
