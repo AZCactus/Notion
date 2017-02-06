@@ -27,7 +27,6 @@ function indexEnter() {
 
 function onBoardEnter(nextRouterState) {
   const boardHash = nextRouterState.params.boardHash;
-  console.log(boardHash);
   store.dispatch(getBoard(boardHash));
   if (!store.getState().noteReducer.all.length) {
     store.dispatch(getAllNotes({boardHash}));
