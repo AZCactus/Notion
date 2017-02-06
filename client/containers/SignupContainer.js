@@ -6,6 +6,7 @@ import Signup from '../components/Signup';
 import Login from '../components/Login';
 
 import isEmpty from 'lodash/isEmpty';
+import ReactTransitionGroup from 'react-addons-css-transition-group';
 
 
 export class SignupContainer extends Component {
@@ -58,17 +59,24 @@ export class SignupContainer extends Component {
 
   render() {
     return (
-      <div className='signup-form-container' >
-        {this.state.type === 'signup' ?
-          <Signup submitForm={this.submitForm}
-                   changeForm={this.changeForm}
-                   handleInput={this.handleInput} />
-                   :
-          <Login loginForm={this.loginForm}
-                handleInput={this.handleInput}
-                changeForm={this.changeForm} />
-        }
-    </div>
+      <ReactTransitionGroup
+      transitionName="slideIn"
+      transitionAppear={true}
+      transitionAppearTimeout={500}
+      transitionEnterTimeout={500}
+      transitionLeaveTimeout={500}>
+        <div className='signup-form-container' >
+          {this.state.type === 'signup' ?
+            <Signup submitForm={this.submitForm}
+                    changeForm={this.changeForm}
+                    handleInput={this.handleInput} />
+                    :
+            <Login loginForm={this.loginForm}
+                  handleInput={this.handleInput}
+                  changeForm={this.changeForm} />
+          }
+        </div>
+    </ReactTransitionGroup>
     );
   }
 }

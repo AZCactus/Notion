@@ -19,12 +19,10 @@ describe ('<ParticipantsContainer /> ', () => {
   let socketEmit, socketConnect, addSocketListener, clearSocketListener;
 
   beforeEach(() => {
-    socketEmit = spy();
     socketConnect = spy();
     addSocketListener = spy();
     clearSocketListener = spy();
     const props = {
-      socketEmit,
       socketConnect,
       addSocketListener,
       clearSocketListener,
@@ -39,7 +37,6 @@ describe ('<ParticipantsContainer /> ', () => {
 
   it('<ParticipantContainer /> socket listeners to have been called', () => {
     expect(addSocketListener.called).to.be.true;
-    expect(socketEmit.calledOnce).to.be.true;
     expect(socketConnect.calledOnce).to.be.true;
   });
 
