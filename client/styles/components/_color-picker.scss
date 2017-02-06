@@ -1,20 +1,62 @@
 .c-color-picker {
   @extend .o-aspect-ratio;
   @extend .o-aspect-ratio--sq;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  background: $grey;
+  // border: 1px solid $black;
+  border-radius: 0.4em;
+  box-shadow: 0 0 0.5em 0 $black;
 }
 
 .c-color-picker__wrapper {}
 .c-color-picker__wrapper--modal {
-  width: 80%;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
   margin: 0 auto;
+  background: $white;
   .c-color-picker {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
+    width: 80%;
+    padding-top: 80%;
   }
 }
 
 .c-color-picker__inner {
   @extend .o-aspect-ratio__inner;
+}
+
+.c-color-picker__sample {
+  display: block;
+  width: 100%;
+  padding-top: 5%
+}
+
+.c-color-picker__saturation {
+  cursor: pointer;
+  padding-top: 30%;
+}
+.c-color-picker__hue {
+  cursor: pointer;
+  padding-top: 10%;
+}
+
+.c-color-picker__presets {
+  @include clearfix;
+  margin-top: 1em;
+}
+
+.c-color-picker__preset {
+  float: left;
+  width: 13.7%;
+  margin: 1% 3%;
+  padding-top: 13.6%;
+  cursor: pointer;
+  border-radius: 10%;
 }

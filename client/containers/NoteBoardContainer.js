@@ -1,3 +1,4 @@
+
   import React, { Component } from 'react';
   import {bindActionCreators, compose} from 'redux';
   import {DropTarget} from 'react-dnd';
@@ -7,7 +8,7 @@
   import NoteWrapper from '../components/NoteWrapper';
   import DraggableNote from '../components/DraggableNote';
   import snapToGrid from '../components/snapToGrid';
-  import {moveNote, addNoteToBoard, noteMover} from '../actions/note';
+  import {moveNote, participantMoveNote, addNoteToBoard, noteMover, IndexToZIndex} from '../actions/note';
   import {setLoginUser} from '../actions/user';
   import {
     socketConnect,
@@ -27,15 +28,10 @@
     position: 'relative'
   };
 
-  const queStyles = {
-    height  : 100,
-    width   : 1000,
-    color   : '#FD543D',
-    position: 'relative',
-  };
 
   const noteTarget = {
     drop(props, monitor, component) {
+
       const delta = monitor.getDifferenceFromInitialOffset();
       const item = monitor.getItem();
 
@@ -45,11 +41,16 @@
         [ left, top ] = snapToGrid(left, top);
       }
 
+      props.IndexToZIndex(props.notes, item.id);
       props.noteMover(item.id, left, top);
-
+      const newdata = {[item.id]: {left, top}};
+      component.participantMoveNote(newdata);
 
     },
+
+
   };
+
 
   const collect = (connector, monitor) => {
 
@@ -75,9 +76,8 @@
       this.props.addSocketListener('moveNote', this.participantMoveNote);
     }
 
+
     boardUpdate(note) {
-      console.log('RECEIVED NOTE', note);
-      console.log('BOARD ID', this.props.board.id);
       if (note.board_id === this.props.board.id) {
         store.dispatch(addNoteToBoard(note));
       }
@@ -99,46 +99,31 @@
     }
 
 
-    componentWillReceiveProps({board, user, note, room}) {
-      /* join room is done in participants container instead */
-      // if (!this.props.board || isEmpty(this.props.board)) {
-      //   return;
-      // } else {
-      //   this.props.socketEmit('join', {
-
-      //     room: genShortHash(board.id),
-      //     name: user.first_name + user.last_name
-      //   });
-      // }
-
-
-    }
-
     componentWillUnmount() {
       this.props.clearSocketListeners();
       this.props.socketDisconnect();
     }
 
 
-    renderNote(item, key) {
+    renderNote(item, key, index) {
 
       return (
-        <DraggableNote key={key} id={key} {...item} />
+        <DraggableNote key={key} id={key} {...item}>{item.content}</DraggableNote>
       );
     }
 
     render() {
+
+
       const {movedNote, notes, connectDropTarget} = this.props;
 
       return connectDropTarget(
-
       <div style={styles}>
-        <div style={queStyles}>
-        {notes.map(note => {
-          return this.renderNote(note, note.id);
-        }
+        {
+          notes.map((note) => {
+            return this.renderNote(note, note.id);
+          }
       )}
-        </div>
       </div>
     );
     }
@@ -146,14 +131,19 @@
 
   const mapStateToProps = (state, ownProps) => {
 
-    return {notes: state.noteReducer.all.filter(note => {
-      return ownProps.board.id === note.board_id;
-    }), user: state.userReducer.loggedInUser};
+    return {
+      notes: state.noteReducer.all.filter(note => {
+        return ownProps.board.id === note.board_id;
+      }),
+      user       : state.userReducer.loggedInUser,
+      zIndexNotes: state.noteReducer.zIndexNotes,
+      dragged    : state.noteReducer.selected
+    };
 
   };
 
   const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({noteMover, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard}, dispatch);
+    return bindActionCreators({noteMover, participantMoveNote, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard, IndexToZIndex}, dispatch);
   };
 
   export default flow(DropTarget(NOTE, noteTarget, collect

@@ -13,8 +13,12 @@
   width: calc(100% - 2em);
   top: 1em;
   right: 1em;
-  bottom: 1em;
+  bottom: 1vw;
   left: 1em;
+  overflow: hidden;
+  border-bottom: solid transparent;
+
+
 }
 
 .c-note__content {
@@ -23,6 +27,9 @@
   word-wrap: break-word;
   font-family: $note-body;
   font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
 }
 
 .c-note__input {
@@ -30,3 +37,7 @@
   left: -200vw;
   top: -200vh;
 }
+
+.top {z-index: 2; position: relative}
+
+.bottom {z-index: 1; position: relative}
