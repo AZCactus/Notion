@@ -104,34 +104,32 @@ export default class CreateNote extends Component {
     return (
       <div className="container">
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
-        <hr />
-          <div className="row">
-            <div className="col-xs-10 col-xs-offset-1" style={{fontSize: '6vw'}}>
-              <NoteContainer
-                editable={true}
-                content={this.state.content}
-                color={this.state.color}
-                onChange={this.changeHandler} />
-            </div>
-            { this.state.displayColorPicker &&
-              <div className="c-color-picker__wrapper c-color-picker__wrapper--modal"
-                onClick={(e) => { this.modalClickHandler(e, this.toggleColorPicker); }}>
-                <ColorPicker
-                  color={this.state.color}
-                  updateColor={this.updateColor}
-                  presets={presetColors} />
-              </div>
-            }
-          </div>
-          <hr />
-          <div className="row">
+        <div className="row">
+          <div className="col-xs-10 col-xs-offset-1" style={{fontSize: '6vw'}}>
+            <NoteContainer
+              editable={true}
+              content={this.state.content}
+              color={this.state.color}
+              onChange={this.changeHandler}></NoteContainer>
+            <div style={{margin: '0.25em auto'}}>
               <button
                 onClick={this.toggleColorPicker}
-                className="btn btn-primary block">
-                Change Color
+                className="btn btn-color"
+                style={{borderColor: this.state.color}}>
+                Color Picker
               </button>
+            </div>
           </div>
-        <hr />
+          { this.state.displayColorPicker &&
+            <div className="c-color-picker__wrapper c-color-picker__wrapper--modal"
+              onClick={(e) => { this.modalClickHandler(e, this.toggleColorPicker); }}>
+              <ColorPicker
+                color={this.state.color}
+                updateColor={this.updateColor}
+                presets={presetColors} />
+            </div>
+          }
+        </div>
         <div className="row">
           <button
             onClick={this.submitHandler}
