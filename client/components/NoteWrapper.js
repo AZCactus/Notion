@@ -43,7 +43,7 @@ class NoteWrapper extends PureComponent {
 
     return (
 
-      <div className='enlarge' style={{ ...styles, backgroundColor }}>
+      <div className='enlarge' style={{ ...styles }}>
         <Note color={color} content={content} value={this.props.content} />
       </div>
 

@@ -48,7 +48,7 @@ export class ParticipantsContainer extends Component {
   connect() {
     this.setState({ status: 'connected'});
     if (isEmpty(this.props.loggedInUser)) {
-      browserHistory.push('/signup');
+      // browserHistory.push('/signup');
     } else if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
       this.props.socketEmit('join',
         {
@@ -96,16 +96,8 @@ const mapDispatchToProps = (dispatch) => ({
   addSocketListener   : (eventName, method) => { dispatch(addSocketListener(eventName, method)); },
   clearSocketListeners: (eventName, method) => { dispatch(clearSocketListeners(eventName, method)); },
   socketEmit          : (eventName, payload) => { dispatch(socketEmit(eventName, payload)); },
-  socketConnect       : (namespace) => {dispatch(socketConnect(namespace))},
-  socketDisconnect    : () => { dispatch(socketDisconnect())}
+  socketConnect       : (namespace) => { dispatch(socketConnect(namespace)); },
+  socketDisconnect    : () => { dispatch(socketDisconnect()); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantsContainer);
-
-
-
-
-
-
-
-
