@@ -7,20 +7,23 @@ button:focus {
 }
 
 .signup-form-container {
+  font-family: "Open Sans", sans-serif;
   width: 90vw;
-  height: 60vh;
+  height: 65vh;
   min-height: 28em;
   background-color:#fff;
   margin: 0 auto;
   margin-top: 2em;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
+  border-bottom-right-radius: 60px 10px;
+  border-bottom-left-radius: 60px 10px;
 }
 
 .signup-label {
   text-align: center;
   margin: 0 auto;
   display: block;
-  padding-top: 1em;
+  padding-top: 2em;
 }
 
 .login-label {
@@ -31,7 +34,6 @@ button:focus {
 }
 
 .signup-input-field {
-  border: 1px solid darkgrey;
   width: 80%;
   text-align: left;
   line-height: 2em;
@@ -45,7 +47,6 @@ button:focus {
 }
 
 .login-input-field {
-  border: 1px solid darkgrey;
   width: 100%;
   text-align: left;
   line-height: 2em;
@@ -55,6 +56,14 @@ button:focus {
   padding: 1em 0.5em 1em 1em;
   border-radius: 2px;
   border: 1px solid #dfe0e6;
+}
+
+.login-input-field:focus {
+  border: 1px solid #4099FF;
+}
+
+.signup-input-field:focus{
+  border: 1px solid #4099FF;
 }
 
 .signup-disclaimer-container {
@@ -99,7 +108,7 @@ button:focus {
   text-align: center;
   border-radius: 500px;
   display: block;
-  background-color: #3a3f41;
+  background-color: #4099FF;
   border: none;
   height: 2.5em;
   margin-top: 0.8em;
@@ -112,7 +121,7 @@ button:focus {
   text-align: center;
   border-radius: 500px;
   display: block;
-  background-color: #3a3f41;
+  background-color: #4099FF;
   border: none;
   height: 2.5em;
   margin-top: 0.8em;
@@ -123,12 +132,21 @@ button:focus {
  {
 
   .signup-form-container {
-  width: 50vw;
-  height: 60vh;
+  width: 40vw;
+  height: 50vh;
   background-color:#fff;
   margin: 0 auto;
   margin-top: 2em;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
 }
 
+}
+
+.slideIn-appear {
+  margin-top: -500px;
+}
+
+.slideIn-appear.slideIn-appear-active {
+  margin-top: 0;
+  transition: margin-top .5s ease-in;
 }
