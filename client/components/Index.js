@@ -12,7 +12,7 @@ const Index = (props) => {
       <NavbarContainer />
       <div >
         <div className='col-lg-2'>
-        <SidebarContainer />
+        {/*<SidebarContainer />*/}
         </div>
         <div className='col-lg-8 col-lg-offset-1'>
         {
