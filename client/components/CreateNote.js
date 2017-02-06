@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import bindHandlers from '../utils/bindHandlers';
-import NoteContainer from '../containers/NoteContainer';
+import Note from './Note';
 import ColorPicker from './ColorPicker';
 import Color from 'color';
 import {genShortHash} from '../utils/stringHash';
@@ -23,9 +23,13 @@ export default class CreateNote extends Component {
     bindHandlers(this,
       this.changeHandler,
       this.submitHandler,
+      this.clickHandler,
+      this.modalClickHandler,
       this.updateColor,
       this.toggleColorPicker,
-      this.join
+      this.join,
+      this.focusHandler,
+      this.blurHandler
     );
   }
 
@@ -41,25 +45,13 @@ export default class CreateNote extends Component {
     }
   }
 
-  join() {
-    this.props.socketEmit('join', {
+  componentWillUnmount() {
+    this.props.clearSocketListeners();
+    this.props.socketDisconnect();
+    this.props.socketEmit('leave', {
       room  : genShortHash(this.props.board.id),
-      name  : this.props.user.first_name + ' ' + this.props.user.last_name,
       userId: this.props.user.id
     });
-  }
-
-  changeHandler(content) {
-    this.setState({content});
-  }
-
-  submitHandler(e) {
-    e.preventDefault();
-    this.props.createNote({
-      content: this.state.content,
-      color  : this.state.color
-    }, this.props.board.id)
-      .then(() => this.setState(initState));
   }
 
   componentWillReceiveProps({board, user}) {
@@ -70,9 +62,12 @@ export default class CreateNote extends Component {
     }
   }
 
-  modalClickHandler(e, cb) {
-    e.stopPropagation();
-    if (e.target === e.currentTarget) cb(e);
+  join() {
+    this.props.socketEmit('join', {
+      room  : genShortHash(this.props.board.id),
+      name  : this.props.user.first_name + ' ' + this.props.user.last_name,
+      userId: this.props.user.id
+    });
   }
 
   toggleColorPicker() {
@@ -91,13 +86,38 @@ export default class CreateNote extends Component {
     this.setState(newState);
   }
 
-  componentWillUnmount() {
-    this.props.clearSocketListeners();
-    this.props.socketDisconnect();
-    this.props.socketEmit('leave', {
-      room  : genShortHash(this.props.board.id),
-      userId: this.props.user.id
-    });
+  changeHandler(e) {
+    e.preventDefault();
+    this.setState({content: e.target.value});
+  }
+
+  clickHandler(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.input.focus();
+  }
+
+  modalClickHandler(e, cb) {
+    e.stopPropagation();
+    if (e.target === e.currentTarget) cb(e);
+  }
+
+  focusHandler() {
+
+    this.setState({focused: true});
+  }
+
+  blurHandler() {
+    this.setState({focused: false});
+  }
+
+  submitHandler(e) {
+    e.preventDefault();
+    this.props.createNote({
+      content: this.state.content,
+      color  : this.state.color
+    }, this.props.board.id)
+      .then(() => this.setState(initState));
   }
 
   render() {
@@ -106,11 +126,20 @@ export default class CreateNote extends Component {
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1" style={{fontSize: '6vw'}}>
-            <NoteContainer
-              editable={true}
-              content={this.state.content}
-              color={this.state.color}
-              onChange={this.changeHandler}></NoteContainer>
+            <div onClick={!!this.input && this.clickHandler}>
+              <Note
+                editable={true}
+                content={this.state.content}
+                color={this.state.color}
+                onChange={this.changeHandler}/>
+              <input type="text"
+                value={this.state.content}
+                className="c-note__input"
+                ref={(input) => { this.input = input; }}
+                onFocus={this.focusHandler}
+                onBlur={this.blurHandler}
+                onChange={this.changeHandler} />
+            </div>
             <div style={{margin: '0.25em auto'}}>
               <button
                 onClick={this.toggleColorPicker}
