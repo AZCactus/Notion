@@ -47,7 +47,6 @@ export class ParticipantsContainer extends Component {
 
   connect() {
     this.setState({ status: 'connected'});
-
     if (false && isEmpty(this.props.loggedInUser)) {
       browserHistory.push('/signup');
     } else if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
