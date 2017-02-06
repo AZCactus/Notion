@@ -22,7 +22,7 @@ class BoardContainer extends Component {
       <div className="col-xs-12" key={ this.props.board.id }>
         <span className="text-center">
           <h2>{ this.props.board.name }</h2>
-          <div>notes?={this.props.board.hash}</div>
+          <div>http://localhost:3030/note?={this.props.board.hash}</div>
         </span>
           <div>
             <div className="screen col-xs-12">
