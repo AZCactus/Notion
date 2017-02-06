@@ -10,7 +10,10 @@ const initState = {
   content           : '',
   color             : Color.rgb([ 237, 208, 13 ]).hex(),
   displayColorPicker: false,
-  hasJoined         : false
+  hasJoined         : false,
+  flickState        : false,
+  dragStart         : null,
+  position          : 0
 };
 
 
@@ -29,7 +32,10 @@ export default class CreateNote extends Component {
       this.toggleColorPicker,
       this.join,
       this.focusHandler,
-      this.blurHandler
+      this.blurHandler,
+      this.touchStartHandler,
+      this.touchEndHandler,
+      this.touchMoveHandler
     );
   }
 
@@ -56,8 +62,8 @@ export default class CreateNote extends Component {
 
   componentWillReceiveProps({board, user}) {
     if (board && user && !isEmpty(board) && !isEmpty(user) && !this.state.hasJoined) {
-      this.props.addSocketListener('connect', this.join);
       this.props.socketConnect('board');
+      this.props.addSocketListener('connect', this.join);
       this.setState({hasJoined: true});
     }
   }
@@ -111,22 +117,70 @@ export default class CreateNote extends Component {
     this.setState({focused: false});
   }
 
+  touchStartHandler(e) {
+    this.setState({flickState: 'positioning', dragStart: e.touches[0].pageY});
+  }
+
+  touchMoveHandler(e) {
+    const dragPosition = e.touches[0].pageY;
+    if (this.state.dragStart && dragPosition < this.state.dragStart) {
+      this.setState({ position: dragPosition - this.state.dragStart });
+    }
+  }
+
+  touchEndHandler(e) {
+    const viewportWidth = window.innerWidth ? window.innerWidth : window.screen.width;
+    if (Math.abs(this.state.position) > viewportWidth / 2) {
+      this.setState({flickState: 'sending', position: -viewportWidth});
+      setTimeout(() => {
+        this.submitHandler();
+      }, 100);
+    } else this.setState({flickState: 'resting', dragStart: null, position: 0});
+  }
+
   submitHandler(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
+
+    this.setState({flickState: 'positioning', position: window.innerHeight || window.screen.height});
     this.props.createNote({
       content: this.state.content,
       color  : this.state.color
     }, this.props.board.id)
-      .then(() => this.setState(initState));
+      .then(() => {
+        this.setState(Object.assign(initState, {flickState: 'returning'}));
+      });
   }
 
   render() {
+    const noteWrapperStyle = {zIndex: 1};
+    noteWrapperStyle.transform = `rotate(${this.state.position * 0.02}deg)`;
+    noteWrapperStyle.top = this.state.position;
+
+    switch (this.state.flickState) {
+    case 'positioning':
+      break;
+    case 'sending':
+      noteWrapperStyle.transition = 'all 0.1s ease-in';
+      break;
+    case 'returning':
+      noteWrapperStyle.top = 0;
+      noteWrapperStyle.transition = 'all 0.25s ease-in-out';
+      break;
+    default:
+      noteWrapperStyle.transition = 'all 0.25s ease-in-out';
+    }
+
     return (
       <div className="container">
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1" style={{fontSize: '6vw'}}>
-            <div onClick={!!this.input && this.clickHandler}>
+            <div
+              style={noteWrapperStyle}
+              onClick={!!this.input && this.clickHandler}
+              onTouchStart={this.touchStartHandler}
+              onTouchMove={this.touchMoveHandler}
+              onTouchEnd={this.touchEndHandler}>
               <Note
                 editable={true}
                 content={this.state.content}
