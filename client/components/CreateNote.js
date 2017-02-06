@@ -9,7 +9,8 @@ import presetColors from 'ROOT/client/presetColors.json';
 const initState = {
   content           : '',
   color             : Color.rgb([ 237, 208, 13 ]).hex(),
-  displayColorPicker: false
+  displayColorPicker: false,
+  hasJoined         : false
 };
 
 
@@ -29,9 +30,6 @@ export default class CreateNote extends Component {
   }
 
   componentWillMount() {
-    this.props.socketConnect('board');
-    this.props.addSocketListener('connect', this.join);
-
     if ((!this.props.board || isEmpty(this.props.board)) && !this.props.location.query.board) {
       // If no board is selected and no board ID is provided
       // redirect to myBoards page
@@ -44,13 +42,11 @@ export default class CreateNote extends Component {
   }
 
   join() {
-    if (!isEmpty(this.props.board) && !isEmpty(this.props.user)) {
-      this.props.socketEmit('join', {
-        room  : genShortHash(this.props.board.id),
-        name  : this.props.user.first_name + ' ' + this.props.user.last_name,
-        userId: this.props.user.id
-      });
-    }
+    this.props.socketEmit('join', {
+      room  : genShortHash(this.props.board.id),
+      name  : this.props.user.first_name + ' ' + this.props.user.last_name,
+      userId: this.props.user.id
+    });
   }
 
   changeHandler(content) {
@@ -66,16 +62,13 @@ export default class CreateNote extends Component {
       .then(() => this.setState(initState));
   }
 
-  /* changed to join room upon connect to account for phone disconnects */
-  // componentWillReceiveProps({board, user}) {
-  //   if (!isEmpty(board) && !isEmpty(user)) {
-  //     this.props.socketEmit('join', {
-  //       room  : genShortHash(board.id),
-  //       name  : user.first_name + ' ' + user.last_name,
-  //       userId: user.id
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps({board, user}) {
+    if (board && user && !isEmpty(board) && !isEmpty(user) && !this.state.hasJoined) {
+      this.props.addSocketListener('connect', this.join);
+      this.props.socketConnect('board');
+      this.setState({hasJoined: true});
+    }
+  }
 
   modalClickHandler(e, cb) {
     e.stopPropagation();
