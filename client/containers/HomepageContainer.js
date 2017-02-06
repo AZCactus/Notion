@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Typist from 'react-typist';
 
 export default class HomePageContainer extends Component {
 
@@ -16,7 +17,11 @@ export default class HomePageContainer extends Component {
 
         <div className="homepage-main-image-container">
           <img className="homepage-main-image" src="/assets/brainstorm.jpg"></img>
-          <div className="main-slogan"> THINK BETTER. FASTER. TOGETHER.</div>
+          <div className="main-slogan">
+          <Typist avgTypingDelay={130}>
+          THINK BETTER. FASTER. TOGETHER.
+          </Typist>
+          </div>
           <div className="main-mini-desc"> Your collaboration & brainstorming platform
           </div>
           <div className="main-signup-button-container">

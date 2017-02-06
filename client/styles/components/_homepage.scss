@@ -26,6 +26,7 @@ $light-gray: #7e8890;
   text-align: center;
   z-index: 999;
   width: 100%;
+  text-shadow: 1px 1px 10px #000
 }
 
 .main-mini-desc {
@@ -37,6 +38,7 @@ $light-gray: #7e8890;
   text-align: center;
   z-index: 999;
   width: 100%;
+  text-shadow: 1px 1px 10px #000
 }
 
 input:focus{
@@ -333,6 +335,19 @@ button:focus {
   .border-line {
     margin-top: 15rem;
   }
+
+  /* typist css */
+  .Typist .Cursor--blinking {
+  opacity: 1;
+  animation: blink 1s linear infinite; }
+
+@keyframes blink {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 
 
 }
