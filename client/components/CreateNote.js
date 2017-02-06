@@ -115,8 +115,7 @@ export default class CreateNote extends Component {
               <button
                 onClick={this.toggleColorPicker}
                 className="btn btn-color"
-                style={{borderColor: this.state.color}}>
-                Color Picker
+                style={{background: this.state.color}}>
               </button>
             </div>
           </div>
