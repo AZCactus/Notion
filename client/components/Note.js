@@ -40,6 +40,7 @@ export default class Note extends Component {
     this.input.focus();
   }
   focusHandler() {
+
     this.setState({focused: true});
   }
   blurHandler() {

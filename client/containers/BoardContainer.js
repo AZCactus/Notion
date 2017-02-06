@@ -96,7 +96,7 @@ class BoardContainer extends Component {
           <h2>{ this.props.board.name }</h2>
           <div>
             <p>Press Cmd + C to copy:</p>
-            <pre>{value}</pre>
+            <pre className='ClipboardBlocking'>{value}</pre>
             <Clipboard value={value}
               onCopy={this.handleCopy} />
           </div>

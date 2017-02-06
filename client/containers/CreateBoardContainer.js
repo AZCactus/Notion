@@ -5,9 +5,6 @@ import {createBoard} from '../actions/board';
 import {getAllNotes} from '../actions/note';
 import {genShortHash} from '../utils/stringHash';
 
-// make redirect to board page when created - updated state
-// short hash url to db with util short hash function
-// touch up navbar
 const mapStateToProps = (state, ownProps) => {
   return {
     user       : state.userReducer.loggedInUser,

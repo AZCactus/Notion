@@ -4,6 +4,8 @@ const socketio = require('socket.io');
 
 const {green, blue, red} = require('../lib/utils/chalk');
 
+const {Note} = require('ROOT/server/models');
+
 /* active connections */
 const connections = {};
 
@@ -50,7 +52,13 @@ module.exports = function sockets(server) {
 
     /* wild card socket listener other than join room and leave room */
     socket.on('*', (eventName, payload) => {
+
       if (eventName !== 'join' && eventName !== 'leave') {
+        if (eventName === 'moveNote') {
+          Object.keys(payload).forEach(id => {
+            updateNoteCoords(id, payload[id].left, payload[id].top);
+          });
+        }
         /* broadcast to all clients in board namespace */
         io.of('board').emit(eventName, payload);
       }
@@ -131,5 +139,20 @@ module.exports = function sockets(server) {
 
   /********************************* util function END  ************************************/
 
+
   return io;
 };
+
+
+/*********************************** DB  **************************************/
+
+function updateNoteCoords(id, left, top) {
+  Note.update(
+    {left: left, top: top},
+    {where: { id: id }
+    });
+}
+
+
+
+
