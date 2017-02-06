@@ -15,7 +15,6 @@ const CreateBoard = (props) => {
   } else {
     filterArr = permissions.map(permission => permission.board_id);
   }
-
   return (
     <div>
 
@@ -37,7 +36,7 @@ const CreateBoard = (props) => {
             if (filterArr.indexOf(board.id) !== -1) {
               return (
               <div className="col-xs-10 col-md-8 col-lg-4 col-xs-offset-1" key={ board.id }>
-                  <Link className="thumbnail" to={`/boards/${board.id}`}>
+                  <Link className="thumbnail" to={`/boards/${board.hash}`}>
                   <UserBoardsContainer board={board} />
                   <div className="caption">
                     <h5>

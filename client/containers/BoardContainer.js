@@ -20,9 +20,10 @@ class BoardContainer extends Component {
 
     return (
       <div className="col-xs-12" key={ this.props.board.id }>
-        <h2 className="text-center">
-          <span>{ this.props.board.name }</span>
-        </h2>
+        <span className="text-center">
+          <h2>{ this.props.board.name }</h2>
+          <div>http://localhost:3030/note?={this.props.board.hash}</div>
+        </span>
           <div>
             <div className="screen col-xs-12">
               <CustomDragLayerContainer {...this.props}/>

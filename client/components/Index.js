@@ -11,7 +11,7 @@ const Index = (props) => {
     <div>
       <NavbarContainer />
       <div >
-        {/*<SidebarContainer />*/}
+        {/* <SidebarContainer /> */}
         {
           props.children && React.cloneElement(props.children, props)
         }
