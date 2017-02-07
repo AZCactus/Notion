@@ -48,6 +48,7 @@ export const noteArrayIndexPush = (noteArr) => {
 };
 
 export const addNoteToBoard = (note) => {
+  console.log(note);
   return {
     type   : ADD_NOTE_TO_BOARD,
     newNote: note

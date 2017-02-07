@@ -1,18 +1,22 @@
-import sh from 'shorthash';
-import { randomString } from 'ROOT/lib/utils/random';
+const sh = require('shorthash');
+const { randomString } = require('ROOT/lib/utils/random');
 
 // 6 letter alpha numeric room name generator
-export const genRoomName = () => {
+const genRoomName = () => {
   const range = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   return randomString(6, 6, range);
 };
 
 // returns unique hash from any given str
-export const genShortHash = (val) => {
+const genShortHash = (val) => {
   let string;
   if (typeof val === 'string') string = val;
   else if (val.toString) string = val.toString();
   else throw new Error(`What on earth did you just give me? I don't want ${val}`);
 
   return sh.unique(string);
+};
+
+module.exports = {
+  genRoomName, genShortHash
 };

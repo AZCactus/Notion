@@ -33,9 +33,9 @@ export const getAllBoards = () => {
 };
 
 
-export const createBoard = (boardName, hash) => {
+export const createBoard = (boardName) => {
   return dispatch => {
-    return axios.post('/api/boards/', {boardName, hash})
+    return axios.post('/api/boards/', {boardName})
       .then((res) => res.data)
       .then((board) => {
         dispatch(addNewBoard(board.board, board.permission));
