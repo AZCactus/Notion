@@ -28,7 +28,14 @@ router.post('/', (req, res, next) => {
 
 /* get users */
 router.get('/', (req, res, next) => {
-  User.findAll()
+  const {searchUsername} = req.query;
+  User.findAll({
+    where: {
+      username: {
+        $notLike: `${searchUsername}%`
+      }
+    }
+  })
     .then(users => res.send(users))
     .catch(next);
 });
