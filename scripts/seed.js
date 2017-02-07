@@ -10,7 +10,6 @@ const presetUsers = [
     first_name: 'Ada',
     last_name : 'Lovelace',
     email     : 'ada@lovelace.com',
-    username  : 'ada_lovelace',
     password  : '12345'
   }
 ];
@@ -36,13 +35,10 @@ function seedUsers(count) {
   return db.Promise.map(users, user => User.create(user));
 }
 function generateUser() {
-  const firstName = randomString(3, 12);
-  const lastName = randomString(3, 12);
   return {
-    first_name: firstName,
-    last_name : lastName,
+    first_name: randomString(3, 12),
+    last_name : randomString(3, 12),
     email     : `${randomString(3, 12)}@${randomString(2, 6)}.com`,
-    username  : `${firstName}_${lastName}`,
     password  : randomString(8, 36)
   };
 }

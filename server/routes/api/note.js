@@ -5,23 +5,15 @@ const {Note, User, Board, Comment} = require('ROOT/server/models');
 const router = module.exports = new Router();
 
 router.get('/', (req, res, next) => {
-  const {userId, boardId, mentionedUserId, limit} = req.query;
   const noteQuery = {include: []};
 
-  if (userId) {
+  if (req.query && req.query.userId) {
     noteQuery.include.push({
       model: User,
       where: {id: req.query.userId}
     });
   }
-  if (mentionedUserId) {
-    noteQuery.include.push({
-      model: User,
-      as   : 'MentionedUser',
-      where: {id: req.query.mentionedUserId}
-    });
-  }
-  if (boardId) {
+  if (req.query && req.query.boardId) {
     noteQuery.include.push({
       model: Board,
       where: {id: req.query.boardId}
@@ -35,7 +27,7 @@ router.get('/', (req, res, next) => {
     } ]
   });
 
-  if (limit) {
+  if (req.query && req.query.limit) {
     noteQuery.limit = req.query.limit;
   }
 
@@ -52,20 +44,20 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const {content, color, top, left, boardId} = req.body;
-  const mentions = req.body.mentions || [];
-
-  Note.create({
-    content: req.body.content,
-    color  : req.body.color,
-    top    : req.body.top || null,
-    left   : req.body.left || null
-  })
-    .then((note) => Promise.all([
+  Promise.all([
+    Note.create({
+      content: req.body.content,
+      color  : req.body.color,
+      top    : req.body.top || null,
+      left   : req.body.top || 0
+    }),
+    Board.findById(req.body.boardId)
+  ])
+    .then(([ note, board ]) => Promise.all([
       note,
-      note.setBoard(boardId),
-      note.setUser(req.user),
-      ...mentions.map((userId) => note.addMentionedUser(userId))
+      board,
+      note.setBoard(board),
+      note.setUser(req.user)
     ]))
     .then(([ note, board ]) => {
       return new Promise((resolve, reject) => {
@@ -94,12 +86,11 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  const {content, color, top, left, mentions} = req.body;
   const changes = {};
-  if (content) changes.content = content;
-  if (color) changes.color = color;
-  if (top) changes.top = top;
-  if (left) changes.left = left;
+  if (req.body.content) changes.content = req.body.content;
+  if (req.body.color) changes.color = req.body.color;
+  if (req.body.top) changes.top = req.body.top;
+  if (req.body.left) changes.left = req.body.left;
 
   Note.update(changes, {where: {id: req.params.id}})
     .then(note => res.sendStatus(200))
