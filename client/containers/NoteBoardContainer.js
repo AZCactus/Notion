@@ -137,7 +137,7 @@
 
       return connectDropTarget(
       <div>
-        <MediaQuery query='(min-device-width: 800px)'>
+        <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
             <div style={styles}>
 
         {
@@ -150,27 +150,28 @@
       </div>
     </div>
     </MediaQuery>
-    <MediaQuery query='(max-device-width: 799px)'>
-   <h4 style={{textAlign: 'center'}}>{board.name}</h4>
-   <ol className='mobileOL'>
-     {
-     notes.map((note, index) => {
-       backgroundColor = '#' + note.color;
-       return (
 
-       <li key={note.id} className="mobileListItem col-xs-12">
+    <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
+     <h4 style={{textAlign: 'center'}}>{board.name}</h4>
+     <ol className='mobileOL'>
+       {
+       notes.map((note, index) => {
+         backgroundColor = '#' + note.color;
+         return (
 
-         <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}/>
+         <li key={note.id} className="mobileListItem col-xs-12">
+
+           <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}/>
 
 
-         <span className='mobileNoteContent col-xs-10'>{note.content}</span>
+           <span className='mobileNoteContent col-xs-10'>{note.content}</span>
 
-       </li>
+         </li>
 
-       );
-     })
-   }
- </ol>
+         );
+       })
+     }
+   </ol>
  <div className="trashcan">
      <TrashCan notesDelete={notesDelete} notes={notes}/>
  </div>
