@@ -14,6 +14,8 @@ import { genShortHash } from '../utils/stringHash';
 
 import isEmpty from 'lodash/isEmpty';
 
+import {addUserPermission} from '../actions/board';
+
 export class ParticipantsContainer extends Component {
 
   constructor(props) {
@@ -50,6 +52,12 @@ export class ParticipantsContainer extends Component {
     if (isEmpty(this.props.loggedInUser)) {
       browserHistory.push('/signup');
     } else if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
+      if (Object.keys(this.props.loggedInUser).length) {
+        if (this.props.permissions.findIndex(permission => {
+          return permission.board_id === this.props.selectedBoard.id; }) === -1) {
+          this.props.userPermission(this.props.selectedBoard);
+        }
+      }
       this.props.socketEmit('join',
         {
           room: genShortHash(this.props.selectedBoard.id),
@@ -89,7 +97,9 @@ export class ParticipantsContainer extends Component {
 const mapStateToProps = (state) => ({
   loggedInUser : state.userReducer.loggedInUser,
   socket       : state.socket,
-  selectedBoard: state.board.selectedBoard
+  selectedBoard: state.board.selectedBoard,
+  permissions  : state.board.permissions
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -97,7 +107,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearSocketListeners: (eventName, method) => { dispatch(clearSocketListeners(eventName, method)); },
   socketEmit          : (eventName, payload) => { dispatch(socketEmit(eventName, payload)); },
   socketConnect       : (namespace) => { dispatch(socketConnect(namespace)); },
-  socketDisconnect    : () => { dispatch(socketDisconnect()); }
+  socketDisconnect    : () => { dispatch(socketDisconnect()); },
+  userPermission      : (board) => { dispatch(addUserPermission(board)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantsContainer);

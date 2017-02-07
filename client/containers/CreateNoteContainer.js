@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import CreateNote from '../components/CreateNote';
 
-import {getBoard} from '../actions/board';
+import {getBoard, addUserPermission} from '../actions/board';
 import {createNote} from '../actions/note';
 import {searchUsername} from '../actions/user';
 import {
@@ -20,7 +20,8 @@ function mapStateToProps(state) {
   return {
     board       : state.board.selectedBoard,
     user        : state.userReducer.loggedInUser,
-    queriedUsers: state.userReducer.queriedUsers
+    queriedUsers: state.userReducer.queriedUsers,
+    permissions: state.board.permissions
   };
 }
 
@@ -33,6 +34,7 @@ function mapDispatchToProps(dispatch) {
     socketEmit,
     clearSocketListeners,
     socketDisconnect,
-    searchUsername
+    searchUsername,
+    addUserPermission
   }, dispatch);
 }

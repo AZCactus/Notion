@@ -80,6 +80,12 @@ export default class CreateNote extends Component {
   }
 
   join() {
+    if (Object.keys(this.props.user).length) {
+      if (this.props.permissions.findIndex(permission => {
+        return permission.board_id === this.props.board.id; }) === -1) {
+        this.props.addUserPermission(this.props.board);
+      }
+    }
     this.props.socketEmit('join', {
       room  : genShortHash(this.props.board.id),
       name  : this.props.user.first_name + ' ' + this.props.user.last_name,
