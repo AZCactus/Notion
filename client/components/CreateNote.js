@@ -210,7 +210,7 @@ export default class CreateNote extends Component {
   }
 
   render() {
-    console.log(this.state.mentions);
+    (this.state.mentions);
     const suggestedUsers = this.props.queriedUsers;
     const noteWrapperStyle = {zIndex: 1};
     noteWrapperStyle.transform = `rotate(${this.state.position * 0.02}deg)`;
@@ -248,22 +248,23 @@ export default class CreateNote extends Component {
                   {this.state.parsedContent.map(part => {
                     if (part.isMention && part.isSuggesting) {
                       return (
-                        <span style={{background: '#77f', color: '#f77'}}>
+                        <span className="c-mention c-mention--suggesting">
                           {part.content}
-                          <ul>
+                          <ul className="c-mention__suggestions">
                             {suggestedUsers.map((user) => (
                               <li>
-                                <button onClick={() => this.autoComplete(part.content, '@' + user.username, user.id)}>{user.username}</button>
+                                <button onClick={() => this.autoComplete(part.content, '@' + user.username, user.id)}>@{user.username}</button>
                               </li>
                             ))}
                           </ul>
-                        </span>);
+                        </span>
+                      );
                     } else if (part.isMention) {
                       return (
-                      <span style={{background: '#f77', color: '#77f'}}>
-                        {part.content}
-                      </span>
-                    );
+                        <span className="c-mention">
+                          {part.content}
+                        </span>
+                      );
                     } else return part.content;
                   })}
                 </div>
