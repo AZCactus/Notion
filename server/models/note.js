@@ -8,12 +8,6 @@ const Note = db.define('note', {
   color  : Sequelize.TEXT,
   top    : Sequelize.INTEGER,
   left   : Sequelize.INTEGER
-}, {
-  hooks: {
-    beforeCreate: function(instanceNote) {
-
-    }
-  }
 });
 
 module.exports = Note;
