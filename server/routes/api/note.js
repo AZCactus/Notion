@@ -71,6 +71,18 @@ router.delete('/:id', (req, res, next) => {
     .catch(next);
 });
 
+router.delete('/bulk', (req, res, next) => {
+  console.log('REQ QUERY', req.query);
+  let deleteArr;
+
+  deleteArr.forEach((note) => {
+    Note.destroy({where: {id: note.id}})
+      .then(() => res.sendStatus(200))
+      .catch(next);
+  });
+});
+
+
 router.use((err, req, res, next) => {
   console.log('Error in server/routes/api/note.js');
   next(err);
