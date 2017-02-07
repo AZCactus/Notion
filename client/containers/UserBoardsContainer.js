@@ -28,6 +28,7 @@ export class UserBoardsContainer extends Component {
                   note={note}
                   height={40}
                   width={40}
+                  color={note.color}
                 />
               );
             })

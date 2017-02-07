@@ -4,11 +4,12 @@
   import {DropTarget} from 'react-dnd';
   import {connect} from 'react-redux';
   import { browserHistory } from 'react-router';
+  import axios from 'axios';
   import {NOTE} from '../constants';
   import NoteWrapper from '../components/NoteWrapper';
   import DraggableNote from '../components/DraggableNote';
   import snapToGrid from '../components/snapToGrid';
-  import {moveNote, participantMoveNote, addNoteToBoard, noteMover, IndexToZIndex} from '../actions/note';
+  import {deleteNotesFromDatabase, moveNote, participantMoveNote, addNoteToBoard, noteMover, IndexToZIndex, notesDelete} from '../actions/note';
   import {setLoginUser} from '../actions/user';
   import {
     socketConnect,
@@ -40,19 +41,18 @@
 
       const delta = monitor.getDifferenceFromInitialOffset();
       const item = monitor.getItem();
-
-      let left = Math.round(item.left + delta.x);
-      let top = Math.round(item.top + delta.y);
-      if (props.snapToGrid) {
-        [ left, top ] = snapToGrid(left, top);
-      }
-
-      console.log('OLD COORD', item.id, item.left, item.top, 'NEW COORDS', item.id, left, top);
-
-      props.IndexToZIndex(props.notes, item.id);
-      props.noteMover(item.id, left, top);
+      if (delta === null) {
+        return;
+      } else {
+        let left = Math.round(item.left + delta.x);
+        let top = Math.round(item.top + delta.y);
+        if (props.snapToGrid) {
+          [ left, top ] = snapToGrid(left, top);
+        }
+        props.IndexToZIndex(props.notes, item.id);
+        props.noteMover(item.id, left, top);
       // const newdata = {[item.id]: {left, top}};
-
+      }
     },
 
 
@@ -73,14 +73,14 @@
       super(props);
       this.boardUpdate = this.boardUpdate.bind(this);
       this.participantMoveNote = this.participantMoveNote.bind(this);
+
     }
 
     componentWillMount() {
       this.props.socketConnect('board');
-
-
       this.props.addSocketListener('note', this.boardUpdate);
       this.props.addSocketListener('moveNote', this.participantMoveNote);
+
     }
 
 
@@ -109,6 +109,7 @@
     componentWillUnmount() {
       this.props.clearSocketListeners();
       this.props.socketDisconnect();
+      deleteNotesFromDatabase(this.props.deletedNotes);
     }
 
 
@@ -120,7 +121,8 @@
 
     render() {
 
-      const {movedNote, notes, connectDropTarget} = this.props;
+
+      const {notesDelete, movedNote, notes, connectDropTarget} = this.props;
 
       return connectDropTarget(
         <div style={styles}>
@@ -130,7 +132,7 @@
           }
       )}
       <div className="trashcan">
-          <TrashCan style={trashStyles}/>
+          <TrashCan style={trashStyles} notesDelete={notesDelete} notes={notes}/>
       </div>
 
       </div>
@@ -144,15 +146,15 @@
       notes: state.noteReducer.all.filter(note => {
         return ownProps.board.id === note.board_id;
       }),
-      user       : state.userReducer.loggedInUser,
-      zIndexNotes: state.noteReducer.zIndexNotes,
-      dragged    : state.noteReducer.selected
+      user        : state.userReducer.loggedInUser,
+      zIndexNotes : state.noteReducer.zIndexNotes,
+      deletedNotes: state.noteReducer.deletedNotes
     };
 
   };
 
   const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({noteMover, participantMoveNote, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard, IndexToZIndex}, dispatch);
+    return bindActionCreators({noteMover, notesDelete, participantMoveNote, socketConnect, socketEmit, clearSocketListeners, socketDisconnect, addSocketListener, addNoteToBoard, IndexToZIndex}, dispatch);
   };
 
   export default flow(DropTarget(NOTE, noteTarget, collect

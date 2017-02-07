@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-const {Note, User, Board} = require('ROOT/server/models');
+const {Note, User, Board, Comment} = require('ROOT/server/models');
 const router = module.exports = new Router();
 
 router.get('/', (req, res, next) => {
@@ -19,6 +19,14 @@ router.get('/', (req, res, next) => {
       where: {id: req.query.boardId}
     });
   }
+
+  noteQuery.include.push({
+    model  : Comment,
+    include: [ {
+      model: User
+    } ]
+  });
+
   if (req.query && req.query.limit) {
     noteQuery.limit = req.query.limit;
   }
@@ -29,7 +37,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  Note.findById(req.params.id)
+  Note.findOne({where  : { id: Number(req.params.id)},
+  include: [ Comment ]})
     .then(note => res.send(note))
     .catch(next);
 });
@@ -70,6 +79,17 @@ router.delete('/:id', (req, res, next) => {
     .then(() => res.sendStatus(200))
     .catch(next);
 });
+
+router.delete('/bulk', (req, res, next) => {
+  let deleteArr;
+
+  deleteArr.forEach((note) => {
+    Note.destroy({where: {id: note.id}})
+      .then(() => res.sendStatus(200))
+      .catch(next);
+  });
+});
+
 
 router.use((err, req, res, next) => {
   console.log('Error in server/routes/api/note.js');

@@ -7,7 +7,8 @@ api
   .use('/boards', require('./board'))
   .use('/notes', require('./note'))
   .use('/user', require('./user'))
-  .use('/auth', require('./auth'));
+  .use('/auth', require('./auth'))
+  .use('/comment', require('./comment'));
 
 // Send along any errors
 api.use((err, req, res, next) => {

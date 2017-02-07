@@ -1,9 +1,12 @@
-import {DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE } from '../constants';
+
+import {DELETE_NOTE, DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE, ADD_NEW_COMMENT } from '../constants';
+
 
 const initState = {
   all                  : [],
   selected             : null,
   allBoardSpecificNotes: {},
+  deletedNotes         : []
 
 };
 
@@ -13,6 +16,11 @@ export default function noteReducer(state = initState, action) {
   switch (action.type) {
   case RECEIVE_NOTE:
     nextState.all = [ ...nextState.all, action.payload ];
+    break;
+
+  case ADD_NEW_COMMENT:
+    const commentArr = nextState.all[action.noteId].comments;
+    nextState.all[action.noteId].comments = [ ...commentArr, action.comment ];
     break;
 
   case RECEIVE_NOTES:
@@ -40,10 +48,6 @@ export default function noteReducer(state = initState, action) {
 
     break;
 
-  case DRAGGED_NOTE:
-    nextState.selected = action.draggedNote;
-    break;
-
   case NOTE_ARRAY_INDEX_PUSH:
 
     nextState.all = action.zIndexNotes;
@@ -58,6 +62,11 @@ export default function noteReducer(state = initState, action) {
         return note;
       }
     });
+    break;
+
+  case DELETE_NOTE:
+
+    nextState.deletedNotes = [ ...nextState.deletedNotes, action.deletedNote ];
     break;
 
 
