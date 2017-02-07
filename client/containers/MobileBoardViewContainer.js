@@ -96,6 +96,7 @@ class MobileBoardViewContainer extends Component {
   render() {
 
     const {notes} = this.props;
+    console.log('PROPS NOTES', notes);
 
     return (
       <div>
@@ -116,11 +117,16 @@ class MobileBoardViewContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const hash = ownProps.params.boardHash;
+
+  console.log('HASH', hash);
 
   return {
     notes: state.noteReducer.all.filter(note => {
-      return ownProps.board.id === note.board_id;
+      console.log('NOTE ID HASH', genShortHash(note.id));
+      return hash === genShortHash(note.board_id);
     }),
+
     user        : state.userReducer.loggedInUser,
     zIndexNotes : state.noteReducer.zIndexNotes,
     deletedNotes: state.noteReducer.deletedNotes

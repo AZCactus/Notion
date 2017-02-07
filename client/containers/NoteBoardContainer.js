@@ -143,7 +143,9 @@
 
     return {
       notes: state.noteReducer.all.filter(note => {
-        return ownProps.board.id === note.board_id;
+        console.log('NOTE IN MSTP', note);
+        return note;
+        // return ownProps.board.id === note.board_id;
       }),
       user        : state.userReducer.loggedInUser,
       zIndexNotes : state.noteReducer.zIndexNotes,
