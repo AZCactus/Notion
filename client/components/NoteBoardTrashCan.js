@@ -26,14 +26,19 @@ function getStyle(backgroundColor) {
 const noteTarget = {
   drop(props, monitor, component) {
     const hasDroppedOnChild = monitor.didDrop();
-    if (hasDroppedOnChild && !props.greedy) {
-      return;
-    }
+    const item = monitor.getItem();
+    if (hasDroppedOnChild) {
 
+    }
     component.setState({
       hasDropped: true,
       hasDroppedOnChild,
     });
+
+
+    props.notesDelete(item.id, props.notes);
+
+
   },
 };
 
@@ -66,10 +71,9 @@ class TrashCan extends Component {
       backgroundColor = 'yellow';
     }
 
+
     return connectDropTarget(
       <div style={getStyle(backgroundColor)}>
-        trash
-
           <br />
         {hasDropped &&
           <span>dropped {hasDroppedOnChild && ' on child'}</span>
