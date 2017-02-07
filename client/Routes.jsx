@@ -29,6 +29,7 @@ function indexEnter() {
 function onBoardEnter(nextRouterState) {
   const boardHash = nextRouterState.params.boardHash;
   store.dispatch(getBoard(boardHash));
+  store.dispatch(getAllBoards());
   if (!store.getState().noteReducer.all.length) {
     store.dispatch(getAllNotes({boardHash}));
   }
@@ -45,10 +46,10 @@ export default function Routes() {
       <Route path="/" component={Index} onEnter={indexEnter}>
        <IndexRoute component={HomepageContainer} />
        <Route path="/signup" component={SignupContainer} />
-       <Route path="/myboards" component={CreateBoardContainer} onEnter={onMyBoardEnter} />
+       <Route path="/boards" component={CreateBoardContainer} onEnter={onMyBoardEnter} />
          <Route path='/boards/:boardHash' component={BoardContainer} onEnter={onBoardEnter} />
        <Route path="/note">
-         <IndexRoute component={CreateNoteContainer} />
+         <IndexRoute component={CreateNoteContainer} onEnter={onMyBoardEnter}/>
          <Route path=":id" component={ViewNoteContainer} />
        </Route>
       </Route>
