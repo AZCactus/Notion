@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {bindActionCreators, compose} from 'redux';
 import {connect} from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import axios from 'axios';
 import {NOTE} from '../constants';
 import NoteWrapper from '../components/NoteWrapper';
@@ -23,8 +23,8 @@ import TrashCan from '../components/NoteBoardTrashCan';
 
 
 const noteStyles = {
-  height  : 50,
-  width   : 50,
+  height  : '50px',
+  width   : '50px',
   border  : '1px solid black',
   position: 'relative',
 
@@ -36,8 +36,8 @@ class MobileBoardViewContainer extends Component {
   constructor(props) {
     super(props);
     this.boardUpdate = this.boardUpdate.bind(this);
-    this.participantMoveNote = this.participantMoveNote.bind(this);
-    this.deleteNotesFromDatabase = this.deleteNotesFromDatabase.bind(this);
+    // this.participantMoveNote = this.participantMoveNote.bind(this);
+    // this.deleteNotesFromDatabase = this.deleteNotesFromDatabase.bind(this);
   }
 
   componentWillMount() {
@@ -47,13 +47,6 @@ class MobileBoardViewContainer extends Component {
 
   }
 
-  deleteNotesFromDatabase() {
-    this.props.deletedNotes.forEach(note => {
-      axios.delete(`/api/notes/${note.id}`)
-        .catch(err => console.log('deleteNotes from datatbase had an error'));
-
-    });
-  }
 
   boardUpdate(note) {
     if (note.board_id === this.props.board.id) {
@@ -61,20 +54,20 @@ class MobileBoardViewContainer extends Component {
     }
   }
 
-  participantMoveNote(data) {
-    const key = Object.keys(data);
-    let left;
-    let top;
-    const coordObj = data[key];
-    for (const coords in coordObj) {
-      if (coords === 'left') {
-        left = coordObj[coords];
-      } else {
-        top = coordObj[coords];
-      }
-    }
-    store.dispatch(moveNote(Number(key[0]), left, top));
-  }
+  // participantMoveNote(data) {
+  //   const key = Object.keys(data);
+  //   let left;
+  //   let top;
+  //   const coordObj = data[key];
+  //   for (const coords in coordObj) {
+  //     if (coords === 'left') {
+  //       left = coordObj[coords];
+  //     } else {
+  //       top = coordObj[coords];
+  //     }
+  //   }
+  //   store.dispatch(moveNote(Number(key[0]), left, top));
+  // }
 
 
   componentWillUnmount() {
@@ -86,26 +79,28 @@ class MobileBoardViewContainer extends Component {
 
   render() {
 
-    const {notes} = this.props;
-    console.log('PROPS NOTESasdfadsfads', notes);
+    const {notes, board} = this.props;
+    console.log('PROPS NOTESasdfadsfads', this.props);
     let backgroundColor;
 
     return (
       <div>
+        <h4 style={{textAlign: 'center'}}>{board.name}</h4>
         <ol>
           {
           notes.map((note, index) => {
             backgroundColor = '#' + note.color;
             return (
 
-            <li key={note.id} className="mobileListItem">
+            <li key={note.id} className="mobileListItem col-xs-12">
 
-              <div style={{...noteStyles, backgroundColor}}>
-                    <div style={{textAlign: 'center'}}>{index + 1}</div>
-              </div>
-              <span>{note.content}</span>
+              <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}/>
+
+
+              <span className='mobileNoteContent col-xs-10'>{note.content}</span>
 
             </li>
+
             );
           })
         }
@@ -130,7 +125,8 @@ const mapStateToProps = (state, ownProps) => {
 
     user        : state.userReducer.loggedInUser,
     zIndexNotes : state.noteReducer.zIndexNotes,
-    deletedNotes: state.noteReducer.deletedNotes
+    deletedNotes: state.noteReducer.deletedNotes,
+    board       : state.board.selectedBoard
   };
 
 };
