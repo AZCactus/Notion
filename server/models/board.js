@@ -12,6 +12,7 @@ const Board = db.define('board', {
   hooks: {
     afterCreate: function(board) {
       const boardHash = genShortHash(board.id);
+
       board.hash = boardHash;
       return board.save();
       // board.update({hash: boardHash})
@@ -19,6 +20,7 @@ const Board = db.define('board', {
       //     console.log('value', value);
       //     return value;
       //   });
+
     }
   }
 });

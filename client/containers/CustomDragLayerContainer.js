@@ -33,7 +33,7 @@ class CustomDragLayerContainer extends Component {
         showNoteComments={this.props.showNoteComments}
         />
         <CustomDragLayer snapToGrid={snapToGridWhileDragging} />
-        <div>
+        <div className="snapTo">
         <p>
           <label htmlFor="snapToGridWhileDragging">
             <input
