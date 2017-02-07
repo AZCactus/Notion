@@ -27,8 +27,7 @@ const Navbar = (props) => {
                 <li><Link onClick={() => { props.logoutUser(); }}>Logout</Link></li>
               )
               }
-              <li><Link to="/myboards">My Boards</Link></li>
-              <li><Link to="/participants/111"> Participants Test </Link></li>
+              <li><Link to="/boards">My Boards</Link></li>
           </ul>
         </div>
       </div>

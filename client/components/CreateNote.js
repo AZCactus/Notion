@@ -3,12 +3,16 @@ import isEmpty from 'lodash/isEmpty';
 import bindHandlers from '../utils/bindHandlers';
 import Note from './Note';
 import ColorPicker from './ColorPicker';
+import AutoSuggest from 'react-autosuggest';
 import Color from 'color';
 import {genShortHash} from '../utils/stringHash';
 import presetColors from 'ROOT/client/presetColors.json';
 const initState = {
   content           : '',
+  mentions          : [],
+  parsedContent     : [],
   color             : Color.rgb([ 237, 208, 13 ]).hex(),
+  caretPos          : 0,
   displayColorPicker: false,
   hasJoined         : false,
   flickState        : false,
@@ -16,12 +20,12 @@ const initState = {
   position          : 0
 };
 
-
 export default class CreateNote extends Component {
 
   constructor(props) {
     super(props);
 
+    this.input = {};
     this.state = initState;
     bindHandlers(this,
       this.changeHandler,
@@ -35,7 +39,9 @@ export default class CreateNote extends Component {
       this.blurHandler,
       this.touchStartHandler,
       this.touchEndHandler,
-      this.touchMoveHandler
+      this.touchMoveHandler,
+      this.parseContent,
+      this.autoComplete
     );
   }
 
@@ -51,7 +57,12 @@ export default class CreateNote extends Component {
     }
   }
 
+  componentDidMount() {
+    // document.addEventListener('keyup', this.updateCursor);
+  }
+
   componentWillUnmount() {
+    // document.removeEventListener('keyup', this.updateCursor);
     this.props.clearSocketListeners();
     this.props.socketDisconnect();
     this.props.socketEmit('leave', {
@@ -60,7 +71,7 @@ export default class CreateNote extends Component {
     });
   }
 
-  componentWillReceiveProps({board, user}) {
+  componentWillReceiveProps({board, user, queriedUsers}) {
     if (board && user && !isEmpty(board) && !isEmpty(user) && !this.state.hasJoined) {
       this.props.socketConnect('board');
       this.props.addSocketListener('connect', this.join);
@@ -69,6 +80,12 @@ export default class CreateNote extends Component {
   }
 
   join() {
+    if (Object.keys(this.props.user).length) {
+      if (this.props.permissions.findIndex(permission => {
+        return permission.board_id === this.props.board.id; }) === -1) {
+        this.props.addUserPermission(this.props.board);
+      }
+    }
     this.props.socketEmit('join', {
       room  : genShortHash(this.props.board.id),
       name  : this.props.user.first_name + ' ' + this.props.user.last_name,
@@ -94,7 +111,7 @@ export default class CreateNote extends Component {
 
   changeHandler(e) {
     e.preventDefault();
-    this.setState({content: e.target.value});
+    this.parseContent(e.target.value);
   }
 
   clickHandler(e) {
@@ -141,17 +158,66 @@ export default class CreateNote extends Component {
   submitHandler(e) {
     if (e) e.preventDefault();
 
-    this.setState({flickState: 'positioning', position: window.innerHeight || window.screen.height});
+    this.setState({
+      flickState: 'positioning',
+      position  : window.innerHeight || window.screen.height
+    });
     this.props.createNote({
-      content: this.state.content,
-      color  : this.state.color
+      content : this.state.content,
+      color   : this.state.color,
+      mentions: this.state.mentions
     }, this.props.board.id)
       .then(() => {
         this.setState(Object.assign(initState, {flickState: 'returning'}));
       });
   }
 
+  parseContent(content) {
+    const caretPos = this.input.selectionStart;
+    const users = this.props.queriedUsers;
+    const parsedContent = [];
+    let currentWord = '';
+
+    for (let i = 0; i < content.length; i++) {
+      let char = content[i];
+      const startIndex = i;
+
+      if (char === '@') {
+        do {
+          currentWord += char;
+          i++;
+          char = content[i];
+        } while (char !== ' ' && i < content.length);
+        const tail = trimTail(currentWord.slice(1));
+        currentWord = currentWord.slice(0, -tail.length || undefined);
+
+        if (caretPos > startIndex && caretPos <= startIndex + currentWord.length) {
+          this.props.searchUsername(currentWord.slice(1));
+          parsedContent.push({content: currentWord, isMention: true, isSuggesting: true});
+        } else {
+          parsedContent.push({content: currentWord, isMention: true, isSuggesting: false});
+        }
+        parsedContent.push({content: tail + (char || '')});
+      } else {
+        currentWord = '';
+        parsedContent.push({content: char});
+      }
+    }
+
+    this.setState({content, caretPos, parsedContent});
+  }
+
+  autoComplete(find, replace, id) {
+    const content = this.state.content.replace(find, replace);
+    this.setState((state) => {
+      return Object.assign({}, state, {mentions: [ ...state.mentions, id ]});
+    });
+    this.parseContent(content);
+  }
+
   render() {
+    (this.state.mentions);
+    const suggestedUsers = this.props.queriedUsers;
     const noteWrapperStyle = {zIndex: 1};
     noteWrapperStyle.transform = `rotate(${this.state.position * 0.02}deg)`;
     noteWrapperStyle.top = this.state.position;
@@ -183,9 +249,32 @@ export default class CreateNote extends Component {
               onTouchEnd={this.touchEndHandler}>
               <Note
                 editable={true}
-                content={this.state.content}
-                color={this.state.color}
-                onChange={this.changeHandler}/>
+                color={this.state.color}>
+                <div>
+                  {this.state.parsedContent.map(part => {
+                    if (part.isMention && part.isSuggesting) {
+                      return (
+                        <span className="c-mention c-mention--suggesting">
+                          {part.content}
+                          <ul className="c-mention__suggestions">
+                            {suggestedUsers.map((user) => (
+                              <li>
+                                <button onClick={() => this.autoComplete(part.content, '@' + user.username, user.id)}>@{user.username}</button>
+                              </li>
+                            ))}
+                          </ul>
+                        </span>
+                      );
+                    } else if (part.isMention) {
+                      return (
+                        <span className="c-mention">
+                          {part.content}
+                        </span>
+                      );
+                    } else return part.content;
+                  })}
+                </div>
+              </Note>
               <input type="text"
                 value={this.state.content}
                 className="c-note__input"
@@ -222,4 +311,17 @@ export default class CreateNote extends Component {
       </div>
     );
   }
+}
+
+function trimTail(str) {
+  let tail = '';
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i].match(/[^A-Za-z0-9_]/)) {
+      tail = str.slice(i);
+      break;
+    }
+  }
+
+  return tail;
 }

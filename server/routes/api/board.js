@@ -43,6 +43,7 @@ router.get('/:boardHash', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+
   const boardName = req.body.boardName;
   Board
     .create({
@@ -83,6 +84,22 @@ router.put('/:id', (req, res, next) => {
     }
   })
     .then(board => res.json(board))
+    .catch(next);
+});
+
+router.post('/permissions', (req, res, next) => {
+  req.user.addBoard(req.body.board.id)
+    .then(() => {
+      return BoardPermission.findOne({
+        where: {
+          board_id: req.body.board.id,
+          user_id : req.user.id
+        }
+      });
+    })
+    .then(boardPermission => {
+      res.json(boardPermission);
+    })
     .catch(next);
 });
 

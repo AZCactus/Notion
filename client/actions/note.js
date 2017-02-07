@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DELETE_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE} from '../constants';
+import { DELETE_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE, NOTE_DETAIL} from '../constants';
 import {socketEmit} from './socketio';
 
 export function receiveNote(note) {
@@ -29,6 +29,13 @@ export const moveNote = (id, left, top) => {
     notes: {
       [id]: {left, top}
     }
+  };
+};
+
+export const selectedNoteDetail = (selectedNoteDetails) => {
+  return {
+    type: NOTE_DETAIL,
+    selectedNoteDetails
   };
 };
 
@@ -142,9 +149,10 @@ export function getAllNotes({userId, boardId}) {
 export function createNote(note, boardId) {
   return dispatch =>
     axios.post('/api/notes/', {
-      content: note.content,
-      color  : note.color,
-      boardId: boardId || note.boardId
+      content : note.content,
+      color   : note.color,
+      mentions: note.mentions || [],
+      boardId : boardId || note.boardId
     })
       .then(({data}) => {
         dispatch(socketEmit('note', data));
