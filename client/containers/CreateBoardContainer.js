@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import CreateBoard from '../components/CreateBoard';
 import {createBoard} from '../actions/board';
 import {getAllNotes} from '../actions/note';
-import {genShortHash} from '../utils/stringHash';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -16,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     create: (boardName) => {
-      dispatch(createBoard(boardName, genShortHash(boardName)));
+      dispatch(createBoard(boardName));
     },
     onBoardEnter: function() {
       dispatch(getAllNotes({}));

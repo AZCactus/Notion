@@ -44,13 +44,12 @@ router.get('/:boardHash', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   const boardName = req.body.boardName;
-  const hash = req.body.hash;
   Board
     .create({
       name: boardName,
-      hash: hash
     })
     .then(board => {
+      console.log(board);
       return Promise.all([ board, board.addUser(req.user.id) ]);
     })
     .then(([ board, permission ]) => {
