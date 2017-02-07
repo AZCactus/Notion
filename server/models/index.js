@@ -14,6 +14,8 @@ Board.belongsToMany(User, {through: BoardPermission });
 
 User.hasMany(Note);
 Note.belongsTo(User);
+User.belongsToMany(Note, {as: 'Mention', through: 'user_mention_in_note'});
+Note.belongsToMany(User, {as: 'MentionedUser', through: 'user_mention_in_note'});
 
 module.exports = {
   db, Board, Note, User, BoardPermission
