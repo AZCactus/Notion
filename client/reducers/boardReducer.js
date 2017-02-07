@@ -1,5 +1,5 @@
 
-import {RECEIVE_BOARD, RECEIVE_BOARDS, ADD_NEW_BOARD, RECEIVE_BOARD_NOTES} from '../constants';
+import {RECEIVE_BOARD, RECEIVE_BOARDS, ADD_NEW_BOARD, RECEIVE_BOARD_NOTES, RECEIVE_PERMISSION} from '../constants';
 
 
 const initialState = {selectedBoard: {}, allBoards: [], selectedBoardNotes: [], permissions: [], };
@@ -16,9 +16,11 @@ export default function(state = initialState, action) {
     newState.allBoards = action.boards;
     newState.permissions = action.permissions;
     break;
-
   case ADD_NEW_BOARD:
     newState.allBoards = [ ...newState.allBoards, action.board ];
+    newState.permissions = [ ...newState.permissions, action.permission ];
+    break;
+  case RECEIVE_PERMISSION:
     newState.permissions = [ ...newState.permissions, action.permission ];
     break;
   default:

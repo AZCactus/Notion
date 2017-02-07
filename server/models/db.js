@@ -44,7 +44,7 @@ function sync(retries = 0, maxRetries = 5) {
 
       return new Promise((resolve, reject) =>
         require('child_process').exec(`createdb "${name}"`, resolve)
-      ).then(() => sync(true, retries + 1));
+      ).then(() => sync(retries + 1));
     });
 }
 

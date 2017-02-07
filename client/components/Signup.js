@@ -21,6 +21,13 @@ const Signup = (props) => {
           required />
         </div>
         <div className="form-group">
+          <input type="text" name="username" placeholder="Username"
+          className="signup-input-field"
+          id="signup-username-input-field"
+          onChange={(e) => { props.handleInput(e); }}
+          required />
+        </div>
+        <div className="form-group">
           <input type="email" name="email" placeholder="Email"
           className="signup-input-field"
           id="signup-email-input-field"

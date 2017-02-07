@@ -148,7 +148,7 @@
       }),
       user        : state.userReducer.loggedInUser,
       zIndexNotes : state.noteReducer.zIndexNotes,
-      deletedNotes: state.noteReducer.deletedNotes
+      deletedNotes: state.noteReducer.deletedNotes,
     };
 
   };
