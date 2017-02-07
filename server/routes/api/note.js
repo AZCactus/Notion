@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-const {Note, User, Board} = require('ROOT/server/models');
+const {Note, User, Board, Comment} = require('ROOT/server/models');
 const router = module.exports = new Router();
 
 router.get('/', (req, res, next) => {
@@ -27,6 +27,14 @@ router.get('/', (req, res, next) => {
       where: {id: req.query.boardId}
     });
   }
+
+  noteQuery.include.push({
+    model  : Comment,
+    include: [ {
+      model: User
+    } ]
+  });
+
   if (limit) {
     noteQuery.limit = req.query.limit;
   }
@@ -37,7 +45,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  Note.findById(req.params.id)
+  Note.findOne({where  : { id: Number(req.params.id)},
+  include: [ Comment ]})
     .then(note => res.send(note))
     .catch(next);
 });
@@ -46,7 +55,6 @@ router.post('/', (req, res, next) => {
   const {content, color, top, left, boardId} = req.body;
   const mentions = req.body.mentions || [];
 
-  console.log('>>>>>>>>>>>', mentions);
   Note.create({
     content: req.body.content,
     color  : req.body.color,
@@ -59,7 +67,29 @@ router.post('/', (req, res, next) => {
       note.setUser(req.user),
       ...mentions.map((userId) => note.addMentionedUser(userId))
     ]))
-    .then(([ note ]) => res.send(note))
+    .then(([ note, board ]) => {
+      return new Promise((resolve, reject) => {
+        const topTraverse = function(top) {
+          Note.findOne({
+            where: { top: top, left: 0, board_id: board.id}})
+          .then(noteToCheck => {
+            if (noteToCheck === null) {
+              note.update({top: top})
+              .then(result => {
+                resolve(result);
+              });
+            }
+            else {
+              topTraverse(top + 20);
+            }
+          });
+        };
+        topTraverse(0);
+      });
+    })
+    .then(note => {
+      res.send(note);
+    })
     .catch(next);
 });
 
@@ -81,6 +111,17 @@ router.delete('/:id', (req, res, next) => {
     .then(() => res.sendStatus(200))
     .catch(next);
 });
+
+router.delete('/bulk', (req, res, next) => {
+  let deleteArr;
+
+  deleteArr.forEach((note) => {
+    Note.destroy({where: {id: note.id}})
+      .then(() => res.sendStatus(200))
+      .catch(next);
+  });
+});
+
 
 router.use((err, req, res, next) => {
   console.log('Error in server/routes/api/note.js');

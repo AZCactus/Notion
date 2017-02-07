@@ -21,8 +21,6 @@ module.exports = function sockets(server) {
   });
 
 
-
-
   /************************** main board meeting namespace ***************************/
 
   io.of('board').on('connection', (socket) => {
@@ -152,7 +150,3 @@ function updateNoteCoords(id, left, top) {
     {where: { id: id }
     });
 }
-
-
-
-
