@@ -186,7 +186,6 @@
 
     return {
       notes: state.noteReducer.all.filter(note => {
-        console.log('NOTE IN MSTP', note);
 
         return ownProps.board.id === note.board_id;
       }),
