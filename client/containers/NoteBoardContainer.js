@@ -113,18 +113,19 @@
     }
 
 
-    renderNote(item, key, index) {
-
+    renderNote(item, key) {
       return (
-        <DraggableNote key={key} id={key} {...item}>{item.content}</DraggableNote>
+        <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
       );
     }
 
     render() {
 
+
       const {notesDelete, movedNote, notes, connectDropTarget} = this.props;
+
       return connectDropTarget(
-      <div style={styles}>
+        <div style={styles}>
         {
           notes.map((note) => {
             return this.renderNote(note, note.id);

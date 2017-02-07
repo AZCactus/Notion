@@ -4,23 +4,40 @@ const express = require('express');
 const router = express.Router();
 const {Board, User, CommentPermission, Note, Comment} = require('ROOT/server/models/');
 
+
+router.get('/:id', (req, res, next) => {
+  Comment.findAll({
+    where: {
+      note_id: req.params.id
+    },
+    include: [ { model: User} ]
+  })
+    .then(comments => {
+      res.json(comments);
+    })
+    .catch(next);
+});
+
 router.post('/', (req, res, next) => {
-  console.log(req.body);
+
   const text = req.body.text;
   const noteId = req.body.noteId;
+  const userId = req.body.userId;
   Comment
     .create({
       text: text,
     })
     .then(comment => {
-      console.log(comment);
       return Promise.all(
         [ comment,
-          comment.setUser(2),
+          comment.setUser(Number(userId)),
           comment.setNote(Number(noteId)) ]);
     })
     .then(([ comment ]) => {
-      res.json(comment);
+      return comment.includeUser();
+    })
+    .then(commentWithUser => {
+      res.json(commentWithUser);
     })
     .catch(next);
 });

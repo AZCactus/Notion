@@ -4,6 +4,7 @@ import board from './boardReducer';
 import noteReducer from './noteReducer';
 import userReducer from './userReducer';
 import navbarReducer from './navbarReducer';
+import commentsReducer from './commentsReducer';
 import socket from './socketioReducer';
 
 
@@ -12,7 +13,8 @@ export const combinedReducer = combineReducers({
   noteReducer,
   userReducer,
   nav: navbarReducer,
-  socket
+  socket,
+  commentsReducer
 
 });
 

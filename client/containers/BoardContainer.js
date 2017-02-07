@@ -8,6 +8,10 @@ import CustomDragLayerContainer from './CustomDragLayerContainer';
 import ParticipantsContainer from './ParticipantsContainer';
 import { socketConnect, socketDisconnect, clearSocketListeners } from '../actions/socketio';
 import { bindActionCreators } from 'redux';
+import bindHandlers from '../utils/bindHandlers';
+import NoteDetailsContainer from './NoteDetailsContainer';
+import { selectedNoteDetail } from '../actions/note';
+
 // import Clipboard from 'react-clipboard';
 
 // localhost:3030/note?board=${this.props.board.hash}
@@ -77,21 +81,50 @@ const Clipboard = React.createClass({
 
 });
 
+
 class BoardContainer extends Component {
+
+  constructor(props) {
+    super(props);
+    bindHandlers(this,
+      this.showNoteComments,
+      this.hideNoteComments
+    );
+
+  }
 
   componentWillMount() {
     const { dispatch, board, notes} = this.props;
     const boardId = board.id;
 
   }
+
+
+  showNoteComments(color, content, noteId) {
+    this.props.selectedNoteDetail({color, content, noteId});
+  }
+
+  hideNoteComments() {
+    this.props.selectedNoteDetail();
+  }
+
+
+
+
   handleCopy(e) {
     console.log('copied', e);
   }
+
   render() {
     const value = `localhost:3030/note?board=${this.props.board.hash}`;
 
     return (
-      <div className="col-xs-12" key={ this.props.board.id }>
+      <div className="col-xs-12 board-page-container" key={ this.props.board.id }>
+        {this.props.selectedNoteDetails ?
+          <NoteDetailsContainer
+            note={this.props.selectedNoteDetails}
+            hideNoteComments={this.hideNoteComments}
+          /> : null}
         <span className="text-center">
           <h2>{ this.props.board.name }</h2>
           <div>
@@ -103,7 +136,7 @@ class BoardContainer extends Component {
         </span>
           <div>
             <div className="screen col-xs-12">
-              <CustomDragLayerContainer {...this.props}/>
+              <CustomDragLayerContainer {...this.props} showNoteComments={this.showNoteComments}/>
             </div>
           </div>
           <ParticipantsContainer />
@@ -114,13 +147,14 @@ class BoardContainer extends Component {
 
 
 const mapStateToProps = (state) => ({
-  board: state.board.selectedBoard,
-  notes: state.noteReducer.all,
-  hash : state.board.selectedBoard.hash
+  board              : state.board.selectedBoard,
+  notes              : state.noteReducer.all,
+  hash               : state.board.selectedBoard.hash,
+  selectedNoteDetails: state.noteReducer.selectedNoteDetails
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({socketConnect, socketDisconnect, clearSocketListeners }, dispatch);
+  return bindActionCreators({socketConnect, socketDisconnect, clearSocketListeners, selectedNoteDetail }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);

@@ -3,7 +3,7 @@ export const CLEAR_STORE = 'CLEAR_STORE';
 export const TOGGLE_CLICK = 'TOGGLE_CLICK';
 
 /* COMMENTS CONSTANTS */
-export const RECEIVE_COMMENT = 'RECEIVE_COMMENT';
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENT';
 export const ADD_NEW_COMMENT = 'ADD_NEW_COMMENT';
 
 /* BOARD CONSTANTS */
@@ -21,6 +21,7 @@ export const ADD_NOTE_TO_BOARD = 'ADD_NOTE_TO_BOARD';
 export const SET_NOTE_COORDS = 'SET_NOTE_COORDS';
 export const NOTE_ARRAY_INDEX_PUSH = 'NOTE_ARRAY_INDEX_PUSH';
 export const DELETE_NOTE = 'DELETE_NOTE';
+export const NOTE_DETAIL = 'NOTE_DETAIL';
 
 
 /* USER CONSTANTS */
@@ -40,3 +41,5 @@ export const EMIT = 'EMIT';
 export const CONNECT = 'CONNECT';
 export const ADD_LISTENER = 'ADD_LISTENER';
 export const REMOVE_LISTENER = 'REMOVE_LISTENER';
+
+

@@ -28,7 +28,6 @@ const Navbar = (props) => {
               )
               }
               <li><Link to="/boards">My Boards</Link></li>
-              <li><Link to="/participants/111"> Participants Test </Link></li>
           </ul>
         </div>
       </div>
