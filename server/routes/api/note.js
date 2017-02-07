@@ -49,16 +49,39 @@ router.post('/', (req, res, next) => {
       content: req.body.content,
       color  : req.body.color,
       top    : req.body.top || null,
-      left   : req.body.top || null
+      left   : req.body.top || 0
     }),
     Board.findById(req.body.boardId)
   ])
     .then(([ note, board ]) => Promise.all([
       note,
+      board,
       note.setBoard(board),
       note.setUser(req.user)
     ]))
-    .then(([ note ]) => res.send(note))
+    .then(([ note, board ]) => {
+      return new Promise((resolve, reject) => {
+        const topTraverse = function(top) {
+          Note.findOne({
+            where: { top: top, left: 0, board_id: board.id}})
+          .then(noteToCheck => {
+            if (noteToCheck === null) {
+              note.update({top: top})
+              .then(result => {
+                resolve(result);
+              });
+            }
+            else {
+              topTraverse(top + 20);
+            }
+          });
+        };
+        topTraverse(0);
+      });
+    })
+    .then(note => {
+      res.send(note);
+    })
     .catch(next);
 });
 
