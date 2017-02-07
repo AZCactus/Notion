@@ -39,8 +39,15 @@ export const logoutUser = () => dispatch => {
 };
 
 export const searchUsername = (username) => dispatch => {
-  return axios.get('/api/auth/', {params: {searchUsername: username}})
-    .then(res => dispatch(receiveUserQuery(res.data)))
+  return axios.get('/api/user/', {
+    params: {
+      searchUsername: username,
+      limit         : 6
+    }
+  })
+    .then(res => {
+      dispatch(receiveUserQuery(res.data));
+    })
     .catch(err => console.error(err));
 };
 

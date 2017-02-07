@@ -5,6 +5,7 @@ import CreateNote from '../components/CreateNote';
 
 import {getBoard} from '../actions/board';
 import {createNote} from '../actions/note';
+import {searchUsername} from '../actions/user';
 import {
   socketConnect,
   socketEmit,
@@ -17,8 +18,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateNote);
 
 function mapStateToProps(state) {
   return {
-    board: state.board.selectedBoard,
-    user : state.userReducer.loggedInUser
+    board       : state.board.selectedBoard,
+    user        : state.userReducer.loggedInUser,
+    queriedUsers: state.userReducer.queriedUsers
   };
 }
 
@@ -30,6 +32,7 @@ function mapDispatchToProps(dispatch) {
     addSocketListener,
     socketEmit,
     clearSocketListeners,
-    socketDisconnect
+    socketDisconnect,
+    searchUsername
   }, dispatch);
 }

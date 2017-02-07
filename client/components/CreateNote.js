@@ -3,12 +3,15 @@ import isEmpty from 'lodash/isEmpty';
 import bindHandlers from '../utils/bindHandlers';
 import Note from './Note';
 import ColorPicker from './ColorPicker';
+import AutoSuggest from 'react-autosuggest';
 import Color from 'color';
 import {genShortHash} from '../utils/stringHash';
 import presetColors from 'ROOT/client/presetColors.json';
 const initState = {
   content           : '',
+  parsedContent     : [],
   color             : Color.rgb([ 237, 208, 13 ]).hex(),
+  caretPos          : 0,
   displayColorPicker: false,
   hasJoined         : false,
   flickState        : false,
@@ -16,12 +19,12 @@ const initState = {
   position          : 0
 };
 
-
 export default class CreateNote extends Component {
 
   constructor(props) {
     super(props);
 
+    this.input = {};
     this.state = initState;
     bindHandlers(this,
       this.changeHandler,
@@ -35,7 +38,8 @@ export default class CreateNote extends Component {
       this.blurHandler,
       this.touchStartHandler,
       this.touchEndHandler,
-      this.touchMoveHandler
+      this.touchMoveHandler,
+      this.parseContent
     );
   }
 
@@ -51,7 +55,12 @@ export default class CreateNote extends Component {
     }
   }
 
+  componentDidMount() {
+    // document.addEventListener('keyup', this.updateCursor);
+  }
+
   componentWillUnmount() {
+    // document.removeEventListener('keyup', this.updateCursor);
     this.props.clearSocketListeners();
     this.props.socketDisconnect();
     this.props.socketEmit('leave', {
@@ -60,12 +69,13 @@ export default class CreateNote extends Component {
     });
   }
 
-  componentWillReceiveProps({board, user}) {
+  componentWillReceiveProps({board, user, queriedUsers}) {
     if (board && user && !isEmpty(board) && !isEmpty(user) && !this.state.hasJoined) {
       this.props.socketConnect('board');
       this.props.addSocketListener('connect', this.join);
       this.setState({hasJoined: true});
     }
+    this.parseContent(this.state.content);
   }
 
   join() {
@@ -94,7 +104,7 @@ export default class CreateNote extends Component {
 
   changeHandler(e) {
     e.preventDefault();
-    this.setState({content: e.target.value});
+    this.parseContent(e.target.value);
   }
 
   clickHandler(e) {
@@ -141,7 +151,10 @@ export default class CreateNote extends Component {
   submitHandler(e) {
     if (e) e.preventDefault();
 
-    this.setState({flickState: 'positioning', position: window.innerHeight || window.screen.height});
+    this.setState({
+      flickState: 'positioning',
+      position  : window.innerHeight || window.screen.height
+    });
     this.props.createNote({
       content: this.state.content,
       color  : this.state.color
@@ -149,6 +162,50 @@ export default class CreateNote extends Component {
       .then(() => {
         this.setState(Object.assign(initState, {flickState: 'returning'}));
       });
+  }
+
+  parseContent(content) {
+    const caretPos = this.input.selectionStart;
+    const users = this.props.queriedUsers || [ {username: 'bob'}, {username: 'babs'} ];
+    const parsedContent = [];
+    let currentWord = '';
+
+    for (let i = 0; i < content.length; i++) {
+      let char = content[i];
+      const startIndex = i;
+
+      if (char === '@') {
+        do {
+          currentWord += char;
+          i++;
+          char = content[i];
+        } while (char !== ' ' && i < content.length);
+        const tail = trimTail(currentWord.slice(1));
+        currentWord = currentWord.slice(0, -tail.length || undefined);
+
+        if (caretPos > startIndex && caretPos <= startIndex + currentWord.length) {
+          this.props.searchUsername(currentWord.slice(1));
+          console.log('USERS', users.map((user) => user.username));
+          parsedContent.push(
+            <span key={startIndex} style={{background: '#77f', color: '#f77'}}>
+              {currentWord}
+            </span>
+          );
+        } else {
+          parsedContent.push(
+            <span key={startIndex} style={{background: '#77f', color: '#f77'}}>
+              {currentWord}
+            </span>
+          );
+        }
+        parsedContent.push(tail, char);
+      } else {
+        currentWord = '';
+        parsedContent.push(char);
+      }
+    }
+
+    this.setState({content, caretPos, parsedContent});
   }
 
   render() {
@@ -183,9 +240,9 @@ export default class CreateNote extends Component {
               onTouchEnd={this.touchEndHandler}>
               <Note
                 editable={true}
-                content={this.state.content}
-                color={this.state.color}
-                onChange={this.changeHandler}/>
+                color={this.state.color}>
+                <div>{this.state.parsedContent}</div>
+              </Note>
               <input type="text"
                 value={this.state.content}
                 className="c-note__input"
@@ -222,4 +279,17 @@ export default class CreateNote extends Component {
       </div>
     );
   }
+}
+
+function trimTail(str) {
+  let tail = '';
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i].match(/[^A-Za-z0-9_]/)) {
+      tail = str.slice(i);
+      break;
+    }
+  }
+
+  return tail;
 }

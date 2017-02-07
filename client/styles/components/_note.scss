@@ -29,7 +29,7 @@
   font-weight: 600;
   text-overflow: ellipsis;
   overflow: hidden;
-
+  line-height: 1.5em;
 }
 
 .c-note__input {
@@ -41,3 +41,21 @@
 .top {z-index: 2; position: relative}
 
 .bottom {z-index: 1; position: relative}
+
+.caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: middle;
+  border: none;
+  &::before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    height: 100%;
+    width: 0.025em;
+    background: $black;
+  }
+}
