@@ -49,7 +49,6 @@ router.post('/', (req, res, next) => {
       name: boardName,
     })
     .then(board => {
-      console.log(board);
       return Promise.all([ board, board.addUser(req.user.id) ]);
     })
     .then(([ board, permission ]) => {
