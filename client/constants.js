@@ -34,3 +34,7 @@ export const EMIT = 'EMIT';
 export const CONNECT = 'CONNECT';
 export const ADD_LISTENER = 'ADD_LISTENER';
 export const REMOVE_LISTENER = 'REMOVE_LISTENER';
+
+/* COMMENTS */
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';

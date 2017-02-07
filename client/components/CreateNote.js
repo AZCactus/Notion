@@ -64,8 +64,8 @@ export default class CreateNote extends Component {
 
   componentWillReceiveProps({board, user}) {
     if (board && user && !isEmpty(board) && !isEmpty(user) && !this.state.hasJoined) {
-      this.props.addSocketListener('connect', this.join);
       this.props.socketConnect('board');
+      this.props.addSocketListener('connect', this.join);
       this.setState({hasJoined: true});
     }
   }

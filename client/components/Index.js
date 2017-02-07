@@ -11,10 +11,10 @@ const Index = (props) => {
     <div>
       <NavbarContainer />
       <div >
-        <div className='col-lg-2'>
-        {/*<SidebarContainer />*/}
-        </div>
-        <div className='col-lg-8 col-lg-offset-1'>
+        {/*<div className='col-lg-2'>
+       <SidebarContainer />
+        </div>*/}
+        <div>
         {
           props.children && React.cloneElement(props.children, props)
         }

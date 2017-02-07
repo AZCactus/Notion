@@ -112,23 +112,21 @@
     }
 
 
-    renderNote(item, key, index) {
-
+    renderNote(item, key, expandOneNote) {
       return (
-        <DraggableNote key={key} id={key} {...item}>{item.content}</DraggableNote>
+        <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
       );
     }
 
     render() {
 
-
       const {movedNote, notes, connectDropTarget} = this.props;
 
       return connectDropTarget(
-      <div style={styles}>
+        <div style={styles}>
         {
           notes.map((note) => {
-            return this.renderNote(note, note.id);
+            return this.renderNote(note, note.id, this.props.expandOneNote);
           }
       )}
       <div className="trashcan">

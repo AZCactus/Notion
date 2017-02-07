@@ -73,12 +73,12 @@ class NoteWrapper extends PureComponent {
     };
 
     const backgroundColor = red ? 'red' : 'white';
-
     return (
       <div
           className={`noteWrapper ${this.state.focused ? 'noteWrapper--focused' : ''}`}
           onClick={this.clickHandler}>
       <div className='enlarge'
+        onClick={() => { this.props.showNoteComments(color, content); }}
         style={{ ...styles, backgroundColor }}
         ref={(input) => { this.input = input; }}
         onFocus={this.focusHandler}

@@ -62,7 +62,11 @@ class DraggableNote extends PureComponent {
 
       <div style={getStyles(this.props)}>
         <div className='zIndex'>
-          <NoteWrapper color={this.props.color} content={content}/>
+          <NoteWrapper
+          color={this.props.color}
+          content={content}
+          showNoteComments={this.props.showNoteComments}
+          />
         </div>
       </div>
 
