@@ -23,9 +23,12 @@ import TrashCan from '../components/NoteBoardTrashCan';
 
 
 const noteStyles = {
-  height  : 100,
-  width   : 100,
-  position: 'relative'
+  height  : 50,
+  width   : 50,
+  border  : '1px solid black',
+  position: 'relative',
+
+
 };
 
 
@@ -81,32 +84,32 @@ class MobileBoardViewContainer extends Component {
   }
 
 
-  renderNote(item, key, index) {
-
-    return (
-      <div>
-        <li>
-      <NoteWrapper key={key} id={key} {...item}>{item.content}</NoteWrapper>
-        </li>
-      </div>
-
-    );
-  }
-
   render() {
 
     const {notes} = this.props;
-    console.log('PROPS NOTES', notes);
+    console.log('PROPS NOTESasdfadsfads', notes);
+    let backgroundColor;
 
     return (
       <div>
-        <ul>
+        <ol>
           {
-          notes.map((note) => {
-            return this.renderNote(note, note.id);
+          notes.map((note, index) => {
+            backgroundColor = '#' + note.color;
+            return (
+
+            <li key={note.id} className="mobileListItem">
+
+              <div style={{...noteStyles, backgroundColor}}>
+                    <div style={{textAlign: 'center'}}>{index + 1}</div>
+              </div>
+              <span>{note.content}</span>
+
+            </li>
+            );
           })
         }
-      </ul>
+      </ol>
       <div className="trashcan">
           <TrashCan notesDelete={notesDelete} notes={notes}/>
       </div>
@@ -119,11 +122,9 @@ class MobileBoardViewContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
   const hash = ownProps.params.boardHash;
 
-  console.log('HASH', hash);
-
   return {
     notes: state.noteReducer.all.filter(note => {
-      console.log('NOTE ID HASH', genShortHash(note.id));
+
       return hash === genShortHash(note.board_id);
     }),
 
