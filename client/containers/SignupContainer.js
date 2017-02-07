@@ -17,6 +17,7 @@ export class SignupContainer extends Component {
       firstName: '',
       lastName : '',
       email    : '',
+      username : '',
       password : '',
       display  : false,
     };
@@ -41,7 +42,7 @@ export class SignupContainer extends Component {
   submitForm(e) {
     e.preventDefault();
     this.props.createUser(this.state.firstName,
-    this.state.lastName, this.state.email, this.state.password);
+    this.state.lastName, this.state.email, this.state.username, this.state.password);
   }
 
   loginForm(e) {
@@ -86,8 +87,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createUser: (firstName, lastName, email, password) =>
-  dispatch(createUser(firstName, lastName, email, password)),
+  createUser: (firstName, lastName, email, username, password) =>
+  dispatch(createUser(firstName, lastName, email, username, password)),
   loginUser       : (email, password) => dispatch(loginUser(email, password)),
   checkLoginStatus: () => dispatch(checkLoginStatus())
 });

@@ -1,7 +1,8 @@
-import {SET_LOGIN_USER, REMOVE_LOGIN_USER} from '../constants';
+import {SET_LOGIN_USER, REMOVE_LOGIN_USER, RECEIVE_USER_QUERY} from '../constants';
 
 const initialState = {
-  loggedInUser: {}
+  loggedInUser: {},
+  queriedUsers: []
 };
 
 export default function(state = initialState, action) {
@@ -12,6 +13,9 @@ export default function(state = initialState, action) {
     break;
   case REMOVE_LOGIN_USER:
     newState.loggedInUser = {};
+    break;
+  case RECEIVE_USER_QUERY:
+    newState.queriedUsers = action.payload;
     break;
   default:
     return state;
