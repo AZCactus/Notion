@@ -19,11 +19,6 @@ export default function noteReducer(state = initState, action) {
     nextState.all = [ ...nextState.all, action.payload ];
     break;
 
-  case ADD_NEW_COMMENT:
-    const commentArr = nextState.all[action.noteId].comments;
-    nextState.all[action.noteId].comments = [ ...commentArr, action.comment ];
-    break;
-
   case RECEIVE_NOTES:
     nextState.all = action.payload;
     break;

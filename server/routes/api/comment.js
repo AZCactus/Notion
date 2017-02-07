@@ -5,11 +5,12 @@ const router = express.Router();
 const {Board, User, CommentPermission, Note, Comment} = require('ROOT/server/models/');
 
 
-router.get('/', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   Comment.findAll({
     where: {
-      noteId: req.body.noteId
-    }
+      note_id: req.params.id
+    },
+    include: [ { model: User} ]
   })
     .then(comments => {
       res.json(comments);
@@ -22,20 +23,21 @@ router.post('/', (req, res, next) => {
   const text = req.body.text;
   const noteId = req.body.noteId;
   const userId = req.body.userId;
-    console.log('POST REQ BODY', text, noteId, userId);
   Comment
     .create({
       text: text,
     })
     .then(comment => {
-      console.log(comment);
       return Promise.all(
         [ comment,
           comment.setUser(Number(userId)),
           comment.setNote(Number(noteId)) ]);
     })
     .then(([ comment ]) => {
-      res.json(comment);
+      return comment.includeUser();
+    })
+    .then(commentWithUser => {
+      res.json(commentWithUser);
     })
     .catch(next);
 });

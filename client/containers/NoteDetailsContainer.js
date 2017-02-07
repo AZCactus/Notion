@@ -3,26 +3,27 @@ import {connect} from 'react-redux';
 import { getComments, createComment } from '../actions/comment';
 
 import ReactTransitionGroup from 'react-addons-css-transition-group';
+import Color from 'color';
+
 
 class NoteDetailsContainer extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      comment     : '',
-      showComments: false,
-      comments    : [
-        {id: 1, name: 'Alvin', content: 'This is the first comment'},
-        {id     : 2, name   : 'Hal', content:
-        'This is the second comment'},
-        {id     : 3, name   : 'Spencer', content:
-        'This is the third comment'},
-        {id     : 4, name   : 'Joe', content:
-        'This is the fourth comment...'}
-      ]
+      comment: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCommentInput = this.handleCommentInput.bind(this);
+    this.clearInput = this.clearInput.bind(this);
+    this.getFontColor = this.getFontColor.bind(this);
+  }
+
+  getFontColor(color) {
+    color = color.replace(/^#*/, '#');
+    const hslArr = Color(color).hsl().array();
+    hslArr[2] = hslArr[2] > 32 ? 25 : 85;
+    return Color.hsl(hslArr).rotate(180).hex();
   }
 
   componentWillMount() {
@@ -30,17 +31,36 @@ class NoteDetailsContainer extends Component {
   }
 
   handleCommentInput(e) {
-    console.log('handlecommentinput:', e.target.value);
     this.setState({comment: e.target.value});
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.props.createComment(this.state.comment, this.props.note.noteId, this.props.loggedInUser.id);
+    this.clearInput();
+  }
+
+  handleKeyPress(e) {
+    if (e.key == 'Enter') {
+      this.props.createComment(this.state.comment, this.props.note.noteId, this.props.loggedInUser.id);
+      this.clearInput();
+    }
+  }
+
+  clearInput() {
+    this.refs.input.value = '';
   }
 
   render() {
-    console.log('COLOR!', this.props.note.color);
+    const backgroundColor = this.props.note.color.replace(/^#*/, '#');
+
+    const colorStyle = {
+      backgroundColor: backgroundColor,
+      color          : this.getFontColor(this.props.note.color)
+    };
+
+    console.log('COLOR STYLE', colorStyle.color);
+
     return (
     <ReactTransitionGroup
       transitionName="noteDetailSlideIn"
@@ -48,39 +68,58 @@ class NoteDetailsContainer extends Component {
       transitionAppearTimeout={500}
       transitionEnterTimeout={500}
       transitionLeaveTimeout={500}>
-    <div className="note-details-container">
-      <button type="button" className="note-details-close-btn"
-      onClick={this.props.hideNoteComments}> x </button>
-      <div className="note-details-note" style={{backgroundColor: `#${this.props.note.color}`}}>
-        {this.props.note.content}
-      </div>
 
-      <div className="note-details-comments">
-        <div className="inner">
-         {this.state.comments.map((comment, i) => {
-           return <div key={i} className="note-details-comment">{`${comment.name} : ${comment.content}`}</div>;
-         })}
+      <div className="note-details-container">
+        <button type="button"
+        className="note-details-close-btn"
+        onClick={this.props.hideNoteComments}> x </button>
+        <div className="note-details-note"
+        style={colorStyle}>
+          {this.props.note.content}
         </div>
-      </div>
 
-      <form className="comment-form" onSubmit={this.handleSubmit}>
-        <div className="comment-input-container">
-          <textarea className="comment-text-area" placeholder="Comment..." onChange={this.handleCommentInput}
-        required />
-        <button className="comment-submit-button" type="submit"><i className="ion-chatbubble-working"/></button>
+        <div className="note-details-comments">
+          <div className="inner">
+          {this.props.comments.map((comment, i) => {
+            return (
+            <div key={i} className="note-details-comment">
+            {`${comment.user.first_name} : ${comment.text}`}
+            </div>
+            );
+          })}
+          </div>
         </div>
-      </form>
 
-    </div>
+        <form className="comment-form" onSubmit={this.handleSubmit}>
+          <div className="comment-input-container">
+            <textarea ref="input" className="comment-text-area"
+            placeholder="Comment..."
+            onChange={this.handleCommentInput}
+            onKeyPress={(e) => { this.handleKeyPress(e); }}
+            required />
+          <button className="comment-submit-button" type="submit">
+            <i className="ion-chatbubble-working"/>
+          </button>
+          </div>
+        </form>
+
+      </div>
     </ReactTransitionGroup>
     );
   }
 
 }
 
-const mapStateToProps = (state) => ({
-  loggedInUser: state.userReducer.loggedInUser
-});
+const mapStateToProps = (state) => {
+  let { comments } = state.commentsReducer;
+  comments = comments.sort(function(a, b) {
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+  return {
+    loggedInUser: state.userReducer.loggedInUser,
+    comments    : comments
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

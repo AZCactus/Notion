@@ -1,18 +1,17 @@
 import axios from 'axios';
 
-import {RECEIVE_COMMENT, ADD_NEW_COMMENT} from '../constants';
+import {RECEIVE_COMMENTS, ADD_NEW_COMMENT} from '../constants';
 
-export const receiveComments = (comment) => {
+export const receiveComments = (comments) => {
   return {
-    type: RECEIVE_COMMENT,
-    comment
+    type: RECEIVE_COMMENTS,
+    comments
   };
 };
 
 export const addNewComment = (comment, noteId) => ({
   type: ADD_NEW_COMMENT,
-  comment,
-  noteId
+  comment
 });
 
 export const createComment = (text, noteId, userId) => {
@@ -21,16 +20,18 @@ export const createComment = (text, noteId, userId) => {
     return axios.post('/api/comment/', {text, noteId, userId})
       .then((res) => res.data)
       .then((comment) => {
-        dispatch(addNewComment(comment, noteId));
-      });
+        dispatch(addNewComment(comment));
+      })
+      .catch(err => console.error(err));
   };
 };
 
-export const getComments = () => {
+export const getComments = (noteId) => {
   return dispatch => {
-    return axios.get('/api/comment/')
+    return axios.get(`/api/comment/${noteId}`)
       .then((res) => {
         dispatch(receiveComments(res.data));
-      });
+      })
+      .catch(err => console.error(err));
   };
 };
