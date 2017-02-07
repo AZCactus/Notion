@@ -15,7 +15,6 @@ export const addNewComment = (comment, noteId) => ({
 });
 
 export const createComment = (text, noteId, userId) => {
-  console.log('action post create comment:', text, noteId, userId);
   return dispatch => {
     return axios.post('/api/comment/', {text, noteId, userId})
       .then((res) => res.data)
