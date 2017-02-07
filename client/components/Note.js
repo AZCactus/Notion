@@ -4,7 +4,7 @@ import Color from 'color';
 
 export default function Note(props) {
   const {content, focused} = props;
-  const color = props.color.replace(/^#*/, '#');
+  const color = props.color ? props.color.replace(/^#*/, '#') : '#EDD00D';
   const hslArr = Color(color).hsl().array();
   hslArr[2] = hslArr[2] > 32 ? 25 : 85;
   const noteStyle = {

@@ -9,7 +9,7 @@
   import NoteWrapper from '../components/NoteWrapper';
   import DraggableNote from '../components/DraggableNote';
   import snapToGrid from '../components/snapToGrid';
-  import {moveNote, participantMoveNote, addNoteToBoard, noteMover, IndexToZIndex, notesDelete} from '../actions/note';
+  import {deleteNotesFromDatabase, moveNote, participantMoveNote, addNoteToBoard, noteMover, IndexToZIndex, notesDelete} from '../actions/note';
   import {setLoginUser} from '../actions/user';
   import {
     socketConnect,
@@ -73,7 +73,7 @@
       super(props);
       this.boardUpdate = this.boardUpdate.bind(this);
       this.participantMoveNote = this.participantMoveNote.bind(this);
-      this.deleteNotesFromDatabase = this.deleteNotesFromDatabase.bind(this);
+
     }
 
     componentWillMount() {
@@ -83,14 +83,6 @@
 
     }
 
-    deleteNotesFromDatabase() {
-      this.props.deletedNotes.forEach(note => {
-        axios.delete(`/api/notes/${note.id}`)
-          .then((deleted) => (console.log('DELETED NOTES', deleted)))
-          .catch(err => console.log('deleteNotes from datatbase had an error'));
-
-      });
-    }
 
     boardUpdate(note) {
       if (note.board_id === this.props.board.id) {
@@ -117,7 +109,7 @@
     componentWillUnmount() {
       this.props.clearSocketListeners();
       this.props.socketDisconnect();
-      this.deleteNotesFromDatabase();
+      deleteNotesFromDatabase(this.props.deletedNotes);
     }
 
 

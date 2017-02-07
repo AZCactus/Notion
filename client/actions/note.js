@@ -118,6 +118,15 @@ export const notesDelete = (noteId, notes) => {
   };
 };
 
+export const deleteNotesFromDatabase = (deleteNotesArr) => {
+  deleteNotesArr.forEach(note => {
+    axios.delete(`/api/notes/${note.id}`)
+      .then((deleted) => (console.log('DELETED NOTES', deleted)))
+      .catch(err => console.log('deleteNotes from datatbase had an error'));
+
+  });
+};
+
 export function getAllNotes({userId, boardId}) {
   return dispatch =>
     axios.get('/api/notes/', {params: {userId, boardId}})
