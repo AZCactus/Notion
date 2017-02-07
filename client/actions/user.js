@@ -13,8 +13,8 @@ export const removeLoginUser = () => ({
   type: REMOVE_LOGIN_USER,
 });
 
-export const createUser = (firstName, lastName, email, password) => dispatch => {
-  return axios.post('/api/user/', {first_name: firstName, last_name: lastName, email, password })
+export const createUser = (firstName, lastName, email, username, password) => dispatch => {
+  return axios.post('/api/user/', {first_name: firstName, last_name: lastName, username, email, password })
     .then(res => {
       dispatch(setLoginUser(res.data));
     }).catch(err => console.error(err));
@@ -42,5 +42,3 @@ export const checkLoginStatus = () => dispatch => {
     .then(res => dispatch(setLoginUser(res.data)))
     .catch(err => console.error(err));
 };
-
-
