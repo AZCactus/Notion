@@ -29,7 +29,7 @@ class CustomDragLayerContainer extends Component {
 
         <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board}/>
         <CustomDragLayer snapToGrid={snapToGridWhileDragging} />
-        <div>
+        <div className="snapTo">
         <p>
           <label htmlFor="snapToGridWhileDragging">
             <input

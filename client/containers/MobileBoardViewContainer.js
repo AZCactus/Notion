@@ -3,6 +3,7 @@ import {bindActionCreators, compose} from 'redux';
 import {connect} from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 import axios from 'axios';
+import MediaQuery from 'react-responsive';
 import {NOTE} from '../constants';
 import NoteWrapper from '../components/NoteWrapper';
 import snapToGrid from '../components/snapToGrid';
@@ -85,6 +86,7 @@ class MobileBoardViewContainer extends Component {
 
     return (
       <div>
+         <MediaQuery query='(min-device-width: 800px)'>
         <h4 style={{textAlign: 'center'}}>{board.name}</h4>
         <ol>
           {
@@ -108,6 +110,7 @@ class MobileBoardViewContainer extends Component {
       <div className="trashcan">
           <TrashCan notesDelete={notesDelete} notes={notes}/>
       </div>
+    </MediaQuery>
 
       </div>
     );
