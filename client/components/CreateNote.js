@@ -9,6 +9,7 @@ import {genShortHash} from '../utils/stringHash';
 import presetColors from 'ROOT/client/presetColors.json';
 const initState = {
   content           : '',
+  mentions          : [],
   parsedContent     : [],
   color             : Color.rgb([ 237, 208, 13 ]).hex(),
   caretPos          : 0,
@@ -39,7 +40,8 @@ export default class CreateNote extends Component {
       this.touchStartHandler,
       this.touchEndHandler,
       this.touchMoveHandler,
-      this.parseContent
+      this.parseContent,
+      this.autoComplete
     );
   }
 
@@ -75,7 +77,6 @@ export default class CreateNote extends Component {
       this.props.addSocketListener('connect', this.join);
       this.setState({hasJoined: true});
     }
-    this.parseContent(this.state.content);
   }
 
   join() {
@@ -156,8 +157,9 @@ export default class CreateNote extends Component {
       position  : window.innerHeight || window.screen.height
     });
     this.props.createNote({
-      content: this.state.content,
-      color  : this.state.color
+      content : this.state.content,
+      color   : this.state.color,
+      mentions: this.state.mentions
     }, this.props.board.id)
       .then(() => {
         this.setState(Object.assign(initState, {flickState: 'returning'}));
@@ -166,7 +168,7 @@ export default class CreateNote extends Component {
 
   parseContent(content) {
     const caretPos = this.input.selectionStart;
-    const users = this.props.queriedUsers || [ {username: 'bob'}, {username: 'babs'} ];
+    const users = this.props.queriedUsers;
     const parsedContent = [];
     let currentWord = '';
 
@@ -185,30 +187,31 @@ export default class CreateNote extends Component {
 
         if (caretPos > startIndex && caretPos <= startIndex + currentWord.length) {
           this.props.searchUsername(currentWord.slice(1));
-          console.log('USERS', users.map((user) => user.username));
-          parsedContent.push(
-            <span key={startIndex} style={{background: '#77f', color: '#f77'}}>
-              {currentWord}
-            </span>
-          );
+          parsedContent.push({content: currentWord, isMention: true, isSuggesting: true});
         } else {
-          parsedContent.push(
-            <span key={startIndex} style={{background: '#77f', color: '#f77'}}>
-              {currentWord}
-            </span>
-          );
+          parsedContent.push({content: currentWord, isMention: true, isSuggesting: false});
         }
-        parsedContent.push(tail, char);
+        parsedContent.push({content: tail + (char || '')});
       } else {
         currentWord = '';
-        parsedContent.push(char);
+        parsedContent.push({content: char});
       }
     }
 
     this.setState({content, caretPos, parsedContent});
   }
 
+  autoComplete(find, replace, id) {
+    const content = this.state.content.replace(find, replace);
+    this.setState((state) => {
+      return Object.assign({}, state, {mentions: [ ...state.mentions, id ]});
+    });
+    this.parseContent(content);
+  }
+
   render() {
+    console.log(this.state.mentions);
+    const suggestedUsers = this.props.queriedUsers;
     const noteWrapperStyle = {zIndex: 1};
     noteWrapperStyle.transform = `rotate(${this.state.position * 0.02}deg)`;
     noteWrapperStyle.top = this.state.position;
@@ -241,7 +244,29 @@ export default class CreateNote extends Component {
               <Note
                 editable={true}
                 color={this.state.color}>
-                <div>{this.state.parsedContent}</div>
+                <div>
+                  {this.state.parsedContent.map(part => {
+                    if (part.isMention && part.isSuggesting) {
+                      return (
+                        <span style={{background: '#77f', color: '#f77'}}>
+                          {part.content}
+                          <ul>
+                            {suggestedUsers.map((user) => (
+                              <li>
+                                <button onClick={() => this.autoComplete(part.content, '@' + user.username, user.id)}>{user.username}</button>
+                              </li>
+                            ))}
+                          </ul>
+                        </span>);
+                    } else if (part.isMention) {
+                      return (
+                      <span style={{background: '#f77', color: '#77f'}}>
+                        {part.content}
+                      </span>
+                    );
+                    } else return part.content;
+                  })}
+                </div>
               </Note>
               <input type="text"
                 value={this.state.content}
