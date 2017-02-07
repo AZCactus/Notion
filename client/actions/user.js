@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {browserHistory} from 'react-router';
 
-import { SET_LOGIN_USER, REMOVE_LOGIN_USER } from '../constants' ;
+import { SET_LOGIN_USER, REMOVE_LOGIN_USER, RECEIVE_USER_QUERY } from '../constants' ;
 
 
 export const setLoginUser = (user) => ({
@@ -11,6 +11,11 @@ export const setLoginUser = (user) => ({
 
 export const removeLoginUser = () => ({
   type: REMOVE_LOGIN_USER,
+});
+
+export const receiveUserQuery = (matchedUsers) => ({
+  type   : RECEIVE_USER_QUERY,
+  payload: matchedUsers
 });
 
 export const createUser = (firstName, lastName, email, username, password) => dispatch => {
@@ -29,8 +34,14 @@ export const loginUser = (email, password) => dispatch => {
 
 export const logoutUser = () => dispatch => {
   return axios.delete('/api/auth/')
-  .then(res => dispatch(removeLoginUser(res.data)))
-  .catch(err => console.error(err));
+    .then(res => dispatch(removeLoginUser(res.data)))
+    .catch(err => console.error(err));
+};
+
+export const searchUsername = (username) => dispatch => {
+  return axios.get('/api/auth/', {params: {searchUsername: username}})
+    .then(res => dispatch(receiveUserQuery(res.data)))
+    .catch(err => console.error(err));
 };
 
 /* check login state by calling server and checking user sessions */
