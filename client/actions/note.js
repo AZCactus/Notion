@@ -137,7 +137,6 @@ export function createNote(note, boardId) {
       boardId: boardId || note.boardId
     })
       .then(({data}) => {
-        console.log('DISPATCH SOCKET', data);
         dispatch(socketEmit('note', data));
       })
       .catch(err => console.warn(err));

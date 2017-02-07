@@ -1,4 +1,6 @@
-import {DELETE_NOTE, DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE } from '../constants';
+
+import {DELETE_NOTE, DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE, ADD_NEW_COMMENT } from '../constants';
+
 
 const initState = {
   all                  : [],
@@ -14,6 +16,11 @@ export default function noteReducer(state = initState, action) {
   switch (action.type) {
   case RECEIVE_NOTE:
     nextState.all = [ ...nextState.all, action.payload ];
+    break;
+
+  case ADD_NEW_COMMENT:
+    const commentArr = nextState.all[action.noteId].comments;
+    nextState.all[action.noteId].comments = [ ...commentArr, action.comment ];
     break;
 
   case RECEIVE_NOTES:

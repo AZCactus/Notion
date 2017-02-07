@@ -47,10 +47,9 @@ export class ParticipantsContainer extends Component {
 
   connect() {
     this.setState({ status: 'connected'});
-    // if (isEmpty(this.props.loggedInUser)) {
-    //   browserHistory.push('/signup');
-    // }
-    if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
+    if (false && isEmpty(this.props.loggedInUser)) {
+      browserHistory.push('/signup');
+    } else if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
       this.props.socketEmit('join',
         {
           room: genShortHash(this.props.selectedBoard.id),
