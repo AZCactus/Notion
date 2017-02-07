@@ -81,7 +81,6 @@ router.delete('/:id', (req, res, next) => {
 });
 
 router.delete('/bulk', (req, res, next) => {
-  console.log('REQ QUERY', req.query);
   let deleteArr;
 
   deleteArr.forEach((note) => {

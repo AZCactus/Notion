@@ -67,7 +67,6 @@ export default function noteReducer(state = initState, action) {
   case DELETE_NOTE:
 
     nextState.deletedNotes = [ ...nextState.deletedNotes, action.deletedNote ];
-    console.log('NEXT STATE DELETED NOTE', nextState.deletedNotes);
     break;
 
 
