@@ -1,12 +1,13 @@
 
-import {DELETE_NOTE, DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE, ADD_NEW_COMMENT } from '../constants';
+import {DELETE_NOTE, DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE, ADD_NEW_COMMENT, NOTE_DETAIL } from '../constants';
 
 
 const initState = {
   all                  : [],
   selected             : null,
   allBoardSpecificNotes: {},
-  deletedNotes         : []
+  deletedNotes         : [],
+  selectedNoteDetails  : null
 
 };
 
@@ -40,6 +41,10 @@ export default function noteReducer(state = initState, action) {
         return note;
       }
     });
+    break;
+
+  case NOTE_DETAIL:
+    nextState.selectedNoteDetails = action.selectedNoteDetails;
     break;
 
   case ADD_NOTE_TO_BOARD:

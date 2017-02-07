@@ -55,8 +55,7 @@ class DraggableNote extends PureComponent {
 
 
   render() {
-    const { connectDragSource, content} = this.props;
-
+    const { connectDragSource, content, id} = this.props;
 
     return connectDragSource(
 
@@ -65,6 +64,7 @@ class DraggableNote extends PureComponent {
           <NoteWrapper
           color={this.props.color}
           content={content}
+          id={id}
           showNoteComments={this.props.showNoteComments}
           />
         </div>

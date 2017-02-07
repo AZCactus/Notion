@@ -10,6 +10,7 @@ import { socketConnect, socketDisconnect, clearSocketListeners } from '../action
 import { bindActionCreators } from 'redux';
 import bindHandlers from '../utils/bindHandlers';
 import NoteDetailsContainer from './NoteDetailsContainer';
+import { selectedNoteDetail } from '../actions/note';
 
 // import Clipboard from 'react-clipboard';
 
@@ -85,11 +86,6 @@ class BoardContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      showNoteDetails: false,
-      noteColor      : '',
-      content        : '',
-    };
     bindHandlers(this,
       this.showNoteComments,
       this.hideNoteComments
@@ -104,14 +100,12 @@ class BoardContainer extends Component {
   }
 
 
-  showNoteComments(color, content) {
-    this.setState({showNoteDetails: true});
-    this.setState({noteColor: color});
-    this.setState({content: content});
+  showNoteComments(color, content, noteId) {
+    this.props.selectedNoteDetail({color, content, noteId});
   }
 
   hideNoteComments() {
-    this.setState({showNoteDetails: false});
+    this.props.selectedNoteDetail();
   }
 
 
@@ -126,10 +120,9 @@ class BoardContainer extends Component {
 
     return (
       <div className="col-xs-12 board-page-container" key={ this.props.board.id }>
-        {this.state.showNoteDetails ?
+        {this.props.selectedNoteDetails ?
           <NoteDetailsContainer
-            noteColor={this.state.noteColor}
-            content={this.state.content}
+            note={this.props.selectedNoteDetails}
             hideNoteComments={this.hideNoteComments}
           /> : null}
         <span className="text-center">
@@ -154,13 +147,14 @@ class BoardContainer extends Component {
 
 
 const mapStateToProps = (state) => ({
-  board: state.board.selectedBoard,
-  notes: state.noteReducer.all,
-  hash : state.board.selectedBoard.hash
+  board              : state.board.selectedBoard,
+  notes              : state.noteReducer.all,
+  hash               : state.board.selectedBoard.hash,
+  selectedNoteDetails: state.noteReducer.selectedNoteDetails
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({socketConnect, socketDisconnect, clearSocketListeners }, dispatch);
+  return bindActionCreators({socketConnect, socketDisconnect, clearSocketListeners, selectedNoteDetail }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);

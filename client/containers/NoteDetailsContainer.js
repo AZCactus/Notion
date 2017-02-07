@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { getComments, createComment } from '../actions/comment';
 
 import ReactTransitionGroup from 'react-addons-css-transition-group';
 
@@ -24,6 +25,10 @@ class NoteDetailsContainer extends Component {
     this.handleCommentInput = this.handleCommentInput.bind(this);
   }
 
+  componentWillMount() {
+    this.props.getComments(this.props.note.noteId);
+  }
+
   handleCommentInput(e) {
     console.log('handlecommentinput:', e.target.value);
     this.setState({comment: e.target.value});
@@ -31,12 +36,11 @@ class NoteDetailsContainer extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log('submit comment!');
-    this.setState({comments: [ {id: 5, name: this.props.loggedInUser.first_name, content: this.state.comment}, ...this.state.comments ]});
-    this.setState({comment: ''});
+    this.props.createComment(this.state.comment, this.props.note.noteId, this.props.loggedInUser.id);
   }
 
   render() {
+    console.log('COLOR!', this.props.note.color);
     return (
     <ReactTransitionGroup
       transitionName="noteDetailSlideIn"
@@ -47,8 +51,8 @@ class NoteDetailsContainer extends Component {
     <div className="note-details-container">
       <button type="button" className="note-details-close-btn"
       onClick={this.props.hideNoteComments}> x </button>
-      <div className="note-details-note" style={{backgroundColor: '#ffde00'}}>
-        NOTE DETAILS AWOIJAWO GIJAWG OIAJWGO AIWJGO AWIGJA OWIGJAOWI GJAOW IGJAO WIGBA WOI GJAOWIG JAWOI GJAOWIGJ
+      <div className="note-details-note" style={{backgroundColor: `#${this.props.note.color}`}}>
+        {this.props.note.content}
       </div>
 
       <div className="note-details-comments">
@@ -76,11 +80,13 @@ class NoteDetailsContainer extends Component {
 
 const mapStateToProps = (state) => ({
   loggedInUser: state.userReducer.loggedInUser
-  // selectedNote
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getComments  : (noteId) => { dispatch(getComments(noteId)); },
+    createComment: (text, noteId, userId) => { dispatch(createComment(text, noteId, userId)); }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteDetailsContainer);

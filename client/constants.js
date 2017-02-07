@@ -20,6 +20,7 @@ export const ADD_NOTE_TO_BOARD = 'ADD_NOTE_TO_BOARD';
 export const SET_NOTE_COORDS = 'SET_NOTE_COORDS';
 export const NOTE_ARRAY_INDEX_PUSH = 'NOTE_ARRAY_INDEX_PUSH';
 export const DELETE_NOTE = 'DELETE_NOTE';
+export const NOTE_DETAIL = 'NOTE_DETAIL';
 
 
 /* USER CONSTANTS */
@@ -39,6 +40,4 @@ export const CONNECT = 'CONNECT';
 export const ADD_LISTENER = 'ADD_LISTENER';
 export const REMOVE_LISTENER = 'REMOVE_LISTENER';
 
-/* COMMENTS */
-export const ADD_COMMENT = 'ADD_COMMENT';
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+

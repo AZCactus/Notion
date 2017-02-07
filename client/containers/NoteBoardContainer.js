@@ -113,7 +113,7 @@
     }
 
 
-    renderNote(item, key, expandOneNote) {
+    renderNote(item, key) {
       return (
         <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
       );
@@ -128,7 +128,7 @@
         <div style={styles}>
         {
           notes.map((note) => {
-            return this.renderNote(note, note.id, this.props.expandOneNote);
+            return this.renderNote(note, note.id);
           }
       )}
       <div className="trashcan">
