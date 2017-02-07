@@ -47,7 +47,6 @@ class MobileBoardViewContainer extends Component {
   deleteNotesFromDatabase() {
     this.props.deletedNotes.forEach(note => {
       axios.delete(`/api/notes/${note.id}`)
-        .then((deleted) => (console.log('DELETED NOTES', deleted)))
         .catch(err => console.log('deleteNotes from datatbase had an error'));
 
     });
