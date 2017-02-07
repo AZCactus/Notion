@@ -6,19 +6,6 @@ const router = new Router();
 const {User} = require('ROOT/server/models');
 const chalk = require('chalk');
 
-/* get users */
-router.get('/', (req, res, next) => {
-  const {searchUsername} = req.query;
-  User.findAll({
-    where: {
-      username: {
-        $like: `${searchUsername}%`
-      }
-    }
-  })
-    .then(users => res.send(users))
-    .catch(next);
-});
 
 /* create user */
 router.post('/', (req, res, next) => {
@@ -36,6 +23,13 @@ router.post('/', (req, res, next) => {
         return res.send(user);
       });
     })
+    .catch(next);
+});
+
+/* get users */
+router.get('/', (req, res, next) => {
+  User.findAll()
+    .then(users => res.send(users))
     .catch(next);
 });
 

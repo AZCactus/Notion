@@ -149,10 +149,9 @@ export function getAllNotes({userId, boardId}) {
 export function createNote(note, boardId) {
   return dispatch =>
     axios.post('/api/notes/', {
-      content : note.content,
-      color   : note.color,
-      mentions: note.mentions || [],
-      boardId : boardId || note.boardId
+      content: note.content,
+      color  : note.color,
+      boardId: boardId || note.boardId
     })
       .then(({data}) => {
         dispatch(socketEmit('note', data));
