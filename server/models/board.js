@@ -12,10 +12,11 @@ const Board = db.define('board', {
   hooks: {
     afterCreate: function(board) {
       const boardHash = genShortHash(board.id);
+      console.log('BOARDHASH SEED', boardHash);
       board.update({hash: boardHash})
-      .then(value => {
-        return value;
-      });
+        .then(value => {
+          return value;
+        });
     }
   }
 });
