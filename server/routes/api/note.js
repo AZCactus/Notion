@@ -5,21 +5,29 @@ const {Note, User, Board} = require('ROOT/server/models');
 const router = module.exports = new Router();
 
 router.get('/', (req, res, next) => {
+  const {userId, boardId, mentionedUserId, limit} = req.query;
   const noteQuery = {include: []};
 
-  if (req.query && req.query.userId) {
+  if (userId) {
     noteQuery.include.push({
       model: User,
       where: {id: req.query.userId}
     });
   }
-  if (req.query && req.query.boardId) {
+  if (mentionedUserId) {
+    noteQuery.include.push({
+      model: User,
+      as   : 'MentionedUser',
+      where: {id: req.query.mentionedUserId}
+    });
+  }
+  if (boardId) {
     noteQuery.include.push({
       model: Board,
       where: {id: req.query.boardId}
     });
   }
-  if (req.query && req.query.limit) {
+  if (limit) {
     noteQuery.limit = req.query.limit;
   }
 
