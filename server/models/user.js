@@ -18,6 +18,11 @@ const User = db.define('user', {
     allowNull: false,
     unique   : true
   },
+  username: {
+    type     : Sequelize.STRING,
+    allowNull: false,
+    unique   : true
+  },
   password: Sequelize.TEXT,
 }, {
   instanceMethods: {
