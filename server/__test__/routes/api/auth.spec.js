@@ -1,7 +1,7 @@
 const {expect} = require('chai');
 const request = require('supertest');
-const {User, db} = require('ROOT/server/models');
-const app = require('ROOT/server');
+const {User, db} = require(',../../../models');
+const app = require('../../../../server');
 
 
 describe('Users Auth Route:', () => {

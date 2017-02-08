@@ -1,5 +1,5 @@
 const sh = require('shorthash');
-const { randomString } = require('ROOT/lib/utils/random');
+const { randomString } = require('../../lib/utils/random');
 
 // 6 letter alpha numeric room name generator
 const genRoomName = () => {
