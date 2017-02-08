@@ -49,7 +49,6 @@ export class SignupContainer extends Component {
   loginForm(e) {
     e.preventDefault();
     this.props.loginUser(this.state.email, this.state.password, this);
-    // this.setState({dirty: true});
   }
 
   changeForm(type) {
