@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 
 const {green, blue, red} = require('../lib/utils/chalk');
 
-const {Note} = require('ROOT/server/models');
+const {Note} = require('../models');
 
 /* active connections */
 const connections = {};

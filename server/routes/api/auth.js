@@ -5,7 +5,7 @@ const Router = express.Router;
 const router = new Router();
 
 const passport = require('passport');
-const {User} = require('ROOT/server/models');
+const {User} = require('../../models');
 
 const LocalStrategy = require('passport-local').Strategy;
 

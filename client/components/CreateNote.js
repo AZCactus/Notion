@@ -7,7 +7,7 @@ import ColorPicker from './ColorPicker';
 import AutoSuggest from 'react-autosuggest';
 import Color from 'color';
 import {genShortHash} from '../utils/stringHash';
-import presetColors from 'ROOT/client/presetColors.json';
+import presetColors from '../presetColors.json';
 const initState = {
   content           : '',
   mentions          : [],

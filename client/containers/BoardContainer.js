@@ -115,8 +115,8 @@ class BoardContainer extends Component {
   }
 
   render() {
-    ``;
-    const value = `localhost:3030/note?board=${this.props.board.hash}${window.location.host}${window.location.host === 'localhost' ? window.location.port : ''}` + value;
+
+    const value = `${window.location.host}${window.location.host === 'localhost' ? window.location.port : ''}/note?board=${this.props.board.hash}`;
 
 
     return (

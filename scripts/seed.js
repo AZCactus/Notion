@@ -1,7 +1,7 @@
 'use strict';
 
-const {db, User, Board, Note, BoardPermission} = require('ROOT/server/models');
-const {randomString, randomNumber, randomColor} = require('ROOT/lib/utils/random');
+const {db, User, Board, Note, BoardPermission} = require('../server/models');
+const {randomString, randomNumber, randomColor} = require('../lib/utils/random');
 const userCount = 10;
 const boardsPerUser = [ 3, 8 ];
 const notesPerBoard = [ 4, 12 ];
