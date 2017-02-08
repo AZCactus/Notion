@@ -245,7 +245,7 @@ export default class CreateNote extends Component {
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
         </Link>
         <div className="row">
-          <div className="col-xs-10 col-xs-offset-1" style={{fontSize: '6vw'}}>
+          <div className="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4" style={{fontSize: '6vw'}}>
             <div
               style={noteWrapperStyle}
               onClick={!!this.input && this.clickHandler}
@@ -309,7 +309,8 @@ export default class CreateNote extends Component {
         <div className="row">
           <button
             onClick={this.submitHandler}
-            className="btn btn-primary block ml-auto mr-auto">
+            className="btn btn-primary block ml-auto mr-auto"
+            style={{width: '80%'}}>
             Submit Note
           </button>
         </div>

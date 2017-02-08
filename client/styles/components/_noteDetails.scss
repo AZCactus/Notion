@@ -9,15 +9,21 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
 
 .note-details-close-btn {
   position: absolute;
-  top: 1%;
+  top: 0.1%;
   right: 1%;
   background-color: #192C46;
   border-radius: 50%;
   color: white;
   border: 0;
+  font-size: 1em;
+  z-index:999;
 }
 
 .note-details-container {
+  // position: absolute;
+  top: 1%;
+  width: 94vw;
+  height: 90vh;
   font-family: "Open Sans", sans-serif;
   padding: 1.5em;
   margin: 0.5em auto;
@@ -25,6 +31,7 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
   background: $bgd-color;
   border: 0;
   z-index: 99999;
+  box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
 }
 
 .note-details-note {
@@ -49,7 +56,7 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
 
 .comment-text-area {
   margin: 0;
-  padding: 0;
+  padding: 0.5em;
   width: 80%;
   height: 100%;
   margin-right: 5%;
@@ -68,7 +75,7 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
   width: 15%;
   border: none;
   padding: 0;
-  background-color: #69bdf4;
+  background-color: #fff;
 }
 
 .note-details-comments {
@@ -139,6 +146,7 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
 .note-details-container {
   position: absolute;
   width: 40vw;
+  height: 90vh;
   left: 30vw;
 }
 

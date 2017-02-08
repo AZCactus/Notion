@@ -30,6 +30,12 @@ class NoteDetailsContainer extends Component {
     this.props.getComments(this.props.note.noteId);
   }
 
+  componentWillReceiveProps(props, nextProps) {
+    if (props.note.noteId !== this.props.note.noteId) {
+      this.props.getComments(this.props.note.noteId);
+    }
+  }
+
   handleCommentInput(e) {
     this.setState({comment: e.target.value});
   }
@@ -58,8 +64,6 @@ class NoteDetailsContainer extends Component {
       backgroundColor: backgroundColor,
       color          : this.getFontColor(this.props.note.color)
     };
-
-    console.log('COLOR STYLE', colorStyle.color);
 
     return (
     <ReactTransitionGroup
@@ -93,12 +97,12 @@ class NoteDetailsContainer extends Component {
         <form className="comment-form" onSubmit={this.handleSubmit}>
           <div className="comment-input-container">
             <textarea ref="input" className="comment-text-area"
-            placeholder="Comment..."
+            placeholder="Leave a comment"
             onChange={this.handleCommentInput}
             onKeyPress={(e) => { this.handleKeyPress(e); }}
             required />
           <button className="comment-submit-button" type="submit">
-            <i className="ion-chatbubble-working"/>
+            <i className="ion-ios-chatbubble-outline"/>
           </button>
           </div>
         </form>
