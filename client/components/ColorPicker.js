@@ -17,6 +17,7 @@ export function ColorPicker(props) {
 
   return (
     <div className="c-color-picker">
+      <button onClick={props.toggle} className="c-color-picker__close">x</button>
       <div className="c-color-picker__inner">
         <div className="c-color-picker__sample" style={{background: props.color}}></div>
         <div className="c-color-picker__saturation">
