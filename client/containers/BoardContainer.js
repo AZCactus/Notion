@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 const ReactDOM = require('react-dom');
-
+import {Link} from 'react-router';
 import store from '../store';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
@@ -109,8 +109,6 @@ class BoardContainer extends Component {
   }
 
 
-
-
   handleCopy(e) {
     console.log('copied', e);
   }
@@ -126,14 +124,23 @@ class BoardContainer extends Component {
             hideNoteComments={this.hideNoteComments}
           /> : null}
         <span className="text-center">
+          <div className='col-xs-12'>
           <h2>{ this.props.board.name }</h2>
-          <div>
-            <p>Press Cmd + C to copy:</p>
-            <pre className='ClipboardBlocking'>{value}</pre>
-            <Clipboard value={value}
-              onCopy={this.handleCopy} />
           </div>
         </span>
+            <div className='col-xs-3'>
+        <span className="text-right">
+          <p>create note:</p>
+          <Link to={`/note?board=${this.props.board.hash}`}>
+
+
+          <pre className='ClipboardBlocking'>{value}</pre>
+            <Clipboard value={value}
+              onCopy={this.handleCopy} />
+
+           </Link>
+        </span>
+            </div>
           <div>
             <div className="screen col-xs-12">
               <CustomDragLayerContainer {...this.props} showNoteComments={this.showNoteComments}/>

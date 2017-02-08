@@ -1,5 +1,16 @@
-.snapTo {
-  // display: none;
+.hideThis {
+  display: none;
+}
+
+
+@media (max-width: 799px) {
+  .snapTo {
+    display: none;
+  }
+
+  .trashcan {
+    display: none;
+  }
 }
 
 .mobileListItem {
