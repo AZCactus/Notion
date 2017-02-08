@@ -48,12 +48,11 @@ export class SignupContainer extends Component {
 
   loginForm(e) {
     e.preventDefault();
-    this.props.loginUser(this.state.email, this.state.password);
-    this.setState({dirty: true});
+    this.props.loginUser(this.state.email, this.state.password, this);
+    // this.setState({dirty: true});
   }
 
   changeForm(type) {
-    this.setState({dirty: false});
     this.setState({type: type});
   }
 
@@ -99,7 +98,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   createUser: (firstName, lastName, email, username, password) =>
   dispatch(createUser(firstName, lastName, email, username, password)),
-  loginUser       : (email, password) => dispatch(loginUser(email, password)),
+  loginUser: (email, password, state) => {
+    dispatch(loginUser(email, password))
+    .then(res => {
+      if (res) {
+        state.setState({dirty: true});
+      }
+    });
+  },
   checkLoginStatus: () => dispatch(checkLoginStatus())
 });
 
