@@ -6,17 +6,26 @@ button:focus {
   outline: none;
 }
 
-.signup-form-container {
+.form-container {
   font-family: "Open Sans", sans-serif;
   width: 90vw;
-  height: 65vh;
-  min-height: 28em;
+
   background-color:#fff;
   margin: 0 auto;
   margin-top: 2em;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
   border-bottom-right-radius: 60px 10px;
   border-bottom-left-radius: 60px 10px;
+}
+
+.login {
+  height: 30vh;
+  min-height: 20em;
+}
+
+.signup {
+  height: 65vh;
+  min-height: 32em;
 }
 
 .signup-label {
@@ -131,14 +140,14 @@ button:focus {
   and (min-device-width: 768px)
  {
 
-  .signup-form-container {
+  .form-container {
   width: 40vw;
-  height: 50vh;
   background-color:#fff;
   margin: 0 auto;
   margin-top: 2em;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
 }
+
 
 }
 
