@@ -26,9 +26,11 @@
   import TrashCan from '../components/NoteBoardTrashCan';
 
   const styles = {
-    height  : 575,
-    width   : 1350,
-    position: 'relative'
+    height  : '100vh',
+    width   : '100%',
+    border  : '1px black line',
+    position: 'relative',
+
   };
 
 

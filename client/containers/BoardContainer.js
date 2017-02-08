@@ -123,26 +123,20 @@ class BoardContainer extends Component {
             note={this.props.selectedNoteDetails}
             hideNoteComments={this.hideNoteComments}
           /> : null}
-        <span className="text-center">
-          <div className='col-xs-12'>
-          <h2>{ this.props.board.name }</h2>
+        <div className='col-xs-12 clearfix'>
+          <div className="text-right" style={{position: 'absolute', right: '0', top: '0', zIndex: '100'}}>
+            <p>create note:</p>
+            <Link to={`/note?board=${this.props.board.hash}`}>
+              <pre className='ClipboardBlocking'>{value}</pre>
+              <Clipboard value={value}
+                onCopy={this.handleCopy} />
+
+            </Link>
           </div>
-        </span>
-            <div className='col-xs-3'>
-        <span className="text-right">
-          <p>create note:</p>
-          <Link to={`/note?board=${this.props.board.hash}`}>
-
-
-          <pre className='ClipboardBlocking'>{value}</pre>
-            <Clipboard value={value}
-              onCopy={this.handleCopy} />
-
-           </Link>
-        </span>
-            </div>
-          <div>
-            <div className="screen col-xs-12">
+            <h2 className="text-center" style={{width: '10em', margin: '.5em auto', wordWrap: 'break-word'}}>{ this.props.board.name }</h2>
+        </div>
+        <div>
+            <div>
               <CustomDragLayerContainer {...this.props} showNoteComments={this.showNoteComments}/>
             </div>
           </div>
