@@ -136,8 +136,10 @@ class BoardContainer extends Component {
 
             </Link>
           </div>
-            <h2 className="text-center" style={{width: '10em', left: '50vw', transform: 'translateX(-50%)', margin: '.5em auto', wordWrap: 'break-word', position: 'absolute'}}>{ this.props.board.name }</h2>
-        </div>
+          <Link to={`/note?board=${this.props.board.hash}`}>
+            <h2 className="text-center" style={{width: '10em', left: '50vw', transform: 'translateX(-50%)', margin: '.5em auto', wordWrap: 'break-word', position: 'absolute', zIndex: 30}}>{ this.props.board.name }</h2>
+          </Link>
+      </div>
         <div>
             <div>
               <CustomDragLayerContainer {...this.props} showNoteComments={this.showNoteComments}/>
