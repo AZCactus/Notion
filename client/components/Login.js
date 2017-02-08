@@ -23,8 +23,8 @@ const Login = (props) => {
           id="login-password-input-field"
           onChange={(e) => { props.handleInput(e); }}
           required />
-          { warning && <div className="alert alert-warning">{warning}</div> }
         </div>
+        { warning && <div className="alert alert-warning">{warning}</div> }
         <button className="login-submit-button" type="submit">
         Login
         </button>

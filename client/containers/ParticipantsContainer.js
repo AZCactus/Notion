@@ -23,7 +23,7 @@ export class ParticipantsContainer extends Component {
     this.state = {
       totalParticipants: 0,
       participants     : [],
-      display          : false,
+      display          : true,
     };
 
     this.connect = this.connect.bind(this);

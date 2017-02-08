@@ -4,6 +4,7 @@
   import {DropTarget} from 'react-dnd';
   import {connect} from 'react-redux';
   import { browserHistory } from 'react-router';
+  import MediaQuery from 'react-responsive';
   import axios from 'axios';
   import {NOTE} from '../constants';
   import NoteWrapper from '../components/NoteWrapper';
@@ -33,6 +34,15 @@
   const trashStyles = {
     top : 900,
     left: 900
+  };
+
+  const noteStyles = {
+    height  : '50px',
+    width   : '50px',
+    border  : '1px solid black',
+    position: 'relative',
+
+
   };
 
 
@@ -73,7 +83,6 @@
       super(props);
       this.boardUpdate = this.boardUpdate.bind(this);
       this.participantMoveNote = this.participantMoveNote.bind(this);
-
     }
 
     componentWillMount() {
@@ -122,10 +131,14 @@
     render() {
 
 
-      const {notesDelete, movedNote, notes, connectDropTarget} = this.props;
+      const {notesDelete, movedNote, notes, connectDropTarget, board} = this.props;
+      let backgroundColor;
 
       return connectDropTarget(
-        <div style={styles}>
+      <div>
+        <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
+            <div style={styles}>
+
         {
           notes.map((note) => {
             return this.renderNote(note, note.id);
@@ -134,6 +147,37 @@
       <div className="trashcan">
           <TrashCan style={trashStyles} notesDelete={notesDelete} notes={notes}/>
       </div>
+    </div>
+    </MediaQuery>
+
+    <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
+
+     <ol className='mobileOL'>
+       {
+       notes.map((note, index) => {
+         console.log('NOTE MOBILE', note);   backgroundColor = note.color.replace(/^#*/, '#');
+         return (
+
+         <li key={`noteboard_${note.id}`} className="mobileListItem col-xs-12"
+          onClick={() => {this.props.showNoteComments(note.color, note.content, note.id); }}>
+
+
+           <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}
+            />
+
+
+           <span className='mobileNoteContent col-xs-10'>{note.content}</span>
+
+         </li>
+
+         );
+       })
+     }
+   </ol>
+ {/*<div className="trashcan">
+     <TrashCan notesDelete={notesDelete} notes={notes}/>
+ </div>*/}
+</MediaQuery>
 
       </div>
     );
@@ -144,11 +188,15 @@
 
     return {
       notes: state.noteReducer.all.filter(note => {
+
         return ownProps.board.id === note.board_id;
       }),
       user        : state.userReducer.loggedInUser,
       zIndexNotes : state.noteReducer.zIndexNotes,
       deletedNotes: state.noteReducer.deletedNotes,
+
+      board: state.board.selectedBoard
+
     };
 
   };

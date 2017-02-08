@@ -74,7 +74,7 @@ export class SignupContainer extends Component {
       transitionAppearTimeout={500}
       transitionEnterTimeout={500}
       transitionLeaveTimeout={500}>
-        <div className='signup-form-container' >
+        <div className={`form-container ${this.state.type}`} >
           {this.state.type === 'signup' ?
             <Signup submitForm={this.submitForm}
                     changeForm={this.changeForm}

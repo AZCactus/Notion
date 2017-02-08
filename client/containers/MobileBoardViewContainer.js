@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {bindActionCreators, compose} from 'redux';
 import {connect} from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import axios from 'axios';
+import MediaQuery from 'react-responsive';
 import {NOTE} from '../constants';
 import NoteWrapper from '../components/NoteWrapper';
 import snapToGrid from '../components/snapToGrid';
@@ -23,9 +24,12 @@ import TrashCan from '../components/NoteBoardTrashCan';
 
 
 const noteStyles = {
-  height  : 100,
-  width   : 100,
-  position: 'relative'
+  height  : '50px',
+  width   : '50px',
+  border  : '1px solid black',
+  position: 'relative',
+
+
 };
 
 
@@ -33,8 +37,8 @@ class MobileBoardViewContainer extends Component {
   constructor(props) {
     super(props);
     this.boardUpdate = this.boardUpdate.bind(this);
-    this.participantMoveNote = this.participantMoveNote.bind(this);
-    this.deleteNotesFromDatabase = this.deleteNotesFromDatabase.bind(this);
+    // this.participantMoveNote = this.participantMoveNote.bind(this);
+    // this.deleteNotesFromDatabase = this.deleteNotesFromDatabase.bind(this);
   }
 
   componentWillMount() {
@@ -44,13 +48,6 @@ class MobileBoardViewContainer extends Component {
 
   }
 
-  deleteNotesFromDatabase() {
-    this.props.deletedNotes.forEach(note => {
-      axios.delete(`/api/notes/${note.id}`)
-        .catch(err => console.log('deleteNotes from datatbase had an error'));
-
-    });
-  }
 
   boardUpdate(note) {
     if (note.board_id === this.props.board.id) {
@@ -58,20 +55,20 @@ class MobileBoardViewContainer extends Component {
     }
   }
 
-  participantMoveNote(data) {
-    const key = Object.keys(data);
-    let left;
-    let top;
-    const coordObj = data[key];
-    for (const coords in coordObj) {
-      if (coords === 'left') {
-        left = coordObj[coords];
-      } else {
-        top = coordObj[coords];
-      }
-    }
-    store.dispatch(moveNote(Number(key[0]), left, top));
-  }
+  // participantMoveNote(data) {
+  //   const key = Object.keys(data);
+  //   let left;
+  //   let top;
+  //   const coordObj = data[key];
+  //   for (const coords in coordObj) {
+  //     if (coords === 'left') {
+  //       left = coordObj[coords];
+  //     } else {
+  //       top = coordObj[coords];
+  //     }
+  //   }
+  //   store.dispatch(moveNote(Number(key[0]), left, top));
+  // }
 
 
   componentWillUnmount() {
@@ -81,34 +78,39 @@ class MobileBoardViewContainer extends Component {
   }
 
 
-  renderNote(item, key, index) {
-
-    return (
-      <div>
-        <li>
-      <NoteWrapper key={key} id={key} {...item}>{item.content}</NoteWrapper>
-        </li>
-      </div>
-
-    );
-  }
-
   render() {
 
-    const {notes} = this.props;
+    const {notes, board} = this.props;
+    console.log('PROPS NOTESasdfadsfads', this.props);
+    let backgroundColor;
 
     return (
       <div>
-        <ul>
+         <MediaQuery query='(min-device-width: 800px)'>
+        <h4 style={{textAlign: 'center'}}>{board.name}</h4>
+        <ol>
           {
-          notes.map((note) => {
-            return this.renderNote(note, note.id);
+          notes.map((note, index) => {
+            backgroundColor = '#' + note.color;
+            return (
+
+            <li key={note.id} className="mobileListItem col-xs-12">
+
+              <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}/>
+
+
+              <span className='mobileNoteContent col-xs-10'>{note.content}</span>
+
+            </li>
+
+            );
           })
         }
-      </ul>
+      </ol>
       <div className="trashcan">
           <TrashCan notesDelete={notesDelete} notes={notes}/>
       </div>
+    </MediaQuery>
 
       </div>
     );
@@ -116,14 +118,18 @@ class MobileBoardViewContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const hash = ownProps.params.boardHash;
 
   return {
     notes: state.noteReducer.all.filter(note => {
-      return ownProps.board.id === note.board_id;
+
+      return hash === genShortHash(note.board_id);
     }),
+
     user        : state.userReducer.loggedInUser,
     zIndexNotes : state.noteReducer.zIndexNotes,
-    deletedNotes: state.noteReducer.deletedNotes
+    deletedNotes: state.noteReducer.deletedNotes,
+    board       : state.board.selectedBoard
   };
 
 };
