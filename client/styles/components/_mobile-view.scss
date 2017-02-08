@@ -35,9 +35,19 @@
 
 }
 
+
+@media screen and (max-device-width: 799px)
+ {
+  .snapTo {
+    display: none;
+  }
+
+
+}
+
 @media screen and (min-device-width: 800px)
  {
   .snapTo {
-    display: inline;
+    display: inline-block;
   }
 }
