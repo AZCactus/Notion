@@ -36,7 +36,7 @@ export class SignupContainer extends Component {
 
   componentWillReceiveProps(props, nextProps) {
     if (!isEmpty(props.loggedInUser)) {
-      this.props.router.push('/');
+      this.props.router.push('/boards');
     }
   }
 

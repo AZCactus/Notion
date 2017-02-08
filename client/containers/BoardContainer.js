@@ -101,6 +101,7 @@ class BoardContainer extends Component {
 
 
   showNoteComments(color, content, noteId) {
+    console.log('show note comments');
     this.props.selectedNoteDetail({color, content, noteId});
   }
 
