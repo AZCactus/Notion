@@ -8,11 +8,20 @@
   .snapTo {
     display: none;
   }
-}
+
 
   .trashcan {
     display: none;
   }
+
+  .ClipboardBlocking {
+    display: none;
+  }
+}
+//
+// .ClipboardBlocking {
+//   display: none;
+// }
 
 
 .mobileListItem {
@@ -48,20 +57,10 @@
 
 
 
-@media screen and (max-device-width: 799px)
- {
-  .snapTo {
-    display: none;
+ @media (min-width: 800px)
+  {
+    .snapTo {
+      display: inline-block;
+
+    }
   }
-
-
-}
-
-@media screen and (min-device-width: 800px)
- {
-
-@media screen and (min-device-width: 800px){
-  .snapTo {
-    display: inline-block;
-  }
-}

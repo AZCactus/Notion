@@ -114,7 +114,6 @@ class BoardContainer extends Component {
   }
 
   render() {
-    console.log('SHOW COMMENTS', this.showNoteComments);
     const value = `localhost:3030/note?board=${this.props.board.hash}`;
 
     return (
@@ -125,16 +124,16 @@ class BoardContainer extends Component {
             hideNoteComments={this.hideNoteComments}
           /> : null}
         <div className='col-xs-12 clearfix'>
-          <div className="text-right" style={{position: 'absolute', right: '0', top: '0', zIndex: '100'}}>
+          <div className="text-right ClipboardBlocking" style={{position: 'absolute', right: '0', top: '0', zIndex: '100'}}>
             <p>create note:</p>
             <Link to={`/note?board=${this.props.board.hash}`}>
-              <pre className='ClipboardBlocking'>{value}</pre>
+              <div>{value}</div>
               <Clipboard value={value}
                 onCopy={this.handleCopy} />
 
             </Link>
           </div>
-            <h2 className="text-center" style={{width: '10em', margin: '.5em auto', wordWrap: 'break-word'}}>{ this.props.board.name }</h2>
+            <h2 className="text-center" style={{width: '10em', left: '50vw', transform: 'translateX(-50%)', margin: '.5em auto', wordWrap: 'break-word', position: 'absolute'}}>{ this.props.board.name }</h2>
         </div>
         <div>
             <div>

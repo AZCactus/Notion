@@ -1,9 +1,9 @@
 .snapTo {
-  top: 87%;
-  left: 91%;
+  top: 75px;
+  left: 88%;
   width: auto;
-  display: inline-block;
   margin-right: auto;
+  position: absolute;
 }
 
 .screen {
@@ -24,10 +24,4 @@
 
 .grid {
     background-color: #EF2D29;
-}
-
-
-
-.ClipboardBlocking {
-  display: inline-block;
 }

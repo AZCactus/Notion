@@ -26,7 +26,7 @@
   import TrashCan from '../components/NoteBoardTrashCan';
 
   const styles = {
-    height  : '100vh',
+    height  : '150vh',
     width   : '100%',
     border  : '1px black line',
     position: 'relative',
@@ -119,7 +119,6 @@
 
 
     renderNote(item, key) {
-      console.log('NB comments', this.props);
       return (
         <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
       );
@@ -145,7 +144,7 @@
           </MediaQuery>
 
           <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
-            <div>
+            <div style={{marginTop: '70px'}}>
 
               <ol className='mobileOL'>
               {
