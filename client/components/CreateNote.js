@@ -304,7 +304,8 @@ export default class CreateNote extends Component {
         <div className="row">
           <button
             onClick={this.submitHandler}
-            className="btn btn-primary block ml-auto mr-auto">
+            className="btn btn-primary block ml-auto mr-auto"
+            style={{width: '80%'}}>
             Submit Note
           </button>
         </div>
