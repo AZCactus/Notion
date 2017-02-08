@@ -245,8 +245,10 @@ export default class CreateNote extends Component {
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
         </Link>
         <div className="row">
-          <div className="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4" style={{fontSize: '6vw'}}>
+          <div className="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
+            <button onClick={() => { console.log('sadgadsfgdsfgsdgf'); this.setState({content: '', parsedContent: []}); }} className="c-note__clear-btn">clear note</button>
             <div
+              className="c-note---createwrapper"
               style={noteWrapperStyle}
               onClick={!!this.input && this.clickHandler}
               onTouchStart={this.touchStartHandler}
@@ -295,24 +297,27 @@ export default class CreateNote extends Component {
                 style={{background: this.state.color}}>
               </button>
             </div>
+            <div className="row">
+              <button
+                onClick={this.submitHandler}
+                className="btn btn-primary block ml-auto mr-auto"
+                style={{width: '90%'}}>
+                Submit Note
+              </button>
+            </div>
           </div>
           { this.state.displayColorPicker &&
-            <div className="c-color-picker__wrapper c-color-picker__wrapper--modal"
-              onClick={(e) => { this.modalClickHandler(e, this.toggleColorPicker); }}>
-              <ColorPicker
-                color={this.state.color}
-                updateColor={this.updateColor}
-                presets={presetColors} />
+            <div>
+              <div className="c-color-picker__wrapper c-color-picker__wrapper--modal"
+                onClick={(e) => { this.modalClickHandler(e, this.toggleColorPicker); }}>
+                <ColorPicker
+                  color={this.state.color}
+                  updateColor={this.updateColor}
+                  presets={presetColors}
+                  toggle={this.toggleColorPicker} />
+              </div>
             </div>
           }
-        </div>
-        <div className="row">
-          <button
-            onClick={this.submitHandler}
-            className="btn btn-primary block ml-auto mr-auto"
-            style={{width: '80%'}}>
-            Submit Note
-          </button>
         </div>
       </div>
     );
