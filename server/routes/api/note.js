@@ -59,7 +59,7 @@ router.post('/', (req, res, next) => {
     content: req.body.content,
     color  : req.body.color,
     top    : req.body.top || null,
-    left   : req.body.left || null
+    left   : req.body.left || 0
   })
     .then((note) => Promise.all([
       note,
@@ -71,7 +71,7 @@ router.post('/', (req, res, next) => {
       return new Promise((resolve, reject) => {
         const topTraverse = function(top) {
           Note.findOne({
-            where: { top: top, left: 0, board_id: board.id}})
+            where: { top: top, left: 0, board_id: boardId}})
           .then(noteToCheck => {
             if (noteToCheck === null) {
               note.update({top: top})

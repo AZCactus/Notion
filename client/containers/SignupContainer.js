@@ -20,6 +20,7 @@ export class SignupContainer extends Component {
       username : '',
       password : '',
       display  : false,
+      dirty    : false,
     };
 
     this.submitForm = this.submitForm.bind(this);
@@ -47,10 +48,12 @@ export class SignupContainer extends Component {
 
   loginForm(e) {
     e.preventDefault();
+    this.setState({dirty: true});
     this.props.loginUser(this.state.email, this.state.password);
   }
 
   changeForm(type) {
+    this.setState({dirty: false});
     this.setState({type: type});
   }
 
@@ -59,6 +62,10 @@ export class SignupContainer extends Component {
   }
 
   render() {
+    const dirty = this.state.dirty;
+    let warning = '';
+
+    if (dirty) warning = 'Password or Email is Invalid';
 
     return (
       <ReactTransitionGroup
@@ -71,11 +78,13 @@ export class SignupContainer extends Component {
           {this.state.type === 'signup' ?
             <Signup submitForm={this.submitForm}
                     changeForm={this.changeForm}
-                    handleInput={this.handleInput} />
+                    handleInput={this.handleInput}
+                    warning={warning} />
                     :
             <Login loginForm={this.loginForm}
                   handleInput={this.handleInput}
-                  changeForm={this.changeForm} />
+                  changeForm={this.changeForm}
+                  warning={warning} />
           }
         </div>
     </ReactTransitionGroup>
