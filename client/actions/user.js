@@ -29,7 +29,7 @@ export const loginUser = (email, password) => dispatch => {
   return axios.post('/api/auth/', { email: email, password: password })
     .then(res => {
       dispatch(setLoginUser(res.data));
-    }).catch(err => console.error(err));
+    }).catch(err => err);
 };
 
 export const logoutUser = () => dispatch => {
