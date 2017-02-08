@@ -83,7 +83,6 @@
       super(props);
       this.boardUpdate = this.boardUpdate.bind(this);
       this.participantMoveNote = this.participantMoveNote.bind(this);
-
     }
 
     componentWillMount() {
@@ -159,9 +158,12 @@
          console.log('NOTE MOBILE', note);   backgroundColor = note.color.replace(/^#*/, '#');
          return (
 
-         <li key={`noteboard_${note.id}`} className="mobileListItem col-xs-12">
+         <li key={`noteboard_${note.id}`} className="mobileListItem col-xs-12"
+          onClick={() => {this.props.showNoteComments(note.color, note.content, note.id); }}>
 
-           <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}/>
+
+           <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}
+            />
 
 
            <span className='mobileNoteContent col-xs-10'>{note.content}</span>
@@ -172,9 +174,9 @@
        })
      }
    </ol>
- <div className="trashcan">
+ {/*<div className="trashcan">
      <TrashCan notesDelete={notesDelete} notes={notes}/>
- </div>
+ </div>*/}
 </MediaQuery>
 
       </div>
