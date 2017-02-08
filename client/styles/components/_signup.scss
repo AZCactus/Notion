@@ -13,18 +13,17 @@ button:focus {
   background-color:#fff;
   margin: 0 auto;
   margin-top: 2em;
+  padding-bottom: 2em;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
   border-bottom-right-radius: 60px 10px;
   border-bottom-left-radius: 60px 10px;
 }
 
 .login {
-  height: 30vh;
   min-height: 23em;
 }
 
 .signup {
-  height: 65vh;
   min-height: 32em;
 }
 
@@ -86,7 +85,7 @@ button:focus {
   margin: 0 auto;
   font-weight: bold;
   width: 80%;
-  line-height: 2em;
+  line-height: 1em;
   display: block;
   margin-top: 1em;
   border-radius: 2px;

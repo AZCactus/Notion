@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Signup = (props) => {
+  const warning = props.warning;
   return (
      <form className="form" onSubmit={(e) => { props.submitForm(e); }}>
         <div className="">
@@ -47,6 +48,7 @@ const Signup = (props) => {
           conditions and privacy policy
           </label>
         </div>
+        { warning && <div className="alert alert-warning">{warning}</div> }
         <button className="signup-submit-button" type="submit">
         SIGN UP
         </button>

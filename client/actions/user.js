@@ -22,7 +22,7 @@ export const createUser = (firstName, lastName, email, username, password) => di
   return axios.post('/api/user/', {first_name: firstName, last_name: lastName, username, email, password })
     .then(res => {
       dispatch(setLoginUser(res.data));
-    }).catch(err => console.error(err));
+    }).catch(err => { console.error(err); return err; });
 };
 
 export const loginUser = (email, password) => dispatch => {

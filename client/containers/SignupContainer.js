@@ -43,7 +43,12 @@ export class SignupContainer extends Component {
   submitForm(e) {
     e.preventDefault();
     this.props.createUser(this.state.firstName,
-    this.state.lastName, this.state.email, this.state.username, this.state.password);
+    this.state.lastName, this.state.email, this.state.username, this.state.password)
+      .then(result => {
+        if (result.message && result.message === 'Request failed with status code 409') {
+          this.setState({dirty: true});
+        }
+      });
   }
 
   loginForm(e) {
@@ -97,8 +102,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createUser: (firstName, lastName, email, username, password) =>
-  dispatch(createUser(firstName, lastName, email, username, password)),
+  createUser: (firstName, lastName, email, username, password) => {
+    return dispatch(createUser(firstName, lastName, email, username, password));
+  },
   loginUser       : (email, password) => dispatch(loginUser(email, password)),
   checkLoginStatus: () => dispatch(checkLoginStatus())
 });
