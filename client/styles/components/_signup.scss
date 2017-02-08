@@ -72,6 +72,18 @@ button:focus {
   margin: 0 auto;
 }
 
+.alert-warning {
+  text-align: center;
+  margin: 0 auto;
+  font-weight: bold;
+  width: 80%;
+  line-height: 2em;
+  display: block;
+  margin-top: 1em;
+  border-radius: 2px;
+  border: 1px solid #dfe0e6;
+}
+
 .login-submit-button {
   width: 80%;
   color: #fff;
