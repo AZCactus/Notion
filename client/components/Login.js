@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Login = (props) => {
+  const warning = props.warning;
   return (
      <form className="form" onSubmit={(e) => { props.loginForm(e); }}>
         <div className="">
@@ -23,6 +24,7 @@ const Login = (props) => {
           onChange={(e) => { props.handleInput(e); }}
           required />
         </div>
+        { warning && <div className="alert alert-warning">{warning}</div> }
         <button className="login-submit-button" type="submit">
         Login
         </button>
