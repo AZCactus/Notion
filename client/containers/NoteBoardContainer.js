@@ -156,8 +156,7 @@
      <ol className='mobileOL'>
        {
        notes.map((note, index) => {
-         console.log('NOTE MOBILE', note);
-         backgroundColor = note.color.replace(/^#*/, '#');
+         console.log('NOTE MOBILE', note);   backgroundColor = note.color.replace(/^#*/, '#');
          return (
 
          <li key={`noteboard_${note.id}`} className="mobileListItem col-xs-12">
