@@ -152,14 +152,14 @@
     </MediaQuery>
 
     <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
-     <h4 style={{textAlign: 'center'}}>{board.name}</h4>
+
      <ol className='mobileOL'>
        {
        notes.map((note, index) => {
-         backgroundColor = '#' + note.color;
+         console.log('NOTE MOBILE', note);   backgroundColor = note.color.replace(/^#*/, '#');
          return (
 
-         <li key={note.id} className="mobileListItem col-xs-12">
+         <li key={`noteboard_${note.id}`} className="mobileListItem col-xs-12">
 
            <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}/>
 
