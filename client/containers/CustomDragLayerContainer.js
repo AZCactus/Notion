@@ -1,71 +1,87 @@
-import React, { Component } from 'react';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import React, { Component} from 'react';
+import {connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 import NoteBoardContainer from './NoteBoardContainer';
 import CustomDragLayer from '../components/CustomDragLayer';
+import TrashCan from '../components/NoteBoardTrashCan';
+import {deleteNotesFromDatabase, notesDelete} from '../actions/note';
 
+
+const trashStyles = {
+
+  position: 'relative'
+};
 
 class CustomDragLayerContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.handleSnapToGridAfterDropChange = this.handleSnapToGridAfterDropChange.bind(this);
+    // this.handleSnapToGridAfterDropChange = this.handleSnapToGridAfterDropChange.bind(this);
     this.handleSnapToGridWhileDraggingChange = this.handleSnapToGridWhileDraggingChange.bind(this);
 
     this.state = {
-      snapToGridAfterDrop    : false,
+      snapToGridAfterDrop    : true,
       snapToGridWhileDragging: false,
     };
+  }
+
+  componentWillUnmount() {
+
+    deleteNotesFromDatabase(this.props.deletedNotes);
   }
 
 
   render() {
     const { snapToGridAfterDrop, snapToGridWhileDragging } = this.state;
+    const {notesDelete, notes} = this.props;
+
     const {board} = this.props;
+
 
     return (
       <div>
 
 
-        <NoteBoardContainer
-        snapToGrid={snapToGridAfterDrop}
-        board={board}
-        showNoteComments={this.props.showNoteComments}
-        />
+        <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board} showNoteComments={this.props.showNoteComments}/>
         <CustomDragLayer snapToGrid={snapToGridWhileDragging} />
+
         <div className="snapTo">
         <p>
-          <label htmlFor="snapToGridWhileDragging">
+          <label htmlFor="snapToGridWhileDragging" >
             <input
               id="snapToGridWhileDragging"
               type="checkbox"
               checked={snapToGridWhileDragging}
               onChange={this.handleSnapToGridWhileDraggingChange}
             />
-            <small>Snap to grid while dragging</small>
+          <small>&nbsp;&nbsp;snap to grid</small>
           </label>
           <br />
-          <label htmlFor="snapToGridAfterDrop">
+          {/*<label htmlFor="snapToGridAfterDrop" className="hideThis">
             <input
               id="snapToGridAfterDrop"
               type="checkbox"
               checked={snapToGridAfterDrop}
               onChange={this.handleSnapToGridAfterDropChange}
             />
-            <small>Snap to grid after drop</small>
-          </label>
+
+          <small>snap to grid after</small>
+          </label>*/}
         </p>
+      </div>
+      <div>
+          <TrashCan style={trashStyles} notesDelete={notesDelete} notes={notes}/>
       </div>
       </div>
     );
   }
 
-  handleSnapToGridAfterDropChange() {
-    this.setState({
-      snapToGridAfterDrop: !this.state.snapToGridAfterDrop,
-
-    });
-  }
+  // handleSnapToGridAfterDropChange() {
+  //   this.setState({
+  //     snapToGridAfterDrop: !this.state.snapToGridAfterDrop,
+  //
+  //   });
+  // }
 
   handleSnapToGridWhileDraggingChange() {
     this.setState({
@@ -75,4 +91,23 @@ class CustomDragLayerContainer extends Component {
 }
 
 
-export default CustomDragLayerContainer;
+const mapStateToProps = (state, ownProps) => {
+
+  return {
+    notes: state.noteReducer.all.filter(note => {
+
+      return ownProps.board.id === note.board_id;
+    }),
+    deletedNotes: state.noteReducer.deletedNotes,
+
+    board: state.board.selectedBoard
+
+  };
+
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ notesDelete}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomDragLayerContainer);

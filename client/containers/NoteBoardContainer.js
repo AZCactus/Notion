@@ -26,23 +26,19 @@
   import TrashCan from '../components/NoteBoardTrashCan';
 
   const styles = {
-    height  : 1000,
-    width   : 1000,
-    position: 'relative'
+    height  : '100vh',
+    width   : '100%',
+    border  : '1px black line',
+    position: 'relative',
+
   };
 
-  const trashStyles = {
-    top : 900,
-    left: 900
-  };
 
   const noteStyles = {
     height  : '50px',
     width   : '50px',
-    border  : '1px solid black',
+    fontSize: '.5em',
     position: 'relative',
-
-
   };
 
 
@@ -123,6 +119,7 @@
 
 
     renderNote(item, key) {
+      console.log('NB comments', this.props);
       return (
         <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
       );
@@ -137,47 +134,35 @@
       return connectDropTarget(
       <div>
         <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
-            <div style={styles}>
-
-        {
-          notes.map((note) => {
-            return this.renderNote(note, note.id);
-          }
-      )}
-      <div className="trashcan">
-          <TrashCan style={trashStyles} notesDelete={notesDelete} notes={notes}/>
-      </div>
-    </div>
-    </MediaQuery>
-
-    <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
-
-     <ol className='mobileOL'>
-       {
-       notes.map((note, index) => {
-         console.log('NOTE MOBILE', note);   backgroundColor = note.color.replace(/^#*/, '#');
-         return (
-
-         <li key={`noteboard_${note.id}`} className="mobileListItem col-xs-12"
-          onClick={() => {this.props.showNoteComments(note.color, note.content, note.id); }}>
+          <div style={styles}>
+            { notes.map((note) => {
+              return this.renderNote(note, note.id);
+            }
+          )}
 
 
-           <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}}
-            />
+        </div>
+          </MediaQuery>
 
+          <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
+            <div>
 
-           <span className='mobileNoteContent col-xs-10'>{note.content}</span>
-
-         </li>
-
-         );
-       })
-     }
-   </ol>
- {/*<div className="trashcan">
-     <TrashCan notesDelete={notesDelete} notes={notes}/>
- </div>*/}
-</MediaQuery>
+              <ol className='mobileOL'>
+              {
+              notes.map((note, index) => {
+                backgroundColor = note.color.replace(/^#*/, '#');
+                return (
+                  <li key={`noteboard_${note.id}`} className="mobileListItem col-xs-12"
+                    onClick={() => { this.props.showNoteComments(note.color, note.content, note.id); }}>
+                    <div className='noteBlock col-xs-2' style={{...noteStyles, backgroundColor}} />
+                    <span className='mobileNoteContent col-xs-10'>{note.content}</span>
+                  </li>
+                );
+              })
+            }
+          </ol>
+       </div>
+        </MediaQuery>
 
       </div>
     );

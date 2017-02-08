@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import isEmpty from 'lodash/isEmpty';
 import bindHandlers from '../utils/bindHandlers';
 import Note from './Note';
@@ -82,7 +83,8 @@ export default class CreateNote extends Component {
   join() {
     if (Object.keys(this.props.user).length) {
       if (this.props.permissions.findIndex(permission => {
-        return permission.board_id === this.props.board.id; }) === -1) {
+        return permission.board_id === this.props.board.id;
+      }) === -1) {
         this.props.addUserPermission(this.props.board);
       }
     }
@@ -235,10 +237,13 @@ export default class CreateNote extends Component {
     default:
       noteWrapperStyle.transition = 'all 0.25s ease-in-out';
     }
+    const value = `/boards/${this.props.board.hash}`;
 
     return (
       <div className="container">
+        <Link to={`/boards/${this.props.board.hash}`}>
         <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
+        </Link>
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4" style={{fontSize: '6vw'}}>
             <div

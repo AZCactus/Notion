@@ -14,7 +14,8 @@ export const combinedReducer = combineReducers({
   userReducer,
   nav: navbarReducer,
   socket,
-  commentsReducer
+  commentsReducer,
+
 
 });
 

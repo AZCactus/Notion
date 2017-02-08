@@ -49,12 +49,14 @@ export class ParticipantsContainer extends Component {
 
   connect() {
     this.setState({ status: 'connected'});
-    if (isEmpty(this.props.loggedInUser)) {
-      browserHistory.push('/signup');
-    } else if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
+    // if (isEmpty(this.props.loggedInUser)) {
+    //   browserHistory.push('/signup');
+    // } else
+    if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
       if (Object.keys(this.props.loggedInUser).length) {
         if (this.props.permissions.findIndex(permission => {
-          return permission.board_id === this.props.selectedBoard.id; }) === -1) {
+          return permission.board_id === this.props.selectedBoard.id;
+        }) === -1) {
           this.props.userPermission(this.props.selectedBoard);
         }
       }
