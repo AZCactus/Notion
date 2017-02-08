@@ -14,13 +14,16 @@ export default function(props) {
           <div className="participant-list-container">
             <ul className="participant-list">
               {props.participants.map((participant, idx) => {
+
                 return <li className="participant-item"
                             key={`${participant.id}_${idx}`}>
                             <div className="participant-image">
                               <i className="glyphicon glyphicon-user participant-icon"></i>
                             </div>
                             <div className="participant">
-                              {participant.name}
+                              {participant.name === 'undefined undefined' ?
+                                'Guest' : participant.name
+                              }
                             </div>
                         </li>;
               })}
