@@ -36,7 +36,7 @@ export class SignupContainer extends Component {
 
   componentWillReceiveProps(props, nextProps) {
     if (!isEmpty(props.loggedInUser)) {
-      this.props.router.push('/');
+      this.props.router.push('/boards');
     }
   }
 
@@ -48,8 +48,8 @@ export class SignupContainer extends Component {
 
   loginForm(e) {
     e.preventDefault();
-    this.setState({dirty: true});
     this.props.loginUser(this.state.email, this.state.password);
+    this.setState({dirty: true});
   }
 
   changeForm(type) {

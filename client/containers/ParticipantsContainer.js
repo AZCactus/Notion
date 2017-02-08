@@ -52,18 +52,22 @@ export class ParticipantsContainer extends Component {
     // if (isEmpty(this.props.loggedInUser)) {
     //   browserHistory.push('/signup');
     // } else
+
+
     if (this.props.selectedBoard && !isEmpty(this.props.selectedBoard)) {
       if (Object.keys(this.props.loggedInUser).length) {
+
         if (this.props.permissions.findIndex(permission => {
           return permission.board_id === this.props.selectedBoard.id;
         }) === -1) {
           this.props.userPermission(this.props.selectedBoard);
         }
       }
+      const participantName = Object.keys(this.props.loggedInUser).length ? this.props.loggedInUser.first_name + ' ' + this.props.loggedInUser.last_name : 'Guest';
       this.props.socketEmit('join',
         {
           room: genShortHash(this.props.selectedBoard.id),
-          name: this.props.loggedInUser.first_name + ' ' + this.props.loggedInUser.last_name,
+          name: participantName,
         });
     }
   }

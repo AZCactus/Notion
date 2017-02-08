@@ -101,6 +101,7 @@ class BoardContainer extends Component {
 
 
   showNoteComments(color, content, noteId) {
+    console.log('show note comments');
     this.props.selectedNoteDetail({color, content, noteId});
   }
 
@@ -114,7 +115,11 @@ class BoardContainer extends Component {
   }
 
   render() {
+
     const value = `localhost:3030/note?board=${this.props.board.hash}`;
+
+    value = `${window.location.host}${window.location.host === 'localhost' ? window.location.port : ''}` + value;
+
 
     return (
       <div className="col-xs-12 board-page-container" key={ this.props.board.id }>
