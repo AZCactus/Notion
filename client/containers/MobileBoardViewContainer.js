@@ -112,6 +112,7 @@ class MobileBoardViewContainer extends Component {
       </div>
     </MediaQuery>
 
+
       </div>
     );
   }

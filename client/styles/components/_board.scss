@@ -1,11 +1,18 @@
-
+.snapTo {
+  top: 87%;
+  left: 91%;
+  width: auto;
+  display: inline-block;
+  margin-right: auto;
+}
 
 .screen {
-  height: 80vh;
-  width: 100%;
+
   border: thin solid black;
-  background-color: #ffffff;
-  padding-bottom: 10%;
+  background-color: #E8E8E8;
+
+  padding-bottom: 2%;
+  margin-bottom: 5%;
   padding-top: 2%;
   overflow: auto;
 }
@@ -19,11 +26,7 @@
     background-color: #EF2D29;
 }
 
-#table {
-  background-color: #CEE3F8;
-  height: 100vh;
-  width: 100vw;
-}
+
 
 .ClipboardBlocking {
   display: inline-block;

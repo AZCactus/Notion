@@ -13,6 +13,7 @@ export const ADD_NEW_BOARD = 'ADD_NEW_BOARD';
 export const RECEIVE_BOARD_NOTES = 'RECEIVE_BOARD_NOTES';
 export const RECEIVE_PERMISSION = 'RECEIVE_PERMISSION';
 
+
 /* NOTE CONSTANTS */
 export const SELECT_NOTE = 'SELECT_NOTE';
 export const RECEIVE_NOTE = 'RECEIVE_NOTE';
@@ -41,5 +42,3 @@ export const EMIT = 'EMIT';
 export const CONNECT = 'CONNECT';
 export const ADD_LISTENER = 'ADD_LISTENER';
 export const REMOVE_LISTENER = 'REMOVE_LISTENER';
-
-

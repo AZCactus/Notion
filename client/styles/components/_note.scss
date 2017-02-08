@@ -6,6 +6,12 @@
 .c-note--focused {
   box-shadow: 0.1em 0.1em 1em 0 darken($yellow, 20);
 }
+.c-note---createwrapper {
+  font-size: 4vw;
+  @media screen and (min-width: 992px) {
+    font-size: 992px * 0.02;
+  }
+}
 
 .c-note__inner {
   display: block;
@@ -62,7 +68,9 @@
   background: rgba($grey, 0.5);
   border-radius: 0.2em;
   border-top-left-radius: 0;
-
+  li {
+    list-style: none;
+  }
   button {
     border: none;
     background: none;
@@ -74,6 +82,13 @@
       color: $yellow;
     }
   }
+}
+
+.c-note__clear-btn {
+  background: $grey;
+  border: none;
+  font-size: 1.3em;
+  border-radius: 0.1em;
 }
 
 .top {z-index: 2; position: relative}

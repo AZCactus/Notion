@@ -65,8 +65,8 @@ class NoteWrapper extends PureComponent {
 
     const styles = {
       cursor  : 'move',
-      height  : this.props.height || 100,
-      width   : this.props.width || 100,
+      height  : this.props.height || '8em',
+      width   : this.props.width || '8em',
       left    : this.props.left || 0,
       top     : this.props.top || 0,
       position: 'absolute'
@@ -75,8 +75,7 @@ class NoteWrapper extends PureComponent {
     const backgroundColor = red ? 'red' : 'white';
     return (
       <div
-          className={`noteWrapper ${this.state.focused ? 'noteWrapper--focused' : ''}`}
-          onClick={this.clickHandler}>
+          className={`noteWrapper ${this.state.focused ? 'noteWrapper--focused' : ''}`}>
       <div className='enlarge'
         onClick={() => { this.props.showNoteComments(color, content, id); }}
         style={{ ...styles, backgroundColor }}

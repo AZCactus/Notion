@@ -6,20 +6,19 @@ import {NOTE} from '../constants';
 function getStyle(backgroundColor) {
   return {
     // border    : '1px solid rgba(0,0,0,0.2)',
-    minHeight : '5rem',
-    maxHeight : '8rem',
-    minWidth  : '5rem',
-    maxWidth  : '8rem',
-    color     : 'white',
+    minHeight: '10rem',
+    maxHeight: '15rem',
+    minWidth : '10rem',
+    maxWidth : '15rem',
+    color    : 'white',
     backgroundColor,
-    padding   : '2rem',
-    paddingTop: '1rem',
-    margin    : '1rem',
-    textAlign : 'center',
-    float     : 'left',
-    fontSize  : '1rem',
-    top       : 900,
-    left      : 900
+    padding  : '1rem',
+
+    margin   : '1rem',
+    textAlign: 'center',
+    float    : 'left',
+    fontSize : '1rem',
+
   };
 }
 
@@ -68,15 +67,15 @@ class TrashCan extends Component {
     let backgroundColor = 'rgba(0, 0, 0, 0)';
 
     if (isOverCurrent || (isOver)) {
-      backgroundColor = 'yellow';
+      backgroundColor = 'red';
     }
 
 
     return connectDropTarget(
-      <div style={getStyle(backgroundColor)}>
+      <div className='trashcan' style={getStyle(backgroundColor)}>
           <br />
         {hasDropped &&
-          <span>dropped {hasDroppedOnChild && ' on child'}</span>
+          <span> {hasDroppedOnChild && ' on child'}</span>
         }
 
         <div>
