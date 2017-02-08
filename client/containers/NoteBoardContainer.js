@@ -119,6 +119,7 @@
 
 
     renderNote(item, key) {
+      console.log('NB comments', this.props);
       return (
         <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
       );

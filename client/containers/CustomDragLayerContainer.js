@@ -42,7 +42,7 @@ class CustomDragLayerContainer extends Component {
       <div>
 
 
-        <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board}/>
+        <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board} showNoteComments={this.props.showNoteComments}/>
         <CustomDragLayer snapToGrid={snapToGridWhileDragging} />
 
         <div className="snapTo">

@@ -114,6 +114,7 @@ class BoardContainer extends Component {
   }
 
   render() {
+    console.log('SHOW COMMENTS', this.showNoteComments);
     const value = `localhost:3030/note?board=${this.props.board.hash}`;
 
     return (

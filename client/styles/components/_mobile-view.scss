@@ -8,6 +8,7 @@
   .snapTo {
     display: none;
   }
+}
 
   .trashcan {
     display: none;
@@ -35,7 +36,6 @@
   width: 80%;
   margin-top: 2%;
   margin-bottom: 2%;
-
 }
 
 .noteBlock {
@@ -44,11 +44,9 @@
   margin-top: 2%;
   margin-top: 2%;
   margin-bottom: 2%;
-
 }
 
-@media screen and (min-device-width: 800px)
- {
+@media screen and (min-device-width: 800px){
   .snapTo {
     display: inline;
   }
