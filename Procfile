@@ -1,1 +1,1 @@
-web: npm install && npm run build-dev && npm start
+web: node ./server/start.js
