@@ -53,13 +53,12 @@ export class SignupContainer extends Component {
 
   loginForm(e) {
     e.preventDefault();
-    this.props.loginUser(this.state.email, this.state.password);
-    this.setState({dirty: true});
+    this.props.loginUser(this.state.email, this.state.password, this);
   }
 
   changeForm(type) {
-    this.setState({dirty: false});
     this.setState({type: type});
+    this.setState({dirty: false});
   }
 
   handleInput(e) {
@@ -70,7 +69,11 @@ export class SignupContainer extends Component {
     const dirty = this.state.dirty;
     let warning = '';
 
-    if (dirty) warning = 'Password or Email is Invalid';
+    if (dirty && this.state.type === 'login') {
+      warning = 'Password or Email is Invalid';
+    } else if (dirty && this.state.type === 'signup') {
+      warning = 'Username or Email is Invalid';
+    }
 
     return (
       <ReactTransitionGroup
@@ -102,10 +105,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createUser: (firstName, lastName, email, username, password) => {
-    return dispatch(createUser(firstName, lastName, email, username, password));
+  createUser: (firstName, lastName, email, username, password) =>
+  dispatch(createUser(firstName, lastName, email, username, password)),
+  loginUser: (email, password, state) => {
+    dispatch(loginUser(email, password))
+    .then(res => {
+      if (res) {
+        state.setState({dirty: true});
+      }
+    });
   },
-  loginUser       : (email, password) => dispatch(loginUser(email, password)),
   checkLoginStatus: () => dispatch(checkLoginStatus())
 });
 

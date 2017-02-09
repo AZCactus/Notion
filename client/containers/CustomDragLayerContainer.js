@@ -40,11 +40,6 @@ class CustomDragLayerContainer extends Component {
 
     return (
       <div>
-
-
-        <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board} showNoteComments={this.props.showNoteComments}/>
-        <CustomDragLayer snapToGrid={snapToGridWhileDragging} />
-
         <div className="snapTo">
         <p>
           <label htmlFor="snapToGridWhileDragging" >
@@ -57,21 +52,16 @@ class CustomDragLayerContainer extends Component {
           <small>&nbsp;&nbsp;snap to grid</small>
           </label>
           <br />
-          {/*<label htmlFor="snapToGridAfterDrop" className="hideThis">
-            <input
-              id="snapToGridAfterDrop"
-              type="checkbox"
-              checked={snapToGridAfterDrop}
-              onChange={this.handleSnapToGridAfterDropChange}
-            />
 
-          <small>snap to grid after</small>
-          </label>*/}
         </p>
       </div>
-      <div>
-          <TrashCan style={trashStyles} notesDelete={notesDelete} notes={notes}/>
-      </div>
+        <div className='trashcan'>
+            <TrashCan style={trashStyles} notesDelete={notesDelete} notes={notes}/>
+        </div>
+        <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board} showNoteComments={this.props.showNoteComments}/>
+        <CustomDragLayer snapToGrid={snapToGridWhileDragging} />
+
+
       </div>
     );
   }

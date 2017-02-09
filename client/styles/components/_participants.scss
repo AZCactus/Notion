@@ -5,8 +5,10 @@
 .participant-number-container {
   text-align: center;
   padding: 0.8em 0;
+  background-color: #3a3f41;
+  color: #fff;
   border-bottom: 2px solid black;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
 .participant-number {
@@ -27,7 +29,9 @@
 }
 
 .participant-item {
-  margin: 0.4em 0;
+  padding: 0.8em;
+  border-bottom: 1px solid #ABABAB;
+
 }
 
 .participant-image {
@@ -64,12 +68,14 @@
 
   .participants-container{
     position: fixed;
-    width: 15vw;
+    margin-top: 3em;
+    width: 20vw;
     padding-top:0.3em;
     min-height: 100vh;
     max-height: 100vh;
     float: right;
-    box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
+    // box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
+    border-left: solid 1px #3a3f41;
     display: block;
     top: 0%;
     z-index: 1000;
@@ -87,7 +93,7 @@
   }
 
   .participants-container-hide {
-    right: -14.7%;
+    right: -19.5%;
   }
 }
 

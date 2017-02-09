@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 const Navbar = (props) => {
   return (
     <div>
-    <nav className="navbar navbar navbar-static-top" role="navigation">
+    <nav className="navbar navbar navbar-fixed-top" role="navigation">
       <div className="container-fluid">
         <div className="navbar-header" id='navHeader' >
           <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"

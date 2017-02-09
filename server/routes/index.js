@@ -6,7 +6,7 @@ const Router = express.Router;
 const router = new Router();
 const path = require('path');
 
-router.use('/api', require('ROOT/server/routes/api'));
+router.use('/api', require('./api'));
 
 router.use('/*', (req, res) => {
 

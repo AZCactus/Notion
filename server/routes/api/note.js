@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-const {Note, User, Board, Comment} = require('ROOT/server/models');
+const {Note, User, Board, Comment} = require('../../models');
 const router = module.exports = new Router();
 
 router.get('/', (req, res, next) => {
