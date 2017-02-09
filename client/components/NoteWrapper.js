@@ -73,9 +73,9 @@ class NoteWrapper extends PureComponent {
 
     const backgroundColor = red ? 'red' : 'transparent';
     return (
-      <div
-          className={`noteWrapper ${this.state.focused ? 'noteWrapper--focused' : ''}`}>
       <div className='enlarge'
+          className={`noteWrapper ${this.state.focused ? 'noteWrapper--focused' : ''}`}>
+      <div
         onDoubleClick={() => { this.props.showNoteComments(color, content, id); }}
         style={{ ...styles, backgroundColor }}
         ref={(input) => { this.input = input; }}
