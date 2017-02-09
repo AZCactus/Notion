@@ -48,7 +48,7 @@ const Signup = (props) => {
           conditions and privacy policy
           </label>
         </div>
-        { warning && <div className="alert alert-warning">{warning}</div> }
+        { !!warning && <div className="alert alert-warning">{warning}</div> }
         <button className="signup-submit-button" type="submit">
         SIGN UP
         </button>
