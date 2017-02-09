@@ -14,8 +14,9 @@
     }
 
     .trashcan {
-      top: 40px;
-      left: 87%;
+      top: 85vh;
+      left: 89%;
       z-index: 1;
-      position: absolute;
+      position: fixed;
+      user-select: none;
     }

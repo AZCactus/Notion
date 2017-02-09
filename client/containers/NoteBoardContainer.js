@@ -31,6 +31,7 @@
     border  : '1px black line',
     position: 'relative',
 
+
   };
 
 
@@ -57,7 +58,6 @@
         }
         props.IndexToZIndex(props.notes, item.id);
         props.noteMover(item.id, left, top);
-      // const newdata = {[item.id]: {left, top}};
       }
     },
 
@@ -142,7 +142,7 @@
           </MediaQuery>
 
           <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
-            <div style={{marginTop: '7  0px'}}>
+            <div className='mobile' style={{marginTop: '7  0px'}}>
 
               <ol className='mobileOL'>
               {
