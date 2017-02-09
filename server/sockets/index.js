@@ -50,7 +50,6 @@ module.exports = function sockets(server) {
 
     /* wild card socket listener other than join room and leave room */
     socket.on('*', (eventName, payload) => {
-      console.log('call socket');
       if (eventName !== 'join' && eventName !== 'leave') {
         if (eventName === 'moveNote') {
           Object.keys(payload).forEach(id => {
