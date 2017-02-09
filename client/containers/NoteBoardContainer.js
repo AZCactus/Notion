@@ -129,16 +129,14 @@
       let backgroundColor;
 
       return connectDropTarget(
-      <div>
-        <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
-          <div style={styles}>
-            { notes.map((note) => {
-              return this.renderNote(note, note.id);
-            }
-          )}
-
-
-        </div>
+        <div>
+          <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
+            <div style={styles}>
+              { notes.map((note) => {
+                return this.renderNote(note, note.id);
+              }
+            )}
+            </div>
           </MediaQuery>
 
           <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
@@ -156,12 +154,11 @@
                   </li>
                 );
               })
-            }
-          </ol>
-       </div>
-        </MediaQuery>
-
-      </div>
+              }
+              </ol>
+            </div>
+          </MediaQuery>
+        </div>
     );
     }
 }

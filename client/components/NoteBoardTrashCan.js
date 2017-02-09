@@ -73,11 +73,10 @@ class TrashCan extends Component {
 
     return connectDropTarget(
       <div className='trashcan' style={getStyle()}>
-          <br />
-        {hasDropped &&
+        <br />
+          {hasDropped &&
           <span> {hasDroppedOnChild && ' on child'}</span>
         }
-
         <div>
           {children}
         </div>

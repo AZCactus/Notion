@@ -13,7 +13,6 @@ const noteSource = {
   },
 };
 
-
 const collect = (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging       : monitor.isDragging()

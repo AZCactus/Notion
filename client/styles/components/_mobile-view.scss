@@ -13,7 +13,7 @@
 
   .trashcan {
     display: none;
-    z-index: 1000;
+
   }
 
   .ClipboardBlocking {
@@ -82,7 +82,7 @@ visibility: hidden;
 
     .boardTitle{
       position: fixed;
-      word-wrap: break-word;
+      // word-wrap: break-word;
       left: 50vw;
       transform: translateX(-50%);
       margin: 75px;
