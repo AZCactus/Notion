@@ -42,14 +42,17 @@ class NoteDetailsContainer extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.createComment(this.state.comment, this.props.note.noteId, this.props.loggedInUser.id);
+    if (this.props.loggedInUser.id) {
+      this.props.createComment(this.state.comment, this.props.note.noteId, this.props.loggedInUser.id);
+    }
     this.clearInput();
   }
 
   handleKeyPress(e) {
-    if (e.key == 'Enter') {
-      this.props.createComment(this.state.comment, this.props.note.noteId, this.props.loggedInUser.id);
-      this.clearInput();
+    if (this.props.loggedInUser.id) {
+      if (e.key == 'Enter') {
+        this.clearInput();
+      }
     }
   }
 
@@ -96,13 +99,12 @@ class NoteDetailsContainer extends Component {
 
         <form className="comment-form" onSubmit={this.handleSubmit}>
           <div className="comment-input-container">
-            <textarea ref="input" className="comment-text-area"
+            <input ref="input" className="comment-text-area"
             placeholder="Leave a comment"
             onChange={this.handleCommentInput}
-            onKeyPress={(e) => { this.handleKeyPress(e); }}
-            required />
+            onKeyPress={(e) => { this.handleKeyPress(e); }} />
           <button className="comment-submit-button" type="submit">
-            <i className="ion-ios-chatbubble-outline"/>
+            <span> Send </span>
           </button>
           </div>
         </form>
