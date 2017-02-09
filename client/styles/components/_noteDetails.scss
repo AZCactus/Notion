@@ -20,22 +20,23 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
 }
 
 .note-details-container {
-  // position: absolute;
-  top: 1%;
+  position: fixed;
+  top: 10%;
+  left: 2%;
   width: 94vw;
-  height: 90vh;
+  height: 80vh;
   font-family: "Open Sans", sans-serif;
   padding: 1.5em;
   margin: 0.5em auto;
-  border-radius: 2px;
-  background: $bgd-color;
+  border-radius: 10px;
+  background:$bgd-color;
   border: 0;
-  z-index: 99999;
+  z-index: 9999;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
 }
 
 .note-details-note {
-  padding: 0.5em;
+  padding: 1em 1.5em;
   height: 20vh;
   width: 100%;
   margin: 0 auto;
@@ -56,7 +57,7 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
 
 .comment-text-area {
   margin: 0;
-  padding: 0.5em;
+  padding: 0.2em;
   width: 80%;
   height: 100%;
   margin-right: 5%;
@@ -69,20 +70,25 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
 }
 
 .comment-submit-button {
+  margin: 0;
+  padding: 0;
   height: 100%;
-  font-size: 2em;
+  font-weight: 700;
   border-radius: 2px;
   width: 15%;
   border: none;
   padding: 0;
   background-color: #fff;
+    span {
+      font-size: 1em;
+    }
 }
 
 .note-details-comments {
   overflow: hidden;
 
   .inner {
-    height:55vh;
+    height:45vh;
     overflow:auto;
     margin:0.3em -3rem 0.3em 0.3em;
     padding-right: 3.3rem;
@@ -137,7 +143,7 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
 
 .noteDetailSlideIn-appear.noteDetailSlideIn-appear-active {
   margin-top: 0;
-  transition: margin-top .5s ease-in;
+  transition: margin-top .5s cubic-bezier(0.31, 0.77, 0.21, 0.99);
 }
 
 
@@ -148,6 +154,13 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #192C46 50%, #22254C
   width: 40vw;
   height: 90vh;
   left: 30vw;
+}
+
+.note-details-comments {
+
+  .inner {
+    height:55vh;
+  }
 }
 
 }
