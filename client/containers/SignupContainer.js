@@ -72,7 +72,7 @@ export class SignupContainer extends Component {
     if (dirty && this.state.type === 'login') {
       warning = 'Password or Email is Invalid';
     } else if (dirty && this.state.type === 'signup') {
-      warning = 'Username or Email is Invalid';
+      warning = 'Username or Email is Unavailable';
     }
 
     return (
