@@ -12,10 +12,7 @@ export class UserBoardsContainer extends Component {
     const boardIdNotes = this.props.notes;
 
     return (
-      <div style={{
-        width   : '100%',
-        height  : 200,
-        position: 'relative'}}>
+      <div className='boardBoxes'>
         { boardIdNotes.length ? (
             boardIdNotes.map((note) => {
               const { left, top } = note;

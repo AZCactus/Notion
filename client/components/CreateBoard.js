@@ -18,37 +18,38 @@ const CreateBoard = (props) => {
   return (
     <div>
 
-      <div className="row">
-      <div className="col-xs-4 col-md-4 col-lg-4 col-xs-offset-1">
-        <h3 >Boards</h3>
-      </div>
-      <div className="col-xs-5 col-md-3 col-lg-4 col-xs-offset-1">
-        <h5 style={{float: 'right', marginTop: '30px'}}>
+      <div className='clearfix' style={{width: '87%', margin: '0 auto'}}>
+        <h3 style={{float: 'left'}}>Boards</h3>
+        <h5 style={{float: 'right', marginTop: '30px', textAlign: 'right'}}>
           <a onClick={() => { props.filterChange('all'); }}>all </a>/
           <a onClick={() => { props.filterChange('admin'); }}> admin </a>/
           <a onClick={() => { props.filterChange('user'); }}> user</a>
         </h5>
-      </div>
     </div>
-      <div className="row">
+      <div style={{textAlign: 'center'}}>
         {
           !!boards.length && boards.map((board) => {
             if (filterArr.indexOf(board.id) !== -1) {
               return (
-              <div className="col-xs-10 col-md-8 col-lg-4 col-xs-offset-1" key={ board.id }>
-                  <Link className="thumbnail" to={`/boards/${board.hash}`}>
-                  <UserBoardsContainer board={board} />
-                  <div className="caption">
+              <div style={{display: 'inline-block', margin: '0 5px 0 5px'}} key={ board.id }>
+                <div className="thumbnail clearfix" style={{ overflow: 'hidden' }}>
+                  <Link to={`/boards/${board.hash}`}>
+                    <UserBoardsContainer board={board} />
+                  </Link>
+                  <div className="caption" style={{float: 'left', display: 'inline-block'}}>
                     <h5>
-                      <span>{ board.name }</span>
+                      <span style={{display: 'inline-block', verticalAlign: 'middle', font: 'bold'}}>{ board.name }</span>
                     </h5>
                   </div>
-                </Link>
+                  <button className="btn btn-secondary deleteButton" type='button' onClick={
+                    () => { props.delete(board.id); }
+                  }>Delete</button>
+                </div>
               </div>
               ); }
           })
           }
-          <div className="col-xs-10 col-md-8 col-lg-4 col-xs-offset-1">
+          <div style={{display: 'inline-block', verticalAlign: 'top'}}>
           <ModalContainer createBoard={props.create}/>
           </div>
 

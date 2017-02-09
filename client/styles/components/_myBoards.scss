@@ -1,6 +1,7 @@
 .addBoard {
   text-decoration: none;
   font-size: 1.5em;
+  height: 100%;
   opacity: 0.5;
   color: black;
 	text-align: center;
@@ -11,4 +12,30 @@
     text-decoration: none;
     color: black;
   }
+}
+
+.boardBoxes {
+  width: 20em;
+  height  : 200px;
+  position: relative;
+}
+
+.createButton {
+  width: 21em;
+  height  : 262px;
+  position: relative;
+  display: inline-block;
+  margin: 0 5px 0 5px;
+}
+.deleteButton {
+float: right;
+text-align: right;
+vertical-align: middle;
+
+color: #292b2c;
+background-color: #f2f2f2;
+border-color: #ccc;
+margin-top: 10px;
+margin-bottom: 10px;
+
 }

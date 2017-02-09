@@ -141,7 +141,6 @@ export function getAllNotes({userId, boardId}) {
         return res.data;
       })
       .then(notes => {
-        console.log(notes);
         dispatch(receiveNotes(notes));
       })
       .catch(err => console.warn(err));
