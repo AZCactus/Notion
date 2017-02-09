@@ -4,9 +4,7 @@ import {shallowEqual} from './ShouldCompUpdate';
 
 
 const styles = {
-  display        : 'inline-block',
-  transform      : 'rotate(-7deg)',
-  WebkitTransform: 'rotate(-7deg)',
+  display: 'inline-block'
 };
 
 
@@ -51,7 +49,7 @@ export default class NoteDragPreview extends Component {
 
     return (
       <div style={styles}>
-        <NoteWrapper red={tickTock} content={content} />
+        <NoteWrapper noteRaised={true} red={tickTock} content={content} />
       </div>
     );
   }
