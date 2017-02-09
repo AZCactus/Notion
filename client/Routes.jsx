@@ -9,7 +9,6 @@ import CreateBoardContainer from './containers/CreateBoardContainer';
 import CreateNoteContainer from './containers/CreateNoteContainer';
 import ViewNoteContainer from './containers/ViewNoteContainer';
 import SignupContainer from './containers/SignupContainer';
-import MobileBoardViewContainer from './containers/MobileBoardViewContainer';
 
 //action-creators
 import {getBoard, getAllBoards} from './actions/board';
