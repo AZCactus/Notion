@@ -4,12 +4,17 @@
 
 .participant-number-container {
   text-align: center;
-  padding: 0.8em 0;
-  border-bottom: 2px solid black;
-  font-size: 1.5rem;
+  padding: 0.7em 0;
+  color: #fff;
+  border-bottom: 1px solid black;
+  font-size: 1.4rem;
 }
 
 .participant-number {
+  margin: 0 0.7em;
+  padding: 0.3em 0.3em;
+    background-color: #4099FF;
+    border-radius: 5px;
   i {
     margin: 0 0.6em;
   }
@@ -27,7 +32,9 @@
 }
 
 .participant-item {
-  margin: 0.4em 0;
+  padding: 0.8em;
+  border-bottom: 1px solid #ABABAB;
+
 }
 
 .participant-image {
@@ -64,17 +71,17 @@
 
   .participants-container{
     position: fixed;
-    width: 15vw;
+    margin-top: 3em;
+    width: 20vw;
     padding-top:0.3em;
     min-height: 100vh;
     max-height: 100vh;
     float: right;
-    box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
+    border-left: solid 1px #3a3f41;
     display: block;
     top: 0%;
     z-index: 1000;
     background: #fff;
-    // margin-top: 3.7em;
     transition: all 0.6s cubic-bezier(0.02, 0.41, 0.65, 1.05);
     -webkit-transition: all 0.6s cubic-bezier(0.02, 0.41, 0.65, 1.05);
     -moz-transition: all 0.6s cubic-bezier(0.02, 0.41, 0.65, 1.05);
@@ -87,7 +94,7 @@
   }
 
   .participants-container-hide {
-    right: -14.7%;
+    right: -19.5%;
   }
 }
 

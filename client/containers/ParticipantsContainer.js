@@ -63,7 +63,7 @@ export class ParticipantsContainer extends Component {
           this.props.userPermission(this.props.selectedBoard);
         }
       }
-      const participantName = Object.keys(this.props.loggedInUser).length ? this.props.loggedInUser.first_name + ' ' + this.props.loggedInUser.last_name : 'Guest';
+      const participantName = Object.keys(this.props.loggedInUser).length ? this.props.loggedInUser.first_name : 'Guest';
       this.props.socketEmit('join',
         {
           room: genShortHash(this.props.selectedBoard.id),

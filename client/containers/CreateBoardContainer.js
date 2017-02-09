@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import CreateBoard from '../components/CreateBoard';
-import {createBoard} from '../actions/board';
+import {createBoard, deleteBoard} from '../actions/board';
 import {getAllNotes} from '../actions/note';
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     onBoardEnter: function() {
       dispatch(getAllNotes({}));
+    },
+    delete: function(boardId) {
+      dispatch(deleteBoard(boardId));
     }
   };
 };
@@ -51,6 +54,7 @@ export class CB extends Component {
         create={this.props.create}
         filterStatus={this.state.filterStatus}
         filterChange={this.filterChange}
+        delete={this.props.delete}
       />
     );
   }

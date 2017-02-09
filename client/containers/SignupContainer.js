@@ -43,7 +43,12 @@ export class SignupContainer extends Component {
   submitForm(e) {
     e.preventDefault();
     this.props.createUser(this.state.firstName,
-    this.state.lastName, this.state.email, this.state.username, this.state.password);
+    this.state.lastName, this.state.email, this.state.username, this.state.password)
+      .then(result => {
+        if (result.message && result.message === 'Request failed with status code 409') {
+          this.setState({dirty: true});
+        }
+      });
   }
 
   loginForm(e) {
@@ -53,6 +58,7 @@ export class SignupContainer extends Component {
 
   changeForm(type) {
     this.setState({type: type});
+    this.setState({dirty: false});
   }
 
   handleInput(e) {
@@ -63,7 +69,11 @@ export class SignupContainer extends Component {
     const dirty = this.state.dirty;
     let warning = '';
 
-    if (dirty) warning = 'Password or Email is Invalid';
+    if (dirty && this.state.type === 'login') {
+      warning = 'Password or Email is Invalid';
+    } else if (dirty && this.state.type === 'signup') {
+      warning = 'Username or Email is Unavailable';
+    }
 
     return (
       <ReactTransitionGroup

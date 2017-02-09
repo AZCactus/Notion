@@ -49,8 +49,9 @@ class ModalContainer extends Component {
 
   render() {
     return (
-      <div>
-        <a className='addBoard thumbnail' onClick={this.openModal}>Create Board</a>
+      <div className="createButton">
+        <a className='addBoard thumbnail' onClick={this.openModal}>
+          <div style={{top: '50%', transform: 'translateY(-50%)'}}>Create Board</div></a>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

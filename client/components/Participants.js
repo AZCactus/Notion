@@ -6,10 +6,10 @@ export default function(props) {
      : 'participants-container participants-container-hide'}
      onClick={() => { props.toggleParticipantsMenu(); }}>
           <div className="participant-number-container">
-            <span className="participant-number">
+            <div className="participant-number">
               <i className="glyphicon glyphicon-globe globe-icon"></i>
               {props.totalParticipants} Collaborators Online
-            </span>
+            </div>
           </div>
           <div className="participant-list-container">
             <ul className="participant-list">

@@ -12,19 +12,18 @@ button:focus {
 
   background-color:#fff;
   margin: 0 auto;
-  margin-top: 2em;
+  margin-top: 4em;
+  padding-bottom: 2em;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
   border-bottom-right-radius: 60px 10px;
   border-bottom-left-radius: 60px 10px;
 }
 
 .login {
-  height: 30vh;
   min-height: 23em;
 }
 
 .signup {
-  height: 65vh;
   min-height: 32em;
 }
 
@@ -39,7 +38,7 @@ button:focus {
   text-align: center;
   margin: 0 auto;
   display: block;
-  padding-top: 1em;
+  padding-top: 2em;
 }
 
 .signup-input-field {
@@ -86,7 +85,7 @@ button:focus {
   margin: 0 auto;
   font-weight: bold;
   width: 80%;
-  line-height: 2em;
+  line-height: 1em;
   display: block;
   margin-top: 1em;
   border-radius: 2px;
@@ -156,7 +155,7 @@ button:focus {
   width: 40vw;
   background-color:#fff;
   margin: 0 auto;
-  margin-top: 2em;
+  margin-top: 6em;
   box-shadow: 0 0 1px rgba(76,86,103,.25), 0 2px 18px rgba(31,37,50,.32);
 }
 
@@ -169,5 +168,5 @@ button:focus {
 
 .slideIn-appear.slideIn-appear-active {
   margin-top: 0;
-  transition: margin-top .5s ease-in;
+  transition: margin-top 0.5s ease-in;
 }

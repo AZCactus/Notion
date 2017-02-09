@@ -34,7 +34,7 @@ $light-gray: #7e8890;
   top: 20%;
   font-style: italic;
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: center;
   z-index: 999;
   width: 100%;
@@ -92,9 +92,9 @@ button:focus {
 .postit{
   box-sizing: border-box;
   margin: 0.2em;
-  min-width: 3.9rem;
-  max-width: 3.9rem;
-  height: 3.9rem;
+  min-width: 3.7rem;
+  max-width: 3.7rem;
+  height: 3.7rem;
   padding: 0.1em;
   border:1px solid #E8E8E8;
   font-size: 1.8rem;
@@ -193,7 +193,7 @@ button:focus {
   }
 
   .main-mini-desc {
-    font-size: 1.9rem;
+    font-size: 1.6rem;
     font-weight: normal;
   }
 
@@ -203,9 +203,9 @@ button:focus {
   }
 
   .postit {
-    min-width: 5rem;
-    max-width: 5rem;
-    height: 5rem;
+    min-width: 4.6rem;
+    max-width: 4.6rem;
+    height: 4.6rem;
     font-size: 3rem;
   }
 

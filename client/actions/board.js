@@ -68,3 +68,11 @@ export const getBoard = (boardHash) => (dispatch) => {
       dispatch(receiveBoard(board));
     });
 };
+
+export const deleteBoard = (boardId) => (dispatch) => {
+  return axios.delete(`/api/boards/${boardId}`)
+    .then((res) => res.data)
+    .then((board) => {
+      dispatch(getAllBoards());
+    });
+};
