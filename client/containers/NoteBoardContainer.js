@@ -94,7 +94,6 @@
     }
 
     participantMoveNote(data) {
-      console.log('PMN', data);
       const key = Object.keys(data);
       let left;
       let top;
