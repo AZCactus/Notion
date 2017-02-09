@@ -43,15 +43,14 @@ export default function Routes() {
   return (
     <Router history={browserHistory}>
       <Route path="/" component={Index} onEnter={indexEnter}>
-        <IndexRoute component={HomepageContainer} />
-        <Route path="/signup" component={SignupContainer} />
-        <Route path="/boards" component={CreateBoardContainer} onEnter={onMyBoardEnter} />
-        <Route path='/boards/:boardHash' component={BoardContainer} onEnter={onBoardEnter} />
-
-        <Route path="/note">
-          <IndexRoute component={CreateNoteContainer} onEnter={onMyBoardEnter}/>
-          <Route path=":id" component={ViewNoteContainer} />
-        </Route>
+       <IndexRoute component={HomepageContainer} />
+       <Route path="/signup" component={SignupContainer} />
+       <Route path="/boards" component={CreateBoardContainer} onEnter={onMyBoardEnter} />
+         <Route path='/boards/:boardHash' component={BoardContainer} onEnter={onBoardEnter} />
+       <Route path="/note">
+         <IndexRoute component={CreateNoteContainer} onEnter={onMyBoardEnter}/>
+         <Route path=":id" component={ViewNoteContainer} />
+       </Route>
       </Route>
     </Router>
   );

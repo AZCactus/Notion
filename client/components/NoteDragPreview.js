@@ -12,9 +12,7 @@ export default class NoteDragPreview extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !shallowEqual(this.props, nextProps);
-
   }
-
 
   constructor(props) {
     super(props);
@@ -22,18 +20,15 @@ export default class NoteDragPreview extends Component {
     this.state = {
       tickTock: false
     };
-
   }
 
   componentDidMount() {
 
     this.interval = setInterval(this.tick, 200);
-
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
-
   }
 
   tick() {
@@ -43,16 +38,13 @@ export default class NoteDragPreview extends Component {
   }
 
   render() {
-
     const { tickTock } = this.state;
-    const {content} = this.props;
+    const {content, color} = this.props;
 
     return (
       <div style={styles}>
-        <NoteWrapper noteRaised={true} red={tickTock} content={content} />
+        <NoteWrapper noteRaised={true} red={tickTock} content={content} color={color}/>
       </div>
     );
   }
-
-
 }

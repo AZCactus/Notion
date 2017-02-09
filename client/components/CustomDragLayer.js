@@ -80,7 +80,7 @@ class CustomDragLayer extends Component {
 
     switch (type) {
     case NOTE:
-      return (<NoteDragPreview content={item.content} test={item}/>);
+      return (<NoteDragPreview content={item.content} color={item.color}/>);
     default:
       return null;
     }

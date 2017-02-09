@@ -7,12 +7,12 @@ import {shallowEqual} from './ShouldCompUpdate';
 
 const noteSource = {
   beginDrag(props) {
-    const { id, left, top, content } = props;
-    return { id, left, top, content };
+    const { id, left, top, content, color } = props;
+    return { id, left, top, content, color };
   },
 };
 
-//ok
+
 function getStyles(props) {
   const { left, top, isDragging } = props;
   const transform = `translate3d(${left}px, ${top}px, 0)`;

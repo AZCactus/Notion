@@ -4,7 +4,8 @@
 }
 
 
-@media (max-width: 799px) {
+@media screen and (max-width: 799px) {
+
   .snapTo {
     display: none;
   }
@@ -12,18 +13,37 @@
 
   .trashcan {
     display: none;
+
   }
 
   .ClipboardBlocking {
     display: none;
   }
-}
+
+  .boardTitle {
+    position: absolute;
+    font-size: 2em;
+    padding-bottom: 25px;
+    word-wrap: none;
+    margin: 1em;
+    text-shadow: center;
+    left: 20vw;
+    transform: translateX(-20%);
+
+     }
+   }
+
+
+
+
 
 .ClipboardBlocking {
 visibility: hidden;
 }
 
-
+.mobile{
+  margin-top: 20%;
+}
 .mobileListItem {
   list-style-type: none;
   border-bottom: 1px dashed black;
@@ -33,9 +53,6 @@ visibility: hidden;
   margin-left: 5%;
   margin-right: 5%;
   float: right;
-
-
-
 }
 
 .mobileNoteContent {
@@ -57,10 +74,18 @@ visibility: hidden;
 
 
 
- @media (min-width: 800px)
+ @media screen and (min-width: 800px)
   {
     .snapTo {
       display: inline-block;
+    }
+
+    .boardTitle{
+      position: fixed;
+      // word-wrap: break-word;
+      left: 50vw;
+      transform: translateX(-50%);
+      margin: 75px;
 
     }
   }
