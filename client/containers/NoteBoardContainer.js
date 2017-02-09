@@ -110,7 +110,6 @@
 
 
     componentWillUnmount() {
-      console.log('safddfhdgfhdfghgdfjgdfhjdhgjghfj');
       this.props.clearSocketListeners();
       this.props.socketDisconnect();
       deleteNotesFromDatabase(this.props.deletedNotes);
