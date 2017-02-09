@@ -89,12 +89,7 @@
 
     boardUpdate(note) {
       if (note.board_id === this.props.board.id) {
-        do {
-          console.log('call board update');
           store.dispatch(addNoteToBoard(note));
-        } while (false); {
-
-        }
       }
     }
 
