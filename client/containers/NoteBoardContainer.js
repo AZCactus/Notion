@@ -88,7 +88,6 @@
     }
 
     boardUpdate(note) {
-      console.log('Called', note);
       if (note.board_id === this.props.board.id) {
           store.dispatch(addNoteToBoard(note));
       }
