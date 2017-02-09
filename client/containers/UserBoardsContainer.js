@@ -13,7 +13,7 @@ export class UserBoardsContainer extends Component {
 
     return (
       <div style={{
-        // width   : 400,
+        width   : '100%',
         height  : 200,
         position: 'relative'}}>
         { boardIdNotes.length ? (

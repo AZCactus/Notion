@@ -46,7 +46,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Note.findOne({where  : { id: Number(req.params.id)},
-  include: [ Comment ]})
+  include: [ {all: true} ]})
     .then(note => res.send(note))
     .catch(next);
 });
@@ -86,6 +86,9 @@ router.post('/', (req, res, next) => {
         };
         topTraverse(0);
       });
+    })
+    .then(note => {
+      return Note.findOne({where: note, include: [ {all: true} ]});
     })
     .then(note => {
       res.send(note);
