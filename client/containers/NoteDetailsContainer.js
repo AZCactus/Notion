@@ -104,7 +104,7 @@ class NoteDetailsContainer extends Component {
             onChange={this.handleCommentInput}
             onKeyPress={(e) => { this.handleKeyPress(e); }} />
           <button className="comment-submit-button" type="submit">
-            <span> Send </span>
+            Send
           </button>
           </div>
         </form>
