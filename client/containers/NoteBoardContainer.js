@@ -90,12 +90,14 @@
 
 
     boardUpdate(note) {
+      console.log('Called', note);
       if (note.board_id === this.props.board.id) {
         store.dispatch(addNoteToBoard(note));
       }
     }
 
     participantMoveNote(data) {
+      console.log('PMN', data);
       const key = Object.keys(data);
       let left;
       let top;
@@ -144,7 +146,7 @@
           </MediaQuery>
 
           <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
-            <div style={{marginTop: '70px'}}>
+            <div style={{marginTop: '7  0px'}}>
 
               <ol className='mobileOL'>
               {

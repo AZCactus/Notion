@@ -7,8 +7,9 @@ import {shallowEqual} from './ShouldCompUpdate';
 
 const noteSource = {
   beginDrag(props) {
-    const { id, left, top, content } = props;
-    return { id, left, top, content };
+    console.log(props);
+    const { id, left, top, content, color } = props;
+    return { id, left, top, content, color };
   },
 };
 

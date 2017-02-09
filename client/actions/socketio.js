@@ -41,6 +41,7 @@ export const clearSocketListeners = () => (dispatch, getState) => {
   if (!isEmpty(socket)) {
     const events =  getState().socket.events;
     events.forEach(e => {
+      console.log(e);
       socket.removeListener(e);
     });
   }
@@ -48,5 +49,6 @@ export const clearSocketListeners = () => (dispatch, getState) => {
 };
 
 export const socketDisconnect = () => (dispatch) => {
+  console.log('DISCONNECT');
   if (socket.disconnect) socket.disconnect();
 };
