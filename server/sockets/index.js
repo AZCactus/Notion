@@ -57,7 +57,6 @@ module.exports = function sockets(server) {
           });
         }
         /* broadcast to all clients in board namespace */
-        console.log('WILDCARD', eventName, payload);
         io.of('board').emit(eventName, payload);
       }
     });
