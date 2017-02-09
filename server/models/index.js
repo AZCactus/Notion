@@ -7,7 +7,7 @@ const User = require('./user');
 const Comment = require('./comment');
 const BoardPermission = require('./board_permission');
 
-Board.hasMany(Note);
+Board.hasMany(Note, {onDelete: 'cascade'});
 Note.belongsTo(Board);
 
 Note.hasMany(Comment);
