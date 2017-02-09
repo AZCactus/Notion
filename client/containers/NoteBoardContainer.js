@@ -88,14 +88,12 @@
     }
 
     boardUpdate(note) {
-      console.log('Called', note);
       if (note.board_id === this.props.board.id) {
           store.dispatch(addNoteToBoard(note));
       }
     }
 
     participantMoveNote(data) {
-      console.log('PMN', data);
       const key = Object.keys(data);
       let left;
       let top;
