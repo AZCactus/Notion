@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {Board, User, BoardPermission, Note} = require('ROOT/server/models/');
+const {Board, User, BoardPermission, Note} = require('../../models/');
 
 
 router.get('/', (req, res, next) => {

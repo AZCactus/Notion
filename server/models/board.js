@@ -1,5 +1,5 @@
 'use strict';
-const {genShortHash} = require('ROOT/client/utils/stringHash');
+const {genShortHash} = require('../../client/utils/stringHash');
 
 
 const Sequelize = require('sequelize');

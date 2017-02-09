@@ -3,7 +3,7 @@
 const express = require('express');
 const Router = express.Router;
 const router = new Router();
-const {User} = require('ROOT/server/models');
+const {User} = require('../../models');
 const chalk = require('chalk');
 
 /* get users */
