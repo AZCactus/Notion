@@ -76,8 +76,7 @@ export class ParticipantsContainer extends Component {
     this.setState({ status: 'disconnected'});
   }
 
-  joined({parts, totalParticipants}) {
-    const participants = [ {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'}, {id: 1, name: 'Alvin'} ];
+  joined({participants, totalParticipants}) {
     this.setState({ participants });
     this.setState({ totalParticipants});
   }
