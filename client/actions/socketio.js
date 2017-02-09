@@ -21,7 +21,7 @@ export const clearAllListeners = () => ({
 //need to change to ip address where board resides
 
 export const socketConnect = (namespace) => dispatch => {
-  socket = io(`/${namespace}`);
+  if (isEmpty(socket)) socket = io(`/${namespace}`);
 };
 
 export const socketEmit = (eventName, payload) => dispatch => {
@@ -41,12 +41,15 @@ export const clearSocketListeners = () => (dispatch, getState) => {
   if (!isEmpty(socket)) {
     const events =  getState().socket.events;
     events.forEach(e => {
-      socket.removeListener(e);
+      socket.removeAllListeners(e);
     });
   }
   dispatch(clearAllListeners());
 };
 
 export const socketDisconnect = () => (dispatch) => {
-  if (socket.disconnect) socket.disconnect();
+  if (socket.disconnect) {
+    socket.disconnect();
+    socket = {};
+  }
 };

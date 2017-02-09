@@ -85,9 +85,7 @@
       this.props.socketConnect('board');
       this.props.addSocketListener('note', this.boardUpdate);
       this.props.addSocketListener('moveNote', this.participantMoveNote);
-
     }
-
 
     boardUpdate(note) {
       if (note.board_id === this.props.board.id) {
@@ -125,8 +123,6 @@
     }
 
     render() {
-
-
       const {notesDelete, movedNote, notes, connectDropTarget, board} = this.props;
       let backgroundColor;
 
