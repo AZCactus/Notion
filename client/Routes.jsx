@@ -9,7 +9,6 @@ import CreateBoardContainer from './containers/CreateBoardContainer';
 import CreateNoteContainer from './containers/CreateNoteContainer';
 import ViewNoteContainer from './containers/ViewNoteContainer';
 import SignupContainer from './containers/SignupContainer';
-import MobileBoardViewContainer from './containers/MobileBoardViewContainer';
 
 //action-creators
 import {getBoard, getAllBoards} from './actions/board';
@@ -48,7 +47,6 @@ export default function Routes() {
        <Route path="/signup" component={SignupContainer} />
        <Route path="/boards" component={CreateBoardContainer} onEnter={onMyBoardEnter} />
          <Route path='/boards/:boardHash' component={BoardContainer} onEnter={onBoardEnter} />
-           <Route path='/boards/:boardHash/mobile' component={MobileBoardViewContainer} onEnter={onBoardEnter} />
 
        <Route path="/note">
          <IndexRoute component={CreateNoteContainer} onEnter={onMyBoardEnter}/>

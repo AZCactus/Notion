@@ -88,9 +88,6 @@ router.post('/', (req, res, next) => {
       });
     })
     .then(note => {
-      return Note.findOne({where: note, include: [ {all: true} ]});
-    })
-    .then(note => {
       res.send(note);
     })
     .catch(next);
