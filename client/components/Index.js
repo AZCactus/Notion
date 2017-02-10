@@ -9,7 +9,7 @@ import NavbarContainer from '../containers/NavbarContainer';
 const Index = (props) => {
   return (
     <div>
-      <NavbarContainer props={props} />
+      <NavbarContainer {...props} />
       <div >
         {/* <div className='col-lg-2'> */}
         {/*<SidebarContainer />*/}
