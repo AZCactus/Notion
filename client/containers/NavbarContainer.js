@@ -31,21 +31,27 @@ class NB extends Component {
     this.state = {
       aria       : false,
       toggleClass: 'navClass navbar-collapse collapse',
+      toggleTitle: 'navbar-brand navTitle',
     };
     this.expandNav = this.expandNav.bind(this);
   }
 
   expandNav() {
     let newToggleClassValue = '';
+    let newToggleTitleValue = '';
 
     if (this.state.toggleClass === 'navClass navbar-collapse collapse') {
       newToggleClassValue = 'navClass navbar-collapse collapse in navToggle';
+      newToggleTitleValue = 'navbar-brand navTitle hideTitle';
+
     } else {
+      newToggleTitleValue = 'navbar-brand navTitle';
       newToggleClassValue = 'navClass navbar-collapse collapse';
     }
     this.setState({
       aria       : !this.state.aria,
-      toggleClass: newToggleClassValue
+      toggleClass: newToggleClassValue,
+      toggleTitle: newToggleTitleValue
     });
   }
 
@@ -55,6 +61,7 @@ class NB extends Component {
         aria={this.state.aria}
         expandNav={this.expandNav}
         navClass={this.state.toggleClass}
+        titleClass={this.state.toggleTitle}
         user={this.props.user}
         logoutUser={this.props.logoutUser}
         toggleSidebar={this.props.toggleSidebar}
