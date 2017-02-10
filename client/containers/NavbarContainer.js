@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     user         : state.userReducer.loggedInUser,
     sidebarToggle: state.nav.sidebarToggle,
     board        : state.board.selectedBoard,
-    location     : ownProps.props.location.pathname
+    location     : ownProps.location.pathname
   };
 };
 
