@@ -102,14 +102,19 @@ class BoardContainer extends Component {
 
   showNoteComments(color, content, noteId) {
     this.props.selectedNoteDetail({color, content, noteId});
+    document.body.classList.toggle('lock-overflow', true);
+    document.documentElement.classList.toggle('lock-overflow', true);
   }
 
   componentWillUnmount() {
     this.props.selectedNoteDetail();
+
   }
 
   hideNoteComments() {
     this.props.selectedNoteDetail();
+    document.body.classList.toggle('lock-overflow', false);
+    document.documentElement.classList.toggle('lock-overflow', false);
   }
 
 
@@ -121,9 +126,8 @@ class BoardContainer extends Component {
 
     const value = `${window.location.host}${window.location.host === 'localhost' ? window.location.port : ''}/note?board=${this.props.board.hash}`;
 
-
     return (
-      <div className="col-xs-12 board-page-container" key={ this.props.board.id }>
+      <div className="col-xs-12 board-page-container " key={ this.props.board.id }>
         {this.props.selectedNoteDetails ?
           <NoteDetailsContainer
             note={this.props.selectedNoteDetails}
