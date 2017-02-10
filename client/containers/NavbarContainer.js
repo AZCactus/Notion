@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(logoutUser())
         .then(() => browserHistory.push('/signup'));
     },
-    toggleSidebar: (field) => dispatch(toggleClick(field))
+    toggleSidebar: (field) => dispatch(toggleClick(field)),
   };
 };
 
@@ -33,6 +33,7 @@ class NB extends Component {
       toggleClass: 'navClass navbar-collapse collapse',
     };
     this.expandNav = this.expandNav.bind(this);
+    this.newPage = this.newPage.bind(this);
   }
 
   expandNav() {
@@ -40,26 +41,31 @@ class NB extends Component {
 
     if (this.state.toggleClass === 'navClass navbar-collapse collapse') {
       newToggleClassValue = 'navClass navbar-collapse collapse in navToggle';
+
     } else {
       newToggleClassValue = 'navClass navbar-collapse collapse';
     }
     this.setState({
       aria       : !this.state.aria,
-      toggleClass: newToggleClassValue
+      toggleClass: newToggleClassValue,
     });
   }
-
+  newPage() {
+    this.setState({toggleClass: 'navClass navbar-collapse collapse'});
+  }
   render() {
     return (
       <Navbar
         aria={this.state.aria}
         expandNav={this.expandNav}
         navClass={this.state.toggleClass}
+        titleClass={this.state.toggleTitle}
         user={this.props.user}
         logoutUser={this.props.logoutUser}
         toggleSidebar={this.props.toggleSidebar}
         board={this.props.board}
         location={this.props.location}
+        newPage={this.newPage}
       />
     );
   }

@@ -60,10 +60,10 @@ export default class HomePageContainer extends Component {
         <div className="desc-container">
             <div className="left-desc">
               <div className="left-desc-title">
-                  Seamless Design.
+                  Real-time collaboration.
               </div>
               <div className="left-desc-content">
-                 Unite with your team and brainstorm ideas on your own dynamic board. Some more description we need to think about. Lets get back to this
+                 Unite with your team and brainstorm ideas in your own dynamic board. Create context around your projects with Boards—flexible spaces to store, share, and talk about your own ideas.
               </div>
 
             </div>

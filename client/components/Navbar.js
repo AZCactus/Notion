@@ -21,7 +21,7 @@ const Navbar = (props) => {
               <Link to={`/note?board=${props.board.hash}`} className='navbar-brand navTitle' >{props.board.name}</Link>) : null }
 
           <div id='navbar' className={props.navClass} style={{float: 'right'}} aria-expanded={props.aria}>
-            <ul className="nav navbar-nav" onClick={() => { props.expandNav(); }}>
+            <ul className="nav navbar-nav" onClick={() => { props.newPage(); }}>
               { !Object.keys(props.user).length ? (
                 <li><Link to="/signup">Login/SignUp</Link></li>
               ) : (

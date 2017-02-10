@@ -3,7 +3,7 @@ import React from 'react';
 const Login = (props) => {
   const warning = props.warning;
   return (
-     <form className="form" onSubmit={(e) => { props.loginForm(e); }}>
+     <form className={'form'} onSubmit={(e) => { props.loginForm(e); }}>
         <div className="">
           <label className="login-label"> Login with your email address </label>
         </div>
@@ -25,7 +25,7 @@ const Login = (props) => {
           required />
         </div>
         { warning && <div className="alert alert-warning">{warning}</div> }
-        <button className="login-submit-button" type="submit">
+        <button className={'login-submit-button'} type="submit">
         Login
         </button>
         <button className="signup-link-container signup-link" type="button"

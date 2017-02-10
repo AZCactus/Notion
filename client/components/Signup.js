@@ -49,10 +49,10 @@ const Signup = (props) => {
           </label>
         </div>
         { !!warning && <div className="alert alert-warning">{warning}</div> }
-        <button className="signup-submit-button" type="submit">
+        <button className={'signup-submit-button'} type="submit">
         SIGN UP
         </button>
-           <button className="login-link-container login-link" type="button"
+           <button className='login-link-container login-link' type="button"
          onClick={() => { props.changeForm('login'); }} >
           Already have an account? Login
         </button>

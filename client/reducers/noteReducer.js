@@ -8,7 +8,6 @@ const initState = {
   allBoardSpecificNotes: {},
   deletedNotes         : [],
   selectedNoteDetails  : null
-
 };
 
 export default function noteReducer(state = initState, action) {
