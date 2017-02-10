@@ -186,30 +186,6 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #183850  50%, #192C4
   }
 }
 
-
-
-
-// [
-//   "#ffeb3b",
-//   "#ffc107",
-//   "#FFA83A",
-//   "#ff9800",
-//   "#FF646E",
-//   "#cddc39",
-//   "#8bc34a",
-//   "#4caf50",
-//   "#28B270",
-//   "#009688",
-//   "#00bcd4",
-//   "#03a9f4",
-//   "#2196f3",
-//   "#5064D2",
-//   "#B150A0"
-// ]
-
-
-
-
 .noteDetailSlideIn-appear {
   left: -50%;
 }
@@ -223,9 +199,8 @@ $bgd-color: linear-gradient(-45deg, #183850 0, #183850 25%, #183850  50%, #192C4
 @media screen and (min-device-width: 1024px) {
 
 .note-details-container {
-  // position: absolute;
   top: 7%;
-  width: 40vw;
+  width: 50vw;
   height: 90vh;
   left: 1%;
   margin: 0;
