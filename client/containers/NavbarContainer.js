@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(logoutUser())
         .then(() => browserHistory.push('/signup'));
     },
-    toggleSidebar: (field) => dispatch(toggleClick(field))
+    toggleSidebar: (field) => dispatch(toggleClick(field)),
   };
 };
 
@@ -34,6 +34,7 @@ class NB extends Component {
       toggleTitle: 'navbar-brand navTitle',
     };
     this.expandNav = this.expandNav.bind(this);
+    this.newPage = this.newPage.bind(this);
   }
 
   expandNav() {
@@ -54,7 +55,9 @@ class NB extends Component {
       toggleTitle: newToggleTitleValue
     });
   }
-
+  newPage() {
+    this.setState({toggleClass: 'navClass navbar-collapse collapse'});
+  }
   render() {
     return (
       <Navbar
@@ -67,6 +70,7 @@ class NB extends Component {
         toggleSidebar={this.props.toggleSidebar}
         board={this.props.board}
         location={this.props.location}
+        newPage={this.newPage}
       />
     );
   }

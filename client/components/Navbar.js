@@ -2,6 +2,9 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const Navbar = (props) => {
+  console.log(props.location);
+  console.log(props.board);
+  console.log(props.location === `/boards/${props.board.hash}`);
   return (
     <div>
     <nav className="navbar navbar navbar-fixed-top" role="navigation">
@@ -21,7 +24,7 @@ const Navbar = (props) => {
               <Link to={`/note?board=${props.board.hash}`} className={props.titleClass} >{props.board.name}</Link>) : null }
 
           <div id='navbar' className={props.navClass} style={{float: 'right'}} aria-expanded={props.aria}>
-            <ul className="nav navbar-nav" onClick={() => { props.expandNav(); }}>
+            <ul className="nav navbar-nav" onClick={() => { props.newPage(); }}>
               { !Object.keys(props.user).length ? (
                 <li><Link to="/signup">Login/SignUp</Link></li>
               ) : (
