@@ -136,9 +136,9 @@ class BoardContainer extends Component {
 
             </Link>
           </div>
-          <Link to={`/note?board=${this.props.board.hash}`}>
+          {/* <Link to={`/note?board=${this.props.board.hash}`}>
             <h2 className=" boardTitle text-center" style={{width: '10em', margin: '.5em auto', zIndex: 30}}>{ this.props.board.name }</h2>
-          </Link>
+          </Link> */}
         </div>
         <div>
             <div>

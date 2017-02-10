@@ -10,7 +10,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user         : state.userReducer.loggedInUser,
     sidebarToggle: state.nav.sidebarToggle,
-
+    board        : state.board.selectedBoard,
+    location     : ownProps.location.pathname
   };
 };
 
@@ -57,6 +58,8 @@ class NB extends Component {
         user={this.props.user}
         logoutUser={this.props.logoutUser}
         toggleSidebar={this.props.toggleSidebar}
+        board={this.props.board}
+        location={this.props.location}
       />
     );
   }

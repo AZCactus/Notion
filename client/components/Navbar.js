@@ -17,7 +17,8 @@ const Navbar = (props) => {
             <a className='navbar-brand' href='/'>Notion</a>
               {/* <button className="ion-gear-b navbarGearIcon" style={{fontSize: '2em', marginTop: '10px', paddingLeft: '10px'}} type='button' onClick={() => { props.toggleSidebar('sidebarToggle'); }}></button> */}
         </div>
-
+            { props.location === `/boards/${props.board.hash}` ? (
+              <Link to={`/note?board=${props.board.hash}`} className='navbar-brand navTitle' >{props.board.name}</Link>) : null }
 
           <div id='navbar' className={props.navClass} style={{float: 'right'}} aria-expanded={props.aria}>
             <ul className="nav navbar-nav" onClick={() => { props.expandNav(); }}>
