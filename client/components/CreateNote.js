@@ -18,7 +18,8 @@ const initState = {
   hasJoined         : false,
   flickState        : false,
   dragStart         : null,
-  position          : 0
+  position          : 0,
+  colorLocked       : true
 };
 
 export default class CreateNote extends Component {
@@ -170,7 +171,9 @@ export default class CreateNote extends Component {
       mentions: this.state.mentions
     }, this.props.board.id)
       .then(() => {
-        this.setState(Object.assign(initState, {flickState: 'returning'}));
+        const newState = {flickState: 'returning', colorLocked: this.state.colorLocked};
+        if (this.state.colorLocked) newState.color = this.state.color;
+        this.setState(Object.assign({}, initState, newState));
       });
   }
 
@@ -218,7 +221,7 @@ export default class CreateNote extends Component {
   }
 
   render() {
-    (this.state.mentions);
+    const {colorLocked} = this.state;
     const suggestedUsers = this.props.queriedUsers;
     const noteWrapperStyle = {zIndex: 1};
     noteWrapperStyle.transform = `rotate(${this.state.position * 0.02}deg)`;
@@ -246,7 +249,7 @@ export default class CreateNote extends Component {
         </Link>
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
-            <button onClick={() => { console.log('sadgadsfgdsfgsdgf'); this.setState({content: '', parsedContent: []}); }} className="c-note__clear-btn">clear note</button>
+            <button onClick={() => { this.setState({content: '', parsedContent: []}); }} className="c-note__clear-btn">clear note</button>
             <div
               className="c-note---createwrapper"
               style={noteWrapperStyle}
@@ -290,12 +293,17 @@ export default class CreateNote extends Component {
                 onBlur={this.blurHandler}
                 onChange={this.changeHandler} />
             </div>
-            <div style={{margin: '0.25em auto'}}>
+            <div className="clearfix" style={{margin: '0.25em auto'}}>
               <button
                 onClick={this.toggleColorPicker}
                 className="btn btn-color"
                 style={{background: this.state.color}}>
               </button>
+              <label htmlFor="lock-color" className={`c-checkbox ${colorLocked ? 'c-checkbox--checked' : ''} right`}>Lock Color</label>
+              <input onChange={() => {
+                console.log('SDFHGSFJHSDFGJAGSRHJSFDGJGF', this.state.colorLocked);
+                this.setState({colorLocked: !this.state.colorLocked});
+              }} id="lock-color" className="c-checkbox__input" type="checkbox" name="lock-color" checked={colorLocked}/>
             </div>
             <div className="row">
               <button
