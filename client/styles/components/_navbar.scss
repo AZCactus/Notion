@@ -26,6 +26,9 @@
 .navToggle {
   top: 0;
 }
+.navTitle {
+  display: none;
+}
 
 @media screen
   and (min-width: 768px) {
@@ -33,14 +36,10 @@
     .navbarGearIcon {
       display: none;
     }
+    .navTitle {
+      display: inline-block;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
-
-.navTitle {
-  display: inline-block;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.hideTitle {
-  display: none;
-}

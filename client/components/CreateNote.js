@@ -246,7 +246,7 @@ export default class CreateNote extends Component {
     return (
       <div className="container">
         <Link to={`/boards/${this.props.board.hash}`}>
-        <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
+        <h1 className=" noteTitle center">{this.props.board ? this.props.board.name : ''}</h1>
         </Link>
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
