@@ -77,13 +77,18 @@ router.put('/:id', (req, res, next) => {
   const changes = {};
   if (req.body.name) changes.name = req.body.name;
   if (req.body.hash) changes.hash = req.body.hash;
+  if (req.body.changedBoard.noteSize) changes.noteSize = Number(req.body.changedBoard.noteSize);
+  console.log('NOTESIZE IN SERVER', req.body, Number(req.body.changedBoard.noteSize));
 
   Board.update(changes, {
     where: {
       id: Number(req.params.id)
     }
   })
-    .then(board => res.json(board))
+    .then(board => {
+      console.log('BOARD IN SERVER', board);
+      res.json(board);
+    })
     .catch(next);
 });
 

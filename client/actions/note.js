@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CHANGE_NOTE_SIZE, DELETE_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE, NOTE_DETAIL} from '../constants';
+import { DELETE_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE, NOTE_DETAIL} from '../constants';
 import {socketEmit} from './socketio';
 
 export function receiveNote(note) {
@@ -32,12 +32,6 @@ export const moveNote = (id, left, top) => {
   };
 };
 
-export const changeNoteSize = (notes) => {
-  return {
-    type     : CHANGE_NOTE_SIZE,
-    sizeNotes: notes
-  };
-};
 
 export const selectedNoteDetail = (selectedNoteDetails) => {
   return {
@@ -103,15 +97,6 @@ export const noteMover = (id, left, top) => {
   };
 };
 
-export const setNoteSize = (size, notes) => {
-  return dispatch => {
-    const changedNotes = notes.map(note => {
-      return Object.assign({}, note, {size: size});
-    });
-    dispatch(changeNoteSize(changedNotes));
-
-  };
-};
 
 export const IndexToZIndex = (notes, dragNoteId) => {
   return dispatch => {

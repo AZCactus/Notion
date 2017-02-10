@@ -1,8 +1,8 @@
 
-import {RECEIVE_BOARD, RECEIVE_BOARDS, ADD_NEW_BOARD, RECEIVE_BOARD_NOTES, RECEIVE_PERMISSION} from '../constants';
+import {SET_NOTES_SIZE, RECEIVE_BOARD, RECEIVE_BOARDS, ADD_NEW_BOARD, RECEIVE_BOARD_NOTES, RECEIVE_PERMISSION} from '../constants';
 
 
-const initialState = {selectedBoard: {}, allBoards: [], selectedBoardNotes: [], permissions: [], };
+const initialState = {selectedBoard: {}, allBoards: [], selectedBoardNotes: [], permissions: [], notesSize: 0};
 
 export default function(state = initialState, action) {
   const newState = Object.assign({}, state);
@@ -23,6 +23,11 @@ export default function(state = initialState, action) {
   case RECEIVE_PERMISSION:
     newState.permissions = [ ...newState.permissions, action.permission ];
     break;
+  case SET_NOTES_SIZE:
+
+    newState.notesSize = action.notesSize;
+    break;
+
   default:
     return state;
 

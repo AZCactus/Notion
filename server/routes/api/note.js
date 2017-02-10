@@ -46,7 +46,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Note.findOne({where  : { id: Number(req.params.id)},
-  include: [ {all: true} ]})
+    include: [ {all: true} ]})
     .then(note => res.send(note))
     .catch(next);
 });
@@ -72,17 +72,16 @@ router.post('/', (req, res, next) => {
         const topTraverse = function(top) {
           Note.findOne({
             where: { top: top, left: 0, board_id: boardId}})
-          .then(noteToCheck => {
-            if (noteToCheck === null) {
-              note.update({top: top})
-              .then(result => {
-                resolve(result);
-              });
-            }
-            else {
-              topTraverse(top + 20);
-            }
-          });
+            .then(noteToCheck => {
+              if (noteToCheck === null) {
+                note.update({top: top})
+                  .then(result => {
+                    resolve(result);
+                  });
+              } else {
+                topTraverse(top + 20);
+              }
+            });
         };
         topTraverse(0);
       });
@@ -94,13 +93,14 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  const {content, color, top, left, mentions} = req.body;
+  const {content, color, top, left, mentions, size} = req.body;
   const changes = {};
   if (content) changes.content = content;
   if (color) changes.color = color;
   if (top) changes.top = top;
   if (left) changes.left = left;
-
+  if (size) changes.size = size;
+  console.log('IN NOTE UPDATE', size);
   Note.update(changes, {where: {id: req.params.id}})
     .then(note => res.sendStatus(200))
     .catch(next);

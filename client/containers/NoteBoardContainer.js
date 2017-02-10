@@ -37,8 +37,9 @@
   const noteStyles = {
     height  : '50px',
     width   : '50px',
-    fontSize: '.5em',
+    fontSize: '3em',
     position: 'relative',
+
   };
 
 
@@ -116,22 +117,24 @@
     }
 
 
-    renderNote(item, key) {
+    renderNote(item, key, notesSize) {
       return (
-        <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
+        <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments} size={notesSize}>{item.content}</DraggableNote>
       );
     }
 
     render() {
-      const {notesDelete, movedNote, notes, connectDropTarget, board} = this.props;
+
+      const {notesDelete, movedNote, notes, connectDropTarget, board, notesSize} = this.props;
       let backgroundColor;
+
 
       return connectDropTarget(
       <div>
         <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
           <div style={styles}>
             { notes.map((note) => {
-              return this.renderNote(note, note.id);
+              return this.renderNote(note, note.id, notesSize);
             }
           )}
 
