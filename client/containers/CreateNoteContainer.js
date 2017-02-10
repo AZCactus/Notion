@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import CreateNote from '../components/CreateNote';
 
 import {getBoard, addUserPermission} from '../actions/board';
-import {createNote} from '../actions/note';
+import {createNote, receiveNote} from '../actions/note';
 import {searchUsername} from '../actions/user';
 import {
   socketConnect,
@@ -21,7 +21,7 @@ function mapStateToProps(state) {
     board       : state.board.selectedBoard,
     user        : state.userReducer.loggedInUser,
     queriedUsers: state.userReducer.queriedUsers,
-    permissions: state.board.permissions
+    permissions : state.board.permissions
   };
 }
 
@@ -35,6 +35,7 @@ function mapDispatchToProps(dispatch) {
     clearSocketListeners,
     socketDisconnect,
     searchUsername,
-    addUserPermission
+    addUserPermission,
+    receiveNote
   }, dispatch);
 }
