@@ -77,6 +77,7 @@ export default class CreateNote extends Component {
     if (board && user && !isEmpty(board) && !isEmpty(user) && !this.state.hasJoined) {
       this.props.socketConnect('board');
       this.props.addSocketListener('connect', this.join);
+      this.props.addSocketListener('note', this.props.receiveNote);
       this.setState({hasJoined: true});
     }
   }
@@ -245,7 +246,7 @@ export default class CreateNote extends Component {
     return (
       <div className="container">
         <Link to={`/boards/${this.props.board.hash}`}>
-        <h1 className="center">{this.props.board ? this.props.board.name : ''}</h1>
+        <h1 className=" noteTitle center">{this.props.board ? this.props.board.name : ''}</h1>
         </Link>
         <div className="row">
           <div className="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
@@ -301,7 +302,6 @@ export default class CreateNote extends Component {
               </button>
               <label htmlFor="lock-color" className={`c-checkbox ${colorLocked ? 'c-checkbox--checked' : ''} right`}>Lock Color</label>
               <input onChange={() => {
-                console.log('SDFHGSFJHSDFGJAGSRHJSFDGJGF', this.state.colorLocked);
                 this.setState({colorLocked: !this.state.colorLocked});
               }} id="lock-color" className="c-checkbox__input" type="checkbox" name="lock-color" checked={colorLocked}/>
             </div>
