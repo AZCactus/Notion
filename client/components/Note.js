@@ -16,7 +16,7 @@ export default function Note(props) {
 
   return (
     <div
-      className={`c-note ${focused ? 'c-note--focused' : ''} ${raised ? 'c-note--raised' : ''}`}
+      className={`hvr-grow c-note ${focused ? 'c-note--focused' : ''} ${raised ? 'c-note--raised' : ''}`}
       style={noteStyle}>
       <div className="c-note__inner">
         <div className="c-note__content">

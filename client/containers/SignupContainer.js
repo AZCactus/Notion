@@ -13,20 +13,22 @@ export class SignupContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type     : 'signup',
-      firstName: '',
-      lastName : '',
-      email    : '',
-      username : '',
-      password : '',
-      display  : false,
-      dirty    : false,
+      type       : 'signup',
+      firstName  : '',
+      lastName   : '',
+      email      : '',
+      username   : '',
+      password   : '',
+      display    : false,
+      dirty      : false,
+      wobbleError: ''
     };
 
     this.submitForm = this.submitForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.changeForm = this.changeForm.bind(this);
     this.loginForm = this.loginForm.bind(this);
+    this.wobbler = this.wobbler.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +49,7 @@ export class SignupContainer extends Component {
       .then(result => {
         if (result.message && result.message === 'Request failed with status code 409') {
           this.setState({dirty: true});
+          this.wobbler();
         }
       });
   }
@@ -63,6 +66,13 @@ export class SignupContainer extends Component {
 
   handleInput(e) {
     this.setState({[e.target.name]: e.target.value});
+  }
+  wobbler() {
+    this.setState({wobbleError: 'hvr-wobble-horizontal'});
+
+    setTimeout(() => {
+      this.setState({wobbleError: ''});
+    }, 1000);
   }
 
   render() {
@@ -82,17 +92,21 @@ export class SignupContainer extends Component {
       transitionAppearTimeout={500}
       transitionEnterTimeout={500}
       transitionLeaveTimeout={500}>
-        <div className={`form-container ${this.state.type}`} >
+        <div className={`form-container ${this.state.type} ${this.state.wobbleError}`} >
           {this.state.type === 'signup' ?
             <Signup submitForm={this.submitForm}
                     changeForm={this.changeForm}
                     handleInput={this.handleInput}
-                    warning={warning} />
+                    warning={warning}
+                    wobbler={this.wobbler}
+                    wobbleError={this.state.wobbleError}/>
                     :
             <Login loginForm={this.loginForm}
                   handleInput={this.handleInput}
                   changeForm={this.changeForm}
-                  warning={warning} />
+                  warning={warning}
+                  wobbler={this.wobbler}
+                  wobbleError={this.state.wobbleError}/>
           }
         </div>
     </ReactTransitionGroup>
@@ -112,6 +126,7 @@ const mapDispatchToProps = (dispatch) => ({
     .then(res => {
       if (res) {
         state.setState({dirty: true});
+        state.wobbler();
       }
     });
   },
