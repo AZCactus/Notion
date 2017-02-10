@@ -59,13 +59,14 @@ class NoteWrapper extends PureComponent {
 
 
   render() {
-    const { color, red, content, id} = this.props;
+    const { color, red, content, id, size} = this.props;
+    console.log(this.props);
 
 
     const styles = {
       cursor  : 'move',
-      height  : this.props.height || '8em',
-      width   : this.props.width || '8em',
+      height  : this.props.height || '' + size + 'em',
+      width   : this.props.width || '' + size + 'em',
       left    : this.props.left || 0,
       top     : this.props.top || 0,
       position: 'absolute'

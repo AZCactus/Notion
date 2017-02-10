@@ -26,9 +26,7 @@ const noteTarget = {
   drop(props, monitor, component) {
     const hasDroppedOnChild = monitor.didDrop();
     const item = monitor.getItem();
-    if (hasDroppedOnChild) {
 
-    }
     component.setState({
       hasDropped: true,
       hasDroppedOnChild,
