@@ -7,8 +7,8 @@ import {shallowEqual} from './ShouldCompUpdate';
 
 const noteSource = {
   beginDrag(props) {
-    const { id, left, top, content, color } = props;
-    return { id, left, top, content, color };
+    const { id, left, top, content, color, size } = props;
+    return { id, left, top, content, color, size };
   },
 };
 
@@ -55,7 +55,7 @@ class DraggableNote extends PureComponent {
 
 
   render() {
-    const { connectDragSource, content, id} = this.props;
+    const { connectDragSource, content, id, size} = this.props;
 
     return connectDragSource(
 
@@ -66,6 +66,7 @@ class DraggableNote extends PureComponent {
           content={content}
           id={id}
           showNoteComments={this.props.showNoteComments}
+          size={size}
           />
         </div>
       </div>

@@ -39,11 +39,11 @@ export default class NoteDragPreview extends Component {
 
   render() {
     const { tickTock } = this.state;
-    const {content, color} = this.props;
+    const {content, color, size} = this.props;
 
     return (
       <div style={styles}>
-        <NoteWrapper noteRaised={true} red={tickTock} content={content} color={color}/>
+        <NoteWrapper noteRaised={true} red={tickTock} content={content} color={color} size={size}/>
       </div>
     );
   }

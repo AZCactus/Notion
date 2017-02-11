@@ -1,6 +1,8 @@
 import React from 'react';
+import SizeSliderContainer from '../containers/SizeSliderContainer';
 
 export default function(props) {
+
   return (
      <div className={props.display ? 'participants-container participants-container-show'
      : 'participants-container participants-container-hide'}
@@ -28,6 +30,10 @@ export default function(props) {
                         </li>;
               })}
             </ul>
+            <div className='sizeSlider'>
+              <div>Note Size</div>
+              <SizeSliderContainer/>
+            </div>
           </div>
       </div>
   );

@@ -93,7 +93,8 @@ export class ParticipantsContainer extends Component {
         totalParticipants={this.state.totalParticipants}
         participants={this.state.participants}
         display={this.state.display}
-        toggleParticipantsMenu={this.toggleParticipantsMenu} />
+        toggleParticipantsMenu={this.toggleParticipantsMenu}
+        board={this.props.board} />
     );
   }
 
