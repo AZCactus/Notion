@@ -35,13 +35,13 @@ class CustomDragLayerContainer extends Component {
     const { snapToGridAfterDrop, snapToGridWhileDragging } = this.state;
     const {notesDelete, notes} = this.props;
 
-    const {board} = this.props;
+    const {board, notesSize} = this.props;
 
 
     return (
       <div>
-        <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board} showNoteComments={this.props.showNoteComments}/>
-        <CustomDragLayer snapToGrid={snapToGridWhileDragging} />
+        <NoteBoardContainer snapToGrid={snapToGridAfterDrop} board={board} showNoteComments={this.props.showNoteComments} notesSize={notesSize}/>
+        <CustomDragLayer snapToGrid={snapToGridWhileDragging} board={board} notesSize={notesSize}/>
         <div className="snapTo">
         <p>
           <label htmlFor="snapToGridWhileDragging" >
@@ -83,6 +83,7 @@ class CustomDragLayerContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 
+
   return {
     notes: state.noteReducer.all.filter(note => {
 
@@ -90,7 +91,8 @@ const mapStateToProps = (state, ownProps) => {
     }),
     deletedNotes: state.noteReducer.deletedNotes,
 
-    board: state.board.selectedBoard
+    board    : state.board.selectedBoard,
+    notesSize: state.board.notesSize
 
   };
 
