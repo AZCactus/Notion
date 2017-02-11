@@ -100,7 +100,6 @@ router.put('/:id', (req, res, next) => {
   if (top) changes.top = top;
   if (left) changes.left = left;
   if (size) changes.size = size;
-  console.log('IN NOTE UPDATE', size);
   Note.update(changes, {where: {id: req.params.id}})
     .then(note => res.sendStatus(200))
     .catch(next);
