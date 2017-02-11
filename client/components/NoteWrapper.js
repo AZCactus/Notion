@@ -62,12 +62,18 @@ class NoteWrapper extends PureComponent {
     const { color, red, content, id, size} = this.props;
 
     let noteSize;
+    let fontSize;
+
 
     if (size === null || size === 0) {
       noteSize = '100px';
+      fontSize = '12.5px';
     } else {
       noteSize = '' + size + 'px';
+      fontSize = '' + size / 8 + 'px';
     }
+
+   
 
 
     const styles = {
@@ -77,6 +83,8 @@ class NoteWrapper extends PureComponent {
       left    : this.props.left || 0,
       top     : this.props.top || 0,
       position: 'absolute',
+      fontSize: fontSize
+
 
     };
 
