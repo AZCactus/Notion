@@ -41,9 +41,20 @@ const CreateBoard = (props) => {
                       <span style={{display: 'inline-block', verticalAlign: 'middle', font: 'bold'}}>{ board.name }</span>
                     </h5>
                   </div>
-                  <button className="btn btn-secondary deleteButton" type='button' onClick={
-                    () => { props.delete(board.id); }
-                  }>Delete</button>
+                  { Object.keys(props.user).length ? (
+                    permissions.map(permission => {
+                      if (permission.board_id === board.id) {
+                        if (permission.permission === 'admin') {
+                          return (
+                          <button key={permission.id} className="btn btn-secondary deleteButton" type='button' onClick={
+                            () => { props.delete(board.id); }
+                          }>Delete</button>
+                        );
+                        }
+                      } })
+                  ) : null
+                  }
+
                 </div>
               </div>
               ); }
