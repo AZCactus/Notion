@@ -73,7 +73,7 @@ class NoteWrapper extends PureComponent {
       fontSize = '' + size / 8 + 'px';
     }
 
-    console.log('FONTSIZE', fontSize);
+   
 
 
     const styles = {
