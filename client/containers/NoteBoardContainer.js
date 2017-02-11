@@ -35,9 +35,8 @@
 
 
   const noteStyles = {
-    height  : '50px',
-    width   : '50px',
-    fontSize: '3em',
+
+
     position: 'relative',
 
   };
@@ -119,7 +118,9 @@
 
     renderNote(item, key, notesSize) {
       return (
-        <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments} size={notesSize}>{item.content}</DraggableNote>
+        <DraggableNote key={key} id={key} {...item}
+          showNoteComments={this.props.showNoteComments}
+          size={notesSize}>{item.content}</DraggableNote>
       );
     }
 
