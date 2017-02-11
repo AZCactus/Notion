@@ -86,7 +86,6 @@ router.put('/:id', (req, res, next) => {
     }
   })
     .then(board => {
-      console.log('BOARD IN SERVER', board);
       res.json(board);
     })
     .catch(next);
