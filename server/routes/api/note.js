@@ -54,7 +54,6 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const {content, color, top, left, boardId} = req.body;
   const mentions = req.body.mentions || [];
-  console.log('MENTIONS IN SERVER!!!!!!!!!!!!', mentions);
 
   Note.create({
     content: req.body.content,
