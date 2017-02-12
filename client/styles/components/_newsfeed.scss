@@ -1,0 +1,72 @@
+
+.newsfeed-wrapper {
+  width: 90vw;
+  margin: 0 auto;
+  font-family: "Open Sans", sans-serif;
+}
+
+.newsfeed-container {
+  margin-top: 5em;
+  border-radius: 5px;
+  border: 1px solid #4099FF;
+}
+
+.newsfeed-title {
+  text-align: center;
+  background-color: #4099FF;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 0.1em;
+  padding: 1em 0;
+}
+
+.newsfeed-list {
+  margin: 0 auto;
+  list-style-type: none;
+  padding: 0;
+}
+
+.newsfeed-item {
+  margin: 0.5em 0.3em;
+  padding: 0 1em;
+}
+
+.newsfeed-date {
+  font-style: italic;
+  color: gray;
+  display: block;
+  font-size: 0.9em;
+}
+
+.newsfeed-boardname {
+  font-weight: 700;
+}
+
+.newsfeed-content {
+  color: gray;
+  word-wrap: break-word;
+}
+
+.newsfeed-empty {
+  text-align: center;
+  color: gray;
+  padding: 0.5em 0;
+  font-style: italic;
+}
+
+.newsfeed-separator {
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 0.5em;
+}
+
+
+@media screen and (min-device-width: 1024px) {
+  .newsfeed-wrapper {
+    width: 50vw;
+  }
+
+  .newsfeed-date {
+    float: right;
+  }
+}

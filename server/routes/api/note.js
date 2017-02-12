@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-const {Note, User, Board, Comment} = require('../../models');
+const {Note, User, Board, Comment, UserMentionInNote} = require('../../models');
 const router = module.exports = new Router();
 
 router.get('/', (req, res, next) => {
@@ -54,6 +54,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const {content, color, top, left, boardId} = req.body;
   const mentions = req.body.mentions || [];
+  console.log('MENTIONS IN SERVER!!!!!!!!!!!!', mentions);
 
   Note.create({
     content: req.body.content,
@@ -68,25 +69,33 @@ router.post('/', (req, res, next) => {
       ...mentions.map((userId) => note.addMentionedUser(userId))
     ]))
     .then(([ note, board ]) => {
-      return new Promise((resolve, reject) => {
-        const topTraverse = function(top) {
-          Note.findOne({
-            where: { top: top, left: 0, board_id: boardId}})
-            .then(noteToCheck => {
-              if (noteToCheck === null) {
-                note.update({top: top})
-                  .then(result => {
-                    resolve(result);
-                  });
-              } else {
-                topTraverse(top + 20);
-              }
-            });
-        };
-        topTraverse(0);
-      });
+      return Promise.all([
+        UserMentionInNote.findAll({
+          where: { note_id: note.id}
+        })
+          .then(userMentionNotes => userMentionNotes.map(userMentionNote =>
+            userMentionNote.addUnreadNoteUser(userMentionNote.user_id)))
+        , new Promise((resolve, reject) => {
+          const topTraverse = function(top) {
+            Note.findOne({
+              where: { top: top, left: 0, board_id: boardId}})
+              .then(noteToCheck => {
+                if (noteToCheck === null) {
+                  note.update({top: top})
+                    .then(result => {
+                      resolve(result);
+                    });
+                } else {
+                  topTraverse(top + 20);
+                }
+              });
+          };
+          topTraverse(0);
+        })
+      ]);
     })
-    .then(note => {
+
+    .then(([ unreadNote, note ]) => {
       res.send(note);
     })
     .catch(next);

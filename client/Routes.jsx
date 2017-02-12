@@ -9,6 +9,7 @@ import CreateBoardContainer from './containers/CreateBoardContainer';
 import CreateNoteContainer from './containers/CreateNoteContainer';
 import ViewNoteContainer from './containers/ViewNoteContainer';
 import SignupContainer from './containers/SignupContainer';
+import NewsfeedContainer from './containers/NewsfeedContainer';
 
 //action-creators
 import {getBoard, getAllBoards} from './actions/board';
@@ -51,6 +52,7 @@ export default function Routes() {
          <IndexRoute component={CreateNoteContainer} onEnter={onMyBoardEnter}/>
          <Route path=":id" component={ViewNoteContainer} />
        </Route>
+       <Route path="/newsfeed" component={NewsfeedContainer} />
       </Route>
     </Router>
   );

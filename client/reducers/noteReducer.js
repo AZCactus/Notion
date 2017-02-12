@@ -1,5 +1,6 @@
 
-import { DELETE_NOTE, DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE, NOTE_DETAIL } from '../constants';
+import { DELETE_NOTE, DRAGGED_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTE, RECEIVE_NOTES, SELECT_NOTE, MOVE_NOTE, NOTE_DETAIL, SET_UNREAD_NOTE_NUMBER,
+SET_MENTIONED_NOTES } from '../constants';
 
 
 const initState = {
@@ -7,7 +8,9 @@ const initState = {
   selected             : null,
   allBoardSpecificNotes: {},
   deletedNotes         : [],
-  selectedNoteDetails  : null
+  selectedNoteDetails  : null,
+  numOfUnread          : 0,
+  mentionedNotes       : [],
 };
 
 export default function noteReducer(state = initState, action) {
@@ -69,6 +72,13 @@ export default function noteReducer(state = initState, action) {
     nextState.deletedNotes = [ ...nextState.deletedNotes, action.deletedNote ];
     break;
 
+  case SET_UNREAD_NOTE_NUMBER:
+    nextState.numOfUnread = action.numOfUnread;
+    break;
+
+  case SET_MENTIONED_NOTES:
+    nextState.mentionedNotes = action.mentionedNotes;
+    break;
 
   default:
     return state;
