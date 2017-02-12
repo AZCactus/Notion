@@ -23,6 +23,8 @@ const Navbar = (props) => {
 
           <div id='navbar' className={props.navClass} style={{float: 'right'}} aria-expanded={props.aria}>
             <ul className="nav navbar-nav" onClick={() => { props.newPage(); }}>
+              { Object.keys(props.user).length ? <li className="navbar-newsfeed"><Link to="/newsfeed"><i className="glyphicon glyphicon-envelope"></i>{props.numOfUnread > 0 ? <span className="navbar-newsfeed-number">{props.numOfUnread}</span> : null }</Link></li> : null }
+
               { !Object.keys(props.user).length ? (
                 <li><Link to="/signup">Login/SignUp</Link></li>
               ) : (

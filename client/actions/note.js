@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DELETE_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE, NOTE_DETAIL} from '../constants';
+import { DELETE_NOTE, NOTE_ARRAY_INDEX_PUSH, SET_NOTE_COORDS, ADD_NOTE_TO_BOARD, RECEIVE_NOTES, RECEIVE_NOTE, SELECT_NOTE, MOVE_NOTE, NOTE_DETAIL, SET_UNREAD_NOTE_NUMBER, SET_MENTIONED_NOTES } from '../constants';
 import {socketEmit} from './socketio';
 
 export function receiveNote(note) {
@@ -67,6 +67,20 @@ export const deleteNote = (note) => {
   return {
     type       : DELETE_NOTE,
     deletedNote: note
+  };
+};
+
+export const setUnreadNoteNumber = (numOfUnread) => {
+  return {
+    type       : SET_UNREAD_NOTE_NUMBER,
+    numOfUnread: numOfUnread
+  };
+};
+
+export const setMentionedNotes = (mentionedNotes) => {
+  return {
+    type          : SET_MENTIONED_NOTES,
+    mentionedNotes: mentionedNotes
   };
 };
 
@@ -157,7 +171,30 @@ export function createNote(note, boardId) {
       boardId : boardId || note.boardId
     })
       .then(({data}) => {
+     
         dispatch(socketEmit('note', data));
       })
       .catch(err => console.warn(err));
 }
+
+export function getUnreadNotes(userId) {
+  return dispatch =>
+    axios.get(`/api/unread/${userId}`)
+      .then((res) => dispatch(setUnreadNoteNumber(res.data.length)))
+      .catch(err => console.warn(err));
+}
+
+export function deleteUnreadNotes(userId) {
+  return dispatch =>
+    axios.delete(`/api/unread/${userId}`)
+      .then((res) => dispatch(setUnreadNoteNumber(0)))
+      .catch(err => console.warn(err));
+}
+
+export function getMentionedNotes(userId) {
+  return dispatch =>
+    axios.get(`/api/notesfeed/${userId}`)
+      .then((res) => dispatch(setMentionedNotes(res.data)))
+      .catch(err => console.warn(err));
+}
+

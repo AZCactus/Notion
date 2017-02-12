@@ -8,7 +8,9 @@ api
   .use('/notes', require('./note'))
   .use('/user', require('./user'))
   .use('/auth', require('./auth'))
-  .use('/comment', require('./comment'));
+  .use('/comment', require('./comment'))
+  .use('/notesfeed', require('./user_mention_in_note'))
+  .use('/unread', require('./unread_note'));
 
 // Send along any errors
 api.use((err, req, res, next) => {

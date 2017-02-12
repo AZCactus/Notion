@@ -47,7 +47,7 @@ export class SignupContainer extends Component {
     this.props.createUser(this.state.firstName,
     this.state.lastName, this.state.email, this.state.username, this.state.password)
       .then(result => {
-        if (result.message && result.message === 'Request failed with status code 409') {
+        if (result && result.message === 'Request failed with status code 409') {
           this.setState({dirty: true});
           this.wobbler();
         }

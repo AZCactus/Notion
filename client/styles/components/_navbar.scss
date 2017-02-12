@@ -43,6 +43,25 @@
   display: none;
 }
 
+.navbar-newsfeed {
+  font-size: 1.1em;
+  text-align: center;
+  position: relative;
+}
+
+.navbar-newsfeed-number {
+  position: absolute;
+  top: 40%;
+  right: 30%;
+  line-height: 1.1em;
+  background-color: #4099FF;
+  border-radius: 50%;
+  width:1.1em;
+  height: 1.1em;
+  color: #fff;
+  font-size: 0.9em;
+}
+
 @media screen
   and (min-width: 768px) {
 
@@ -54,5 +73,8 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+    }
+    .navbar-newsfeed-number {
+      right: 0%;
     }
   }

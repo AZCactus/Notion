@@ -5,13 +5,16 @@ import Navbar from '../components/Navbar';
 
 import { logoutUser } from '../actions/user';
 import { toggleClick } from '../actions/navbar';
+import { getUnreadNotes } from '../actions/note';
+import isEmpty from 'lodash/isEmpty';
 
 const mapStateToProps = (state, ownProps) => {
   return {
     user         : state.userReducer.loggedInUser,
     sidebarToggle: state.nav.sidebarToggle,
     board        : state.board.selectedBoard,
-    location     : ownProps.location.pathname
+    location     : ownProps.location.pathname,
+    numOfUnread  : state.noteReducer.numOfUnread
   };
 };
 
@@ -21,7 +24,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(logoutUser())
         .then(() => browserHistory.push('/signup'));
     },
-    toggleSidebar: (field) => dispatch(toggleClick(field)),
+    toggleSidebar : (field) => dispatch(toggleClick(field)),
+    getUnreadNotes: (userId) => dispatch(getUnreadNotes(userId)),
   };
 };
 
@@ -34,6 +38,12 @@ class NB extends Component {
     };
     this.expandNav = this.expandNav.bind(this);
     this.newPage = this.newPage.bind(this);
+  }
+
+  componentWillReceiveProps({user}) {
+    if (!isEmpty(this.props.user)) {
+      this.props.getUnreadNotes(this.props.user.id);
+    }
   }
 
   expandNav() {
@@ -66,6 +76,7 @@ class NB extends Component {
         board={this.props.board}
         location={this.props.location}
         newPage={this.newPage}
+        numOfUnread={this.props.numOfUnread}
       />
     );
   }
