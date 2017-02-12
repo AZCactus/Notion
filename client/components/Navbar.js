@@ -14,7 +14,8 @@ const Navbar = (props) => {
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-            <a className='navbar-brand' href='/'>Notion</a>
+            <a className='navbar-brand' href='/'><div><span className="nav-no">No</span>
+            <span className="nav-tion">tion</span></div></a>
               {/* <button className="ion-gear-b navbarGearIcon" style={{fontSize: '2em', marginTop: '10px', paddingLeft: '10px'}} type='button' onClick={() => { props.toggleSidebar('sidebarToggle'); }}></button> */}
         </div>
             { props.location === `/boards/${props.board.hash}` ? (
