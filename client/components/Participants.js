@@ -4,13 +4,16 @@ import SizeSliderContainer from '../containers/SizeSliderContainer';
 export default function(props) {
 
   return (
+    <div onClick={() => { props.toggleParticipantsMenu(); }}>
+     <div className={props.display ? 'participants-tab participants-tab-show' : 'participants-tab participants-tab-hide'}>Collaborators</div>
      <div className={props.display ? 'participants-container participants-container-show'
      : 'participants-container participants-container-hide'}
-     onClick={() => { props.toggleParticipantsMenu(); }}>
+     >
+
           <div className="participant-number-container">
             <div className="participant-number">
               <i className="glyphicon glyphicon-globe globe-icon"></i>
-              {props.totalParticipants} Collaborators Online
+              {props.totalParticipants} Online
             </div>
           </div>
           <div className="participant-list-container">
@@ -35,6 +38,7 @@ export default function(props) {
               <SizeSliderContainer/>
             </div>
           </div>
+      </div>
       </div>
   );
 }
