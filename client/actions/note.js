@@ -32,6 +32,7 @@ export const moveNote = (id, left, top) => {
   };
 };
 
+
 export const selectedNoteDetail = (selectedNoteDetails) => {
   return {
     type: NOTE_DETAIL,

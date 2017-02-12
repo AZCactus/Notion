@@ -14,6 +14,7 @@ const layerStyles = {
   top          : 0,
   width        : '100%',
   height       : '100%',
+
 };
 
 function getItemStyles(props) {
@@ -75,28 +76,29 @@ class CustomDragLayer extends Component {
 
 
 
-  renderItem(type, item) {
+  renderItem(type, item, size) {
 
 
     switch (type) {
     case NOTE:
-      return (<NoteDragPreview content={item.content} color={item.color}/>);
+      return (<NoteDragPreview content={item.content} color={item.color} size={size}/>);
     default:
       return null;
     }
   }
 
   render() {
-    const { item, itemType, isDragging } = this.props;
+    const { item, itemType, isDragging, notesSize } = this.props;
 
     if (!isDragging) {
       return null;
     }
 
+
     return (
       <div style={layerStyles}>
         <div style={getItemStyles(this.props)}>
-            {this.renderItem(itemType, item)
+            {this.renderItem(itemType, item, notesSize)
           }
         </div>
       </div>

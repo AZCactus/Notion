@@ -1,6 +1,8 @@
 import React from 'react';
+import SizeSliderContainer from '../containers/SizeSliderContainer';
 
 export default function(props) {
+
   return (
     <div onClick={() => { props.toggleParticipantsMenu(); }}>
      <div className={props.display ? 'participants-tab participants-tab-show' : 'participants-tab participants-tab-hide'}>Collaborators</div>
@@ -31,6 +33,10 @@ export default function(props) {
                         </li>;
               })}
             </ul>
+            <div className='sizeSlider'>
+              <div>Note Size</div>
+              <SizeSliderContainer/>
+            </div>
           </div>
       </div>
       </div>

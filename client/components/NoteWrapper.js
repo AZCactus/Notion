@@ -59,25 +59,42 @@ class NoteWrapper extends PureComponent {
 
 
   render() {
-    const { color, red, content, id} = this.props;
+    const { color, red, content, id, size} = this.props;
+
+    let noteSize;
+    let fontSize;
+
+
+    if (size === null || size === 0) {
+      noteSize = '100px';
+      fontSize = '12.5px';
+    } else {
+      noteSize = '' + size + 'px';
+      fontSize = '' + size / 8 + 'px';
+    }
+
+   
 
 
     const styles = {
       cursor  : 'move',
-      height  : this.props.height || '8em',
-      width   : this.props.width || '8em',
+      height  : this.props.height || noteSize,
+      width   : this.props.width || noteSize,
       left    : this.props.left || 0,
       top     : this.props.top || 0,
-      position: 'absolute'
+      position: 'absolute',
+      fontSize: fontSize
+
+
     };
 
-    const backgroundColor = red ? 'red' : 'transparent';
+
     return (
       <div className='enlarge'
           className={`noteWrapper ${this.state.focused ? 'noteWrapper--focused' : ''}`}>
       <div
         onDoubleClick={() => { this.props.showNoteComments(color, content, id); }}
-        style={{ ...styles, backgroundColor }}
+        style={{ ...styles }}
         ref={(input) => { this.input = input; }}
         onFocus={this.focusHandler}
         onBlur={this.blurHandler}

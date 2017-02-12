@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {RECEIVE_BOARD, RECEIVE_BOARDS, ADD_NEW_BOARD, RECEIVE_BOARD_NOTES, RECEIVE_PERMISSION} from '../constants';
+import {SET_NOTES_SIZE, RECEIVE_BOARD, RECEIVE_BOARDS, ADD_NEW_BOARD, RECEIVE_BOARD_NOTES, RECEIVE_PERMISSION} from '../constants';
 
 export const receiveBoard = (board) => {
   return {
@@ -27,6 +27,27 @@ export const addNewBoard = (board, permission) => ({
   board,
   permission
 });
+
+export const setNotesSize = (size) => ({
+  type     : SET_NOTES_SIZE,
+  notesSize: size
+});
+
+export const changeNoteSize = (size, board) => {
+  const noteSize = size;
+  return dispatch => {
+    const changedBoard = Object.assign({}, board, {noteSize: size});
+    return axios.put(`/api/boards/${board.id}`, {changedBoard})
+      .then((updated) => {
+        dispatch(setNotesSize(size));
+        return updated;
+      })
+      .then((updated) => console.log('UPDATED Size', updated))
+      .catch(err => console.log('ERROR IN Note SIZE UPDATE in Board Action'));
+  };
+
+
+};
 
 
 export const getAllBoards = () => {

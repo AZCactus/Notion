@@ -31,15 +31,14 @@
     border  : '1px black line',
     position: 'relative',
 
-
   };
 
 
   const noteStyles = {
-    height  : '50px',
-    width   : '50px',
-    fontSize: '.5em',
+
+
     position: 'relative',
+
   };
 
 
@@ -58,6 +57,7 @@
         }
         props.IndexToZIndex(props.notes, item.id);
         props.noteMover(item.id, left, top);
+      // const newdata = {[item.id]: {left, top}};
       }
     },
 
@@ -89,7 +89,7 @@
 
     boardUpdate(note) {
       if (note.board_id === this.props.board.id) {
-          store.dispatch(addNoteToBoard(note));
+        store.dispatch(addNoteToBoard(note));
       }
     }
 
@@ -116,29 +116,35 @@
     }
 
 
-    renderNote(item, key) {
+    renderNote(item, key, notesSize) {
       return (
-        <DraggableNote key={key} id={key} {...item} showNoteComments={this.props.showNoteComments}>{item.content}</DraggableNote>
+        <DraggableNote key={key} id={key} {...item}
+          showNoteComments={this.props.showNoteComments}
+          size={notesSize}>{item.content}</DraggableNote>
       );
     }
 
     render() {
-      const {notesDelete, movedNote, notes, connectDropTarget, board} = this.props;
+
+      const {notesDelete, movedNote, notes, connectDropTarget, board, notesSize} = this.props;
       let backgroundColor;
 
+
       return connectDropTarget(
-        <div>
-          <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
-            <div style={styles}>
-              { notes.map((note) => {
-                return this.renderNote(note, note.id);
-              }
-            )}
-            </div>
+      <div>
+        <MediaQuery query='(min-device-width: 800px)'> {/*view for web*/}
+          <div style={styles}>
+            { notes.map((note) => {
+              return this.renderNote(note, note.id, notesSize);
+            }
+          )}
+
+
+        </div>
           </MediaQuery>
 
           <MediaQuery query='(max-device-width: 799px)'> {/*view for mobile*/}
-            <div className='mobile' style={{marginTop: '7  0px'}}>
+            <div style={{marginTop: '70px'}}>
 
               <ol className='mobileOL'>
               {
@@ -152,11 +158,12 @@
                   </li>
                 );
               })
-              }
-              </ol>
-            </div>
-          </MediaQuery>
-        </div>
+            }
+          </ol>
+       </div>
+        </MediaQuery>
+
+      </div>
     );
     }
 }

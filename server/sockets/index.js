@@ -148,4 +148,5 @@ function updateNoteCoords(id, left, top) {
     {left: left, top: top},
     {where: { id: id }
     });
+
 }

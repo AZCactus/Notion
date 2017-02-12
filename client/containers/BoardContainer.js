@@ -152,7 +152,7 @@ class BoardContainer extends Component {
               <CustomDragLayerContainer {...this.props} showNoteComments={this.showNoteComments}/>
             </div>
           </div>
-          <ParticipantsContainer />
+          <ParticipantsContainer board={this.props.board}/>
       </div>
     );
   }
