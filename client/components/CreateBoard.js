@@ -46,7 +46,7 @@ const CreateBoard = (props) => {
                       if (permission.board_id === board.id) {
                         if (permission.permission === 'admin') {
                           return (
-                          <button key={permission.id} className="btn btn-secondary deleteButton" type='button' onClick={
+                          <button key={permission.board_id} className="btn btn-secondary deleteButton" type='button' onClick={
                             () => { props.delete(board.id); }
                           }>Delete</button>
                         );
