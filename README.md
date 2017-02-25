@@ -6,7 +6,7 @@ Hello! Notion is a web and mobile platform for brainstorming. Users can create a
 
 Motivation
 
-We've noticed inefficiencies in brainstorming from the inability to include individuals remotely to the short-term nature of a physical notes. We wanted to solve these problems and also give a delightful interface.
+We've noticed inefficiencies in brainstorming from the inability to include individuals remotely to the short-term nature of physical notes. We wanted to solve these problems and also give a delightful interface.
 
 Installation
 
